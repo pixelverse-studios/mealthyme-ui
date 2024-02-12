@@ -19,6 +19,7 @@ const useAuth = () => {
       } else {
         // display success alert
         dispatch(setProfile(data))
+
         setLocalStorageItem(USER_TOKEN, data)
       }
     },
