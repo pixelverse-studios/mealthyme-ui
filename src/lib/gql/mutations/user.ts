@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client'
 
 export const SIGN_IN = gql`
-  mutation UserSignIn(
+  mutation signIn(
     $email: String
     $fullName: String
     $avatar: String
@@ -23,6 +23,7 @@ export const SIGN_IN = gql`
         createdAt
         lastLogin
         newUser
+        tier
       }
       ... on Errors {
         type

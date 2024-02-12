@@ -6,13 +6,12 @@ import AuthLoading from '../loaders/AuthLoading'
 
 // TODO: Build out this button more, this is for testing purposes at this point
 const LoginButton = () => {
-  const { handleGoogleSignIn } = useAuth()
   const router = useRouter()
+  const { handleGoogleSignIn } = useAuth(router as any)
   const { loading } = useSelector((state: any) => state.user)
 
   const onLogin = async () => {
-    await handleGoogleSignIn()
-    router.push('/dashboard')
+    handleGoogleSignIn()
   }
 
   if (loading) {

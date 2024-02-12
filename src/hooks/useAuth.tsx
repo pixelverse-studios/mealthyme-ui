@@ -8,7 +8,7 @@ import { USER_TOKEN } from '@/utils/constants'
 import { setLocalStorageItem } from '@/utils/localStorage'
 import { authProvider } from '@/lib/auth'
 
-const useAuth = () => {
+const useAuth = (router: any) => {
   const auth = getAuth()
   const dispatch = useDispatch()
 
@@ -19,11 +19,11 @@ const useAuth = () => {
       } else {
         // display success alert
         dispatch(setProfile(data))
-
         setLocalStorageItem(USER_TOKEN, data)
+        router.push('/dashboard')
       }
     },
-    onError() {
+    onError(error) {
       // dispatch alert to snackbar/whatever we do use
     }
   })
