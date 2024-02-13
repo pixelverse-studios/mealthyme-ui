@@ -50,6 +50,7 @@ export const DELETE_PROFILE = gql`
         createdAt
         lastLogin
         newUser
+        tier
       }
       ... on Errors {
         type

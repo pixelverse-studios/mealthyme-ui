@@ -13,6 +13,7 @@ export const GET_USER = gql`
         createdAt
         lastLogin
         newUser
+        tier
       }
       ... on Errors {
         type
