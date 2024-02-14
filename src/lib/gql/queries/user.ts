@@ -18,10 +18,6 @@ export const GET_USER = gql`
       ... on Errors {
         type
         message
-        errors {
-          field
-          message
-        }
       }
     }
   }

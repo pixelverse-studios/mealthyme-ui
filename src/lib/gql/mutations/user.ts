@@ -28,10 +28,6 @@ export const SIGN_IN = gql`
       ... on Errors {
         type
         message
-        errors {
-          field
-          message
-        }
       }
     }
   }
@@ -55,10 +51,6 @@ export const DELETE_PROFILE = gql`
       ... on Errors {
         type
         message
-        errors {
-          field
-          message
-        }
       }
     }
   }
