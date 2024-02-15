@@ -1,11 +1,11 @@
-'use-client'
-import Button from './button'
+'use client'
+import LoginButton from '@/components/auth/LoginButton'
 
 export default function Home() {
   return (
     <main>
       <div>skeeyeee</div>
-      <Button />
+      <LoginButton />
     </main>
   )
 }

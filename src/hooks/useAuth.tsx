@@ -1,32 +1,57 @@
 'use client'
+import { useDispatch } from 'react-redux'
 import { signInWithPopup, signOut, getAuth } from 'firebase/auth'
+import { useMutation } from '@apollo/client'
+import { SIGN_IN } from '@/lib/gql/mutations/user'
+import { setProfileLoading, setProfile } from '@/lib/redux/slices/user'
+import { USER_TOKEN } from '@/utils/constants'
+import { setLocalStorageItem } from '@/utils/localStorage'
 import { authProvider } from '@/lib/auth'
 
-const useAuth = () => {
+const useAuth = (router: any) => {
   const auth = getAuth()
+  const dispatch = useDispatch()
 
-  const handleSignIn = async () => {
+  const [signIn] = useMutation(SIGN_IN, {
+    onCompleted({ signIn: data }) {
+      if (data.__typename === 'Errors') {
+        // display alert with error message
+      } else {
+        // display success alert
+        dispatch(setProfile(data))
+        setLocalStorageItem(USER_TOKEN, data)
+        router.push('/dashboard')
+      }
+    },
+    onError(error) {
+      // dispatch alert to snackbar/whatever we do use
+    }
+  })
+
+  const handleGoogleSignIn = async () => {
+    dispatch(setProfileLoading(true))
     try {
-        // TODO: Come back and update this once we have a working backend
-      console.log('clicked to sign in')
-      //   dispatch(setProfileLoading(true))
       const { user: gUser } = await signInWithPopup(auth, authProvider)
-      console.log(gUser)
-      //   const { email, photoURL, displayName, providerId } = gUser.providerData[0]
-      //   await signIn({
-      //     variables: { email, avatar: photoURL, displayName, providerId }
-      //   })
-      //   setTimeout(() => router.push('/profile'), 1000)
+      const { email, photoURL, displayName, providerId } = gUser.providerData[0]
+      await signIn({
+        variables: {
+          email,
+          avatar: photoURL,
+          fullName: displayName,
+          providerId
+        }
+      })
     } catch (error) {
-      console.log(error)
       //   dispatch(setProfileLoading(false))
       //   snackbar(messages[statuses.ERROR].loggedIn, {
       //     variant: statuses.ERROR
       //   })
+    } finally {
+      dispatch(setProfileLoading(false))
     }
   }
 
-  const handleLogout = async () => {
+  const handleGoogleLogOut = async () => {
     try {
       await signOut(auth)
       //   clearLocalStorageItem(USER_TOKEN)
@@ -36,7 +61,7 @@ const useAuth = () => {
     }
   }
 
-  return { handleSignIn, handleLogout }
+  return { handleGoogleSignIn, handleGoogleLogOut }
 }
 
 export default useAuth
