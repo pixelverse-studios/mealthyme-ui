@@ -13,8 +13,9 @@ import Button from '@mui/material/Button'
 import Tooltip from '@mui/material/Tooltip'
 import MenuItem from '@mui/material/MenuItem'
 import AdbIcon from '@mui/icons-material/Adb'
+import LoginButton from '../auth/LoginButton'
 
-const pages = ['FAQs']
+const pages = ['FAQs', 'Login/Signup']
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout']
 
 function Navbar() {
@@ -116,14 +117,16 @@ function Navbar() {
           {/* Mobile Logo Placement End */}
           {/* Desktop Nav Link */}
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map(page => (
-              <Button
-                key={page}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}>
-                {page}
-              </Button>
-            ))}
+            {pages.map(page => {
+              return (
+                <Button
+                  key={page}
+                  onClick={handleCloseNavMenu}
+                  sx={{ my: 2, color: 'white', display: 'block' }}>
+                  {page}
+                </Button>
+              )
+            })}
           </Box>
           {/* Avatar Icon and Menu */}
           <Box sx={{ flexGrow: 0 }}>
