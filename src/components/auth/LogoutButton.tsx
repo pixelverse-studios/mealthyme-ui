@@ -5,22 +5,22 @@ import LoadingButton from '@mui/lab/LoadingButton'
 
 import useAuth from '@/hooks/useAuth'
 
-const LoginButton = () => {
+const LogoutButton = () => {
   const router = useRouter()
-  const { handleGoogleSignIn } = useAuth(router as any)
+  const { handleGoogleLogOut } = useAuth(router as any)
   const { loading } = useSelector((state: any) => state.user)
 
-  const onLogin = async () => handleGoogleSignIn()
+  const onLogout = async () => handleGoogleLogOut()
 
   return (
     <LoadingButton
       loading={loading}
       variant="contained"
-      color="success"
-      onClick={onLogin}>
-      LOGIN
+      color="secondary"
+      onClick={onLogout}>
+      LOGOUT
     </LoadingButton>
   )
 }
 
-export default LoginButton
+export default LogoutButton

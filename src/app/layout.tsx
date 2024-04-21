@@ -1,10 +1,10 @@
 import type { Metadata } from 'next'
-
 import ApolloWrapper from '@/lib/gql/ApolloWrapper'
 import ReduxWrapper from '@/lib/redux/ReduxWrapper'
-
+import AuthWrapper from '@/components/auth'
 import Navbar from '@/components/nav'
-import Footer from '@/components/footer'
+
+import '../styles/app.css'
 
 export const metadata: Metadata = {
   title: 'Meal Thyme',
@@ -21,9 +21,10 @@ export default function RootLayout({
       <body>
         <ApolloWrapper>
           <ReduxWrapper>
-            <Navbar />
-            {children}
-            <Footer />
+            <AuthWrapper>
+              <Navbar />
+              {children}
+            </AuthWrapper>
           </ReduxWrapper>
         </ApolloWrapper>
       </body>

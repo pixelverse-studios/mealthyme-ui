@@ -1,0 +1,26 @@
+.mobileNav {
+  flex-grow: 1;
+  gap: 1rem;
+  justify-content: space-between;
+}
+
+.nav {
+  flex-grow: 1;
+  gap: 1rem;
+  justify-content: space-between;
+}
+
+.logoBlock {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .logo {
+    font-size: 2rem;
+    margin-right: 5px;
+  }
+
+  span {
+    font-size: 1.8rem;
+  }
+}
