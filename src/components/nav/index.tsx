@@ -30,7 +30,6 @@ function Navbar() {
           <Box
             className={styles.mobileNav}
             sx={{ display: { xs: 'flex', md: 'none' } }}>
-            <Logo showText={false} />
             <IconButton
               size="large"
               aria-label="account of current user"
@@ -40,6 +39,7 @@ function Navbar() {
               color="inherit">
               <Menu />
             </IconButton>
+            <Logo showText={false} />
             <Drawer
               open={showMobileDrawer}
               onClose={() => setShowMobileDrawer(false)}>

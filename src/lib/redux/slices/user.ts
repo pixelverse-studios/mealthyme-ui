@@ -20,9 +20,7 @@ export const initialState = {
     providerId: '',
     lastLogin: null,
     newUser: false,
-    tier: '',
-    createdAt: new Date(),
-    updatedAt: new Date()
+    tier: ''
   } as ProfileProps,
   loading: false as boolean
 }
