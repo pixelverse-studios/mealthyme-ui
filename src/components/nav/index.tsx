@@ -1,30 +1,129 @@
 'use client'
-import { useState } from 'react'
-import { useSelector } from 'react-redux'
-import { AppBar, Box, Toolbar, IconButton, Container } from '@mui/material'
+import { useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
+import { useDispatch, useSelector } from 'react-redux'
+import {
+  AppBar,
+  Avatar,
+  Box,
+  Container,
+  IconButton,
+  Menu,
+  MenuItem,
+  Toolbar
+} from '@mui/material'
+import { Fastfood, Menu as MenuIcon } from '@mui/icons-material'
 import LoginButton from '../auth/LoginButton'
 import LogoutButton from '../auth/LogoutButton'
-import { Drawer } from '@mui/material'
-import { Fastfood, Menu } from '@mui/icons-material'
+import { ProfileProps } from '@/utils/types/user'
+import { setIsMobile, setShowMobile } from '@/lib/redux/slices/nav'
+import { userLinks, NavItemType } from './utils'
+import useScreenSize from '@/hooks/useScreenSize'
+
 import styles from './Nav.module.scss'
 
-// const pages = ['FAQs', 'Login/Signup']
-// const settings = ['Profile', 'Account', 'Dashboard', 'Logout']
+const NavItems = ({ profile }: { profile: ProfileProps }) => {
+  const router = useRouter()
 
-const Logo = ({ showText }: { showText: boolean }) => (
-  <div className={styles.logoBlock}>
-    <Fastfood className={styles.logo} />
-    {showText ? <span>MealThyme</span> : null}
-  </div>
-)
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
+  const menuOpen = Boolean(anchorEl)
+  const onMenuClick = (event: React.MouseEvent<HTMLElement>) =>
+    setAnchorEl(event.currentTarget)
+  const handleMenuClose = () => setAnchorEl(null)
 
-function Navbar() {
-  const { profile } = useSelector((state: any) => state.user)
+  const renderAvatar = () => {
+    if (profile == null) return <LoginButton />
 
-  const [showMobileDrawer, setShowMobileDrawer] = useState<boolean>(false)
+    const { avatar, firstName, lastName } = profile
+    if (avatar === '')
+      return (
+        <IconButton onClick={onMenuClick}>
+          <Avatar>
+            {firstName.charAt(0)}
+            {lastName.charAt(0)}
+          </Avatar>
+        </IconButton>
+      )
+
+    return (
+      <IconButton onClick={onMenuClick}>
+        <Avatar alt={`${firstName}_profileAvatar`} src={avatar} />
+      </IconButton>
+    )
+  }
+
+  const onMenuItemClick = (item: string) => {
+    if (item === 'Premium') {
+      // TODO Premium should route to settings as well, and trigger some sort of focus on upgrading. Or route to settings/upgrade or something
+    } else {
+      return router.push(item)
+    }
+  }
 
   return (
-    <AppBar position="static">
+    <Box
+      className={styles.navBody}
+      sx={{ display: { xs: 'none', md: 'flex' } }}>
+      <Logo showText />
+      <div className={styles.navItems}>
+        {renderAvatar()}
+        <Menu
+          anchorEl={anchorEl}
+          id="account-menu"
+          open={menuOpen}
+          onClose={handleMenuClose}
+          onClick={handleMenuClose}>
+          <MenuItem>
+            <LogoutButton />
+          </MenuItem>
+          {userLinks(profile?._id != '').map(
+            ({ route, label }: NavItemType) => (
+              <MenuItem key={label} onClick={() => onMenuItemClick(route)}>
+                {label}
+              </MenuItem>
+            )
+          )}
+        </Menu>
+      </div>
+    </Box>
+  )
+}
+
+const Logo = ({ showText }: { showText: boolean }) => {
+  const router = useRouter()
+  return (
+    <div className={styles.logoBlock} onClick={() => router.push('/recipes')}>
+      <Fastfood className={styles.logo} />
+      {showText ? <span>MealThyme</span> : null}
+    </div>
+  )
+}
+
+function Navbar() {
+  const dispatch = useDispatch()
+  const { profile } = useSelector((state: any) => state.user)
+  const { isMobile, showMobile } = useSelector((state: any) => state.nav)
+
+  const { isMobileWidth } = useScreenSize()
+  useEffect(() => {
+    if (isMobileWidth && !isMobile) {
+      dispatch(setIsMobile(true))
+      dispatch(setShowMobile(false))
+    }
+
+    if (!isMobileWidth && isMobile) {
+      dispatch(setIsMobile(false))
+    }
+
+    if (!isMobile && !isMobileWidth && !showMobile) {
+      dispatch(setShowMobile(true))
+    }
+  }, [dispatch, isMobile, isMobileWidth, showMobile])
+
+  const onMenuClick = () => dispatch(setShowMobile(!showMobile))
+
+  return (
+    <AppBar position="fixed" className={styles.Nav}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Box
@@ -35,25 +134,13 @@ function Navbar() {
               aria-label="account of current user"
               aria-controls="menu-appbar"
               aria-haspopup="true"
-              onClick={() => setShowMobileDrawer(!showMobileDrawer)}
+              onClick={onMenuClick}
               color="inherit">
-              <Menu />
+              <MenuIcon />
             </IconButton>
             <Logo showText={false} />
-            <Drawer
-              open={showMobileDrawer}
-              onClose={() => setShowMobileDrawer(false)}>
-              display mobile nav list
-            </Drawer>
           </Box>
-          <Box
-            className={styles.nav}
-            sx={{ display: { xs: 'none', md: 'flex' } }}>
-            <Logo showText />
-            <div>
-              {profile?._id !== '' ? <LogoutButton /> : <LoginButton />}
-            </div>
-          </Box>
+          <NavItems profile={profile} />
         </Toolbar>
       </Container>
     </AppBar>

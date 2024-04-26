@@ -3,7 +3,11 @@
   gap: 1rem;
 }
 
-.nav {
+.Nav {
+  box-shadow: none;
+}
+
+.navBody {
   flex-grow: 1;
   gap: 1rem;
   justify-content: space-between;
@@ -21,5 +25,53 @@
 
   span {
     font-size: 1.8rem;
+  }
+}
+
+.SideNav {
+  width: var(--sidebar-width);
+  height: 100%;
+
+  padding-right: 1rem;
+  display: flex;
+  gap: 5px;
+  flex-direction: column;
+
+  .accordion {
+    box-shadow: none;
+    transition: var(--hover-transition);
+
+    &::before {
+      position: relative;
+    }
+    .links {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      padding: 0 0.5rem;
+
+      div {
+        padding: 0.5rem 0.7rem;
+        cursor: pointer;
+
+        &:hover {
+          border-radius: var(--border-radius);
+          box-shadow: var(--boxshadow-border);
+        }
+        &:last-child {
+          padding-bottom: 0.5rem;
+        }
+      }
+    }
+  }
+
+  footer {
+    font-size: 0.7rem;
+  }
+
+  @media screen and (max-width: 900px) {
+    height: calc(100% - 4rem);
+    padding: 0;
+    padding-top: 1rem;
   }
 }

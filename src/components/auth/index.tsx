@@ -28,7 +28,7 @@ const AuthWrapper = ({ children }: { children: React.ReactNode }) => {
   })
 
   useEffect(() => {
-    if (!loading && profile._id == '') {
+    if (!loading && profile?._id == '') {
       const { profile, expired } = getValidatedUser()
       dispatch(setProfileLoading(true))
       if (expired) {
@@ -38,7 +38,7 @@ const AuthWrapper = ({ children }: { children: React.ReactNode }) => {
         dispatch(setProfileLoading(false))
       }
     }
-  }, [dispatch, getUser, loading, profile._id])
+  }, [dispatch, getUser, loading, profile])
 
   return (
     <>
