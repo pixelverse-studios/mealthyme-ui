@@ -50,6 +50,10 @@
       gap: 5px;
       padding: 0 0.5rem;
 
+      .selected {
+        background-color: tomato;
+      }
+
       div {
         padding: 0.5rem 0.7rem;
         cursor: pointer;

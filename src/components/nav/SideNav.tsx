@@ -2,6 +2,7 @@
 import { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useRouter } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 import { Accordion, AccordionSummary, AccordionDetails } from '@mui/material'
 import { ExpandMore } from '@mui/icons-material'
 
@@ -16,6 +17,7 @@ const isExpanded = (panel: string, panels: string[]) => panels.includes(panel)
 
 function SideNav() {
   const router = useRouter()
+  const pathname = usePathname()
   const dispatch = useDispatch()
 
   const { profile } = useSelector((state: any) => state.user)
@@ -59,7 +61,10 @@ function SideNav() {
             <AccordionDetails className={styles.links}>
               {recipeLinks(profile?._id != '').map(
                 ({ label, route }: NavItemType) => (
-                  <div onClick={() => onItemClick(route)} key={label}>
+                  <div
+                    className={route === pathname ? styles.selected : ''}
+                    onClick={() => onItemClick(route)}
+                    key={label}>
                     {label}
                   </div>
                 )
@@ -81,7 +86,10 @@ function SideNav() {
             <AccordionDetails className={styles.links}>
               {resources(profile?._id != '').map(
                 ({ label, route }: NavItemType) => (
-                  <div onClick={() => onItemClick(route)} key={label}>
+                  <div
+                    className={route === pathname ? styles.selected : ''}
+                    onClick={() => onItemClick(route)}
+                    key={label}>
                     {label}
                   </div>
                 )
