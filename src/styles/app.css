@@ -8,7 +8,7 @@ body {
 }
 
 .content {
-  display: grid !important;
+  display: grid;
   grid-template-columns: var(--sidebar-width) 1fr;
   height: var(--content-height);
   padding-top: var(--nav-offset);
@@ -20,7 +20,7 @@ main {
 
 @media screen and (max-width: 900px) {
   .content {
-    grid-template-columns: 1fr;
+    display: flex;
   }
 
   main {

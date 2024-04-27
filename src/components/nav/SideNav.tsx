@@ -45,48 +45,50 @@ function SideNav() {
       overlayContent={isMobile}
       destroy={destroy}>
       <div className={styles.SideNav}>
-        <Accordion
-          className={`${styles.accordion} ${isExpanded(RECIPE_BLOCK, accordions) ? styles.expanded : ''}`}
-          expanded={isExpanded(RECIPE_BLOCK, accordions)}
-          onChange={() => onAccordionClick(RECIPE_BLOCK)}>
-          <AccordionSummary
-            expandIcon={<ExpandMore />}
-            aria-controls={RECIPE_BLOCK}
-            id={RECIPE_BLOCK}>
-            Recipes
-          </AccordionSummary>
-          <AccordionDetails className={styles.links}>
-            {recipeLinks(profile?._id != '').map(
-              ({ label, route }: NavItemType) => (
-                <div onClick={() => onItemClick(route)} key={label}>
-                  {label}
-                </div>
-              )
-            )}
-          </AccordionDetails>
-        </Accordion>
-        <Accordion
-          className={`${styles.accordion} ${
-            isExpanded(RESOURCE_BLOCK, accordions) ? styles.expanded : ''
-          }`}
-          expanded={isExpanded(RESOURCE_BLOCK, accordions)}
-          onChange={() => onAccordionClick(RESOURCE_BLOCK)}>
-          <AccordionSummary
-            expandIcon={<ExpandMore />}
-            aria-controls={RESOURCE_BLOCK}
-            id={RESOURCE_BLOCK}>
-            Resources
-          </AccordionSummary>
-          <AccordionDetails className={styles.links}>
-            {resources(profile?._id != '').map(
-              ({ label, route }: NavItemType) => (
-                <div onClick={() => onItemClick(route)} key={label}>
-                  {label}
-                </div>
-              )
-            )}
-          </AccordionDetails>
-        </Accordion>
+        <div>
+          <Accordion
+            className={`${styles.accordion} ${isExpanded(RECIPE_BLOCK, accordions) ? styles.expanded : ''}`}
+            expanded={isExpanded(RECIPE_BLOCK, accordions)}
+            onChange={() => onAccordionClick(RECIPE_BLOCK)}>
+            <AccordionSummary
+              expandIcon={<ExpandMore />}
+              aria-controls={RECIPE_BLOCK}
+              id={RECIPE_BLOCK}>
+              Recipes
+            </AccordionSummary>
+            <AccordionDetails className={styles.links}>
+              {recipeLinks(profile?._id != '').map(
+                ({ label, route }: NavItemType) => (
+                  <div onClick={() => onItemClick(route)} key={label}>
+                    {label}
+                  </div>
+                )
+              )}
+            </AccordionDetails>
+          </Accordion>
+          <Accordion
+            className={`${styles.accordion} ${
+              isExpanded(RESOURCE_BLOCK, accordions) ? styles.expanded : ''
+            }`}
+            expanded={isExpanded(RESOURCE_BLOCK, accordions)}
+            onChange={() => onAccordionClick(RESOURCE_BLOCK)}>
+            <AccordionSummary
+              expandIcon={<ExpandMore />}
+              aria-controls={RESOURCE_BLOCK}
+              id={RESOURCE_BLOCK}>
+              Resources
+            </AccordionSummary>
+            <AccordionDetails className={styles.links}>
+              {resources(profile?._id != '').map(
+                ({ label, route }: NavItemType) => (
+                  <div onClick={() => onItemClick(route)} key={label}>
+                    {label}
+                  </div>
+                )
+              )}
+            </AccordionDetails>
+          </Accordion>
+        </div>
         <footer>&copy; MealThyme {new Date().getFullYear()}</footer>
       </div>
     </NavDrawer>

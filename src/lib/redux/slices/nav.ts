@@ -21,7 +21,6 @@ export const navSlice = createSlice({
       state.isMobile = action.payload
     },
     toggleDestroyNav: (state, action) => {
-      console.log(action.payload)
       state.destroy = action.payload
     }
   }
