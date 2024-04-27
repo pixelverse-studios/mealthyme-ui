@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client'
 
 export const GET_USER = gql`
-  query GetUser($email: String) {
+  query getUser($email: String!) {
     getUser(email: $email) {
       ... on User {
         _id
@@ -13,14 +13,11 @@ export const GET_USER = gql`
         createdAt
         lastLogin
         newUser
+        tier
       }
       ... on Errors {
         type
         message
-        errors {
-          field
-          message
-        }
       }
     }
   }

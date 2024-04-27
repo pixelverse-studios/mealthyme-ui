@@ -1,17 +1,17 @@
 import { gql } from '@apollo/client'
 
 export const SIGN_IN = gql`
-  mutation UserSignIn(
-    $email: String
+  mutation signIn(
+    $email: String!
     $fullName: String
-    $avatar: String
     $providerId: String
+    $avatar: String
   ) {
     signIn(
       email: $email
       fullName: $fullName
-      avatar: $avatar
       providerId: $providerId
+      avatar: $avatar
     ) {
       ... on User {
         _id
@@ -23,14 +23,11 @@ export const SIGN_IN = gql`
         createdAt
         lastLogin
         newUser
+        tier
       }
       ... on Errors {
         type
         message
-        errors {
-          field
-          message
-        }
       }
     }
   }
@@ -49,14 +46,11 @@ export const DELETE_PROFILE = gql`
         createdAt
         lastLogin
         newUser
+        tier
       }
       ... on Errors {
         type
         message
-        errors {
-          field
-          message
-        }
       }
     }
   }

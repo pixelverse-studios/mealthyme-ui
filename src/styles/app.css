@@ -1,0 +1,30 @@
+@import url('./reset.css');
+@import url('./themes.css');
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+}
+
+.content {
+  display: grid;
+  grid-template-columns: var(--sidebar-width) 1fr;
+  height: var(--content-height);
+  padding-top: var(--nav-offset);
+}
+
+main {
+  padding: 1rem;
+}
+
+@media screen and (max-width: 900px) {
+  .content {
+    display: flex;
+  }
+
+  main {
+    padding: 0;
+    padding-top: 1rem;
+  }
+}
