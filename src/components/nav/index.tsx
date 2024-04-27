@@ -16,7 +16,11 @@ import { Fastfood, Menu as MenuIcon } from '@mui/icons-material'
 import LoginButton from '../auth/LoginButton'
 import LogoutButton from '../auth/LogoutButton'
 import { ProfileProps } from '@/utils/types/user'
-import { setIsMobile, setShowMobile } from '@/lib/redux/slices/nav'
+import {
+  setIsMobile,
+  setShowMobile,
+  toggleDestroy
+} from '@/lib/redux/slices/nav'
 import { userLinks, NavItemType } from './utils'
 import useScreenSize from '@/hooks/useScreenSize'
 
@@ -109,6 +113,7 @@ function Navbar() {
     if (isMobileWidth && !isMobile) {
       dispatch(setIsMobile(true))
       dispatch(setShowMobile(false))
+      toggleDestroy(dispatch)
     }
 
     if (!isMobileWidth && isMobile) {

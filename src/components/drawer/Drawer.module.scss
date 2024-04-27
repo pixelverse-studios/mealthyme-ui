@@ -36,7 +36,13 @@
     left: 0;
 
     .drawerContent {
-        background-image: linear-gradient(to right, #fff, #fff, #fff, transparent);
+      background-image: linear-gradient(
+        to right,
+        #fff,
+        #fff,
+        #fff,
+        transparent
+      );
     }
   }
 

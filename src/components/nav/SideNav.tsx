@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 import { Accordion, AccordionSummary, AccordionDetails } from '@mui/material'
 import { ExpandMore } from '@mui/icons-material'
 
-import Drawer from '../drawer'
+import { NavDrawer } from '../drawer/NavDrawer'
 import { recipeLinks, resources, NavItemType } from './utils'
 import { setShowMobile } from '@/lib/redux/slices/nav'
 import styles from './Nav.module.scss'
@@ -19,7 +19,9 @@ function SideNav() {
   const dispatch = useDispatch()
 
   const { profile } = useSelector((state: any) => state.user)
-  const { isMobile, showMobile } = useSelector((state: any) => state.nav)
+  const { isMobile, showMobile, destroy } = useSelector(
+    (state: any) => state.nav
+  )
   const [accordions, setAccordions] = useState<string[]>([RECIPE_BLOCK])
 
   const onAccordionClick = (panel: string) => {
@@ -37,7 +39,11 @@ function SideNav() {
   }
 
   return (
-    <Drawer open={showMobile} onClose={onDrawerClose} overlayContent={isMobile}>
+    <NavDrawer
+      open={showMobile}
+      onClose={onDrawerClose}
+      overlayContent={isMobile}
+      destroy={destroy}>
       <div className={styles.SideNav}>
         <Accordion
           className={`${styles.accordion} ${isExpanded(RECIPE_BLOCK, accordions) ? styles.expanded : ''}`}
@@ -83,7 +89,7 @@ function SideNav() {
         </Accordion>
         <footer>&copy; MealThyme {new Date().getFullYear()}</footer>
       </div>
-    </Drawer>
+    </NavDrawer>
   )
 }
 
