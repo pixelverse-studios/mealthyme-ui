@@ -19,7 +19,8 @@ export const initialState = {
     avatar: '',
     providerId: '',
     lastLogin: null,
-    newUser: false
+    newUser: false,
+    tier: ''
   } as ProfileProps,
   loading: false as boolean
 }
