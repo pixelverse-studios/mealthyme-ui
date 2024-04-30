@@ -1,2 +1,2 @@
-export const AUTH_TOKEN = 'MealThyme_AUTH'
-export const USER_TOKEN = 'MealThyme_USER'
+export const AUTH_TOKEN = 'PantryPal_AUTH'
+export const USER_TOKEN = 'PantryPal_USER'

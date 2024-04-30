@@ -7,7 +7,4 @@ export interface ProfileProps {
   providerId: string
   lastLogin: Date | null
   newUser: boolean
-  tier: string
-  createdAt: Date
-  updatedAt: Date
 }
