@@ -1,0 +1,80 @@
+.mobileNav {
+  flex-grow: 1;
+  gap: 1rem;
+}
+
+.Nav {
+  box-shadow: none;
+}
+
+.navBody {
+  flex-grow: 1;
+  gap: 1rem;
+  justify-content: space-between;
+}
+
+.logoBlock {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .logo {
+    font-size: 2rem;
+    margin-right: 5px;
+  }
+
+  span {
+    font-size: 1.8rem;
+  }
+}
+
+.SideNav {
+  width: var(--sidebar-width);
+  height: 100%;
+  padding-right: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 5px;
+
+  .accordion {
+    box-shadow: none;
+    transition: var(--hover-transition);
+
+    &::before {
+      position: relative;
+    }
+    .links {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      padding: 0 0.5rem;
+
+      .selected {
+        background-color: tomato;
+      }
+
+      div {
+        padding: 0.5rem 0.7rem;
+        cursor: pointer;
+
+        &:hover {
+          border-radius: var(--border-radius);
+          box-shadow: var(--boxshadow-border);
+        }
+        &:last-child {
+          padding-bottom: 0.5rem;
+        }
+      }
+    }
+  }
+
+  footer {
+    font-size: 0.7rem;
+  }
+
+  @media screen and (max-width: 900px) {
+    height: calc(100% - 4rem);
+    padding-bottom: 1rem;
+  }
+}
