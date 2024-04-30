@@ -18,7 +18,15 @@
   },
   "plugins": ["@typescript-eslint", "react", "prettier"],
   "rules": {
-    "@typescript-eslint/no-explicit-any": 1,
+    // "no-unused-vars": [
+    //   "error",
+    //   { "vars": "all", "args": "after-used", "ignoreRestSiblings": false }
+    // ],
+    // "no-unused-vars": [
+    //   "error",
+    //   { "vars": "all", "args": "after-used", "ignoreRestSiblings": false }
+    // ],
+    "@typescript-eslint/no-explicit-any": "warning",
     "prettier/prettier": "error",
     "react/react-in-jsx-scope": "off",
     "react/jsx-uses-react": "off",

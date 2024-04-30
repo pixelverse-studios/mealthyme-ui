@@ -3,18 +3,10 @@ import { useDispatch } from 'react-redux'
 import { signInWithPopup, signOut, getAuth } from 'firebase/auth'
 import { useMutation } from '@apollo/client'
 import { SIGN_IN } from '@/lib/gql/mutations/user'
-import {
-  setProfileLoading,
-  setProfile,
-  removeProfile
-} from '@/lib/redux/slices/user'
+import { setProfileLoading, setProfile } from '@/lib/redux/slices/user'
 import { USER_TOKEN } from '@/utils/constants'
-import {
-  setLocalStorageItem,
-  clearLocalStorageItem
-} from '@/utils/localStorage'
+import { setLocalStorageItem } from '@/utils/localStorage'
 import { authProvider } from '@/lib/auth'
-import Banner from '@/components/banner'
 
 const useAuth = (router: any) => {
   const auth = getAuth()
@@ -23,17 +15,16 @@ const useAuth = (router: any) => {
   const [signIn] = useMutation(SIGN_IN, {
     onCompleted({ signIn: data }) {
       if (data.__typename === 'Errors') {
-        return Banner.Error(data.message)
+        // display alert with error message
       } else {
+        // display success alert
         dispatch(setProfile(data))
         setLocalStorageItem(USER_TOKEN, data)
-        Banner.LoggedIn()
-        // TODO: Decide how to handle if user should be routed home, or kept on their current page when logged in
-        return router.push('/')
+        router.push('/dashboard')
       }
     },
-    onError() {
-      return Banner.TechDiff()
+    onError(error) {
+      // dispatch alert to snackbar/whatever we do use
     }
   })
 
@@ -51,7 +42,10 @@ const useAuth = (router: any) => {
         }
       })
     } catch (error) {
-      return Banner.LoggingInError()
+      //   dispatch(setProfileLoading(false))
+      //   snackbar(messages[statuses.ERROR].loggedIn, {
+      //     variant: statuses.ERROR
+      //   })
     } finally {
       dispatch(setProfileLoading(false))
     }
@@ -60,12 +54,10 @@ const useAuth = (router: any) => {
   const handleGoogleLogOut = async () => {
     try {
       await signOut(auth)
-      clearLocalStorageItem(USER_TOKEN)
-      dispatch(removeProfile())
-      Banner.LoggedOut()
-      return router.push('/')
+      //   clearLocalStorageItem(USER_TOKEN)
+      //   dispatch(removeProfile())
     } catch (error) {
-      return Banner.LoggedOutError()
+      // TODO: add error handling
     }
   }
 

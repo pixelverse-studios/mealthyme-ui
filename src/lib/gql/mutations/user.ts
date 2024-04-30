@@ -2,16 +2,16 @@ import { gql } from '@apollo/client'
 
 export const SIGN_IN = gql`
   mutation signIn(
-    $email: String!
+    $email: String
     $fullName: String
-    $providerId: String
     $avatar: String
+    $providerId: String
   ) {
     signIn(
       email: $email
       fullName: $fullName
-      providerId: $providerId
       avatar: $avatar
+      providerId: $providerId
     ) {
       ... on User {
         _id
