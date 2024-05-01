@@ -1,49 +1,60 @@
 'use client'
 import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
-import { useLazyQuery } from '@apollo/client'
 import { SnackbarProvider } from 'notistack'
 import { useDispatch } from 'react-redux'
-import { GET_USER } from '@/lib/gql/queries/user'
 import { setProfile, setProfileLoading } from '@/lib/redux/slices/user'
 import { getValidatedUser } from '@/lib/auth/utils'
-import Banner from '../banner'
+import hooks from '@/hooks'
 
 const AuthWrapper = ({ children }: { children: React.ReactNode }) => {
   const dispatch = useDispatch()
   const { loading, profile } = useSelector((state: any) => state.user)
-
-  const [getUser] = useLazyQuery(GET_USER, {
-    onCompleted({ getUser: data }) {
-      if (data.__typename === 'Errors') {
-        return Banner.Error(data.message)
-      } else {
-        dispatch(setProfile(data))
-        Banner.LoggedIn()
-      }
-    },
-    onError() {
-      return Banner.TechDiff()
-    }
-  })
+  const { loading: recipeLoading, all } = useSelector(
+    (state: any) => state.recipes
+  )
+  const {
+    fetchAllFilters,
+    fetchAllRecipes,
+    fetchUserFilters,
+    fetchUserRecipes
+  } = hooks.useRecipes()
+  const { fetchUser } = hooks.useAuth()
 
   useEffect(() => {
     if (!loading && profile?._id == '') {
       const { profile, expired } = getValidatedUser()
       dispatch(setProfileLoading(true))
       if (expired) {
-        getUser({ variables: { email: profile?.email } })
+        fetchUser(profile?.email ?? '', profile?._id ?? '')
       } else {
-        dispatch(setProfile(profile))
-        dispatch(setProfileLoading(false))
+        fetchUserRecipes(profile?._id ?? '').then(() => {
+          fetchUserFilters(profile?._id ?? '')
+          dispatch(setProfile(profile))
+          dispatch(setProfileLoading(false))
+        })
       }
     }
-  }, [dispatch, getUser, loading, profile])
+  }, [
+    dispatch,
+    fetchUser,
+    fetchUserFilters,
+    fetchUserRecipes,
+    loading,
+    profile
+  ])
+
+  useEffect(() => {
+    if (!recipeLoading && all?.length === 0) {
+      fetchAllFilters()
+      fetchAllRecipes()
+    }
+  }, [all, dispatch, fetchAllFilters, fetchAllRecipes, recipeLoading])
 
   return (
     <>
       {children}
-      <SnackbarProvider hideIconVariant />
+      <SnackbarProvider hideIconVariant autoHideDuration={5000} />
     </>
   )
 }

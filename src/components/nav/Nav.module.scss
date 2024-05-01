@@ -36,6 +36,7 @@
   flex-direction: column;
   justify-content: space-between;
   gap: 5px;
+  position: fixed;
 
   .accordion {
     box-shadow: none;
@@ -52,6 +53,8 @@
 
       .selected {
         background-color: tomato;
+        border-radius: var(--border-radius);
+        box-shadow: var(--boxshadow-border);
       }
 
       div {

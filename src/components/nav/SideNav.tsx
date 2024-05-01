@@ -39,6 +39,7 @@ function SideNav() {
     if (!isMobile) return
     dispatch(setShowMobile(false))
   }
+  const isLoggedIn = profile?._id != null || profile?._id?.length > 0
 
   return (
     <NavDrawer
@@ -59,16 +60,14 @@ function SideNav() {
               Recipes
             </AccordionSummary>
             <AccordionDetails className={styles.links}>
-              {recipeLinks(profile?._id != '').map(
-                ({ label, route }: NavItemType) => (
-                  <div
-                    className={route === pathname ? styles.selected : ''}
-                    onClick={() => onItemClick(route)}
-                    key={label}>
-                    {label}
-                  </div>
-                )
-              )}
+              {recipeLinks(isLoggedIn).map(({ label, route }: NavItemType) => (
+                <div
+                  className={route === pathname ? styles.selected : ''}
+                  onClick={() => onItemClick(route)}
+                  key={label}>
+                  {label}
+                </div>
+              ))}
             </AccordionDetails>
           </Accordion>
           <Accordion
@@ -84,16 +83,14 @@ function SideNav() {
               Resources
             </AccordionSummary>
             <AccordionDetails className={styles.links}>
-              {resources(profile?._id != '').map(
-                ({ label, route }: NavItemType) => (
-                  <div
-                    className={route === pathname ? styles.selected : ''}
-                    onClick={() => onItemClick(route)}
-                    key={label}>
-                    {label}
-                  </div>
-                )
-              )}
+              {resources(isLoggedIn).map(({ label, route }: NavItemType) => (
+                <div
+                  className={route === pathname ? styles.selected : ''}
+                  onClick={() => onItemClick(route)}
+                  key={label}>
+                  {label}
+                </div>
+              ))}
             </AccordionDetails>
           </Accordion>
         </div>
