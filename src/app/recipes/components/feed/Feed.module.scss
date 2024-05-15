@@ -1,5 +1,7 @@
 .Feed {
   padding-bottom: 1rem;
+  position: relative;
+
   .feedContent {
     transition: var(--hover-transition);
     padding-top: 1rem;
@@ -92,6 +94,23 @@
   justify-content: space-between;
   align-items: center;
   gap: 1rem;
+  position: sticky;
+  width: 100%;
+  top: 64px;
+  z-index: 10;
+  background-color: white;
+  border-bottom: 1px solid lightgray;
+  padding: 1rem 0;
+
+  .buttonBlock {
+    display: flex;
+    flex-basis: 6rem;
+
+    button {
+      border-radius: var(--border-radius);
+    }
+  }
+
   .search {
     :global .MuiInputBase-root {
       border-radius: var(--border-radius);

@@ -1,5 +1,4 @@
 import type { Metadata } from 'next'
-import { Container } from '@mui/material'
 import ApolloWrapper from '@/lib/gql/ApolloWrapper'
 import ReduxWrapper from '@/lib/redux/ReduxWrapper'
 import AuthWrapper from '@/components/auth'
@@ -25,10 +24,10 @@ export default function RootLayout({
           <ReduxWrapper>
             <AuthWrapper>
               <Navbar />
-              <Container maxWidth="xl" className="content">
+              <div className="content">
                 <SideNav />
                 <main>{children}</main>
-              </Container>
+              </div>
             </AuthWrapper>
           </ReduxWrapper>
         </ApolloWrapper>

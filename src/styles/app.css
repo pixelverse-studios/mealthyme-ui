@@ -11,16 +11,13 @@ body {
   display: grid;
   grid-template-columns: var(--sidebar-width) 1fr;
   height: var(--content-height);
-  padding-top: var(--nav-offset);
-}
-
-main {
   padding: 1rem;
+  padding-top: var(--nav-offset);
 }
 
 @media screen and (max-width: 900px) {
   .content {
-    display: flex;
+    grid-template-columns: 1fr;
   }
 
   main {

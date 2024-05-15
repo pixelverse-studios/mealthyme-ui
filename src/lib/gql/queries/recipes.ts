@@ -12,6 +12,7 @@ export const GET_ALL_RECIPES = gql`
             firstName
           }
           title
+          servings
           ingredients {
             foodId
             name
@@ -96,6 +97,7 @@ export const GET_USER_RECIPES = gql`
             tier
           }
           title
+          servings
           ingredients {
             foodId
             name
@@ -320,6 +322,21 @@ export const GET_ALL_FILTERS = gql`
           lastLogin
           newUser
           tier
+        }
+        prepTime {
+          min
+          max
+          step
+        }
+        cookTime {
+          min
+          max
+          step
+        }
+        totalTime {
+          min
+          max
+          step
         }
       }
       ... on Errors {

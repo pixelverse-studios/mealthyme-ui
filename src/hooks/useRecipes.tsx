@@ -60,7 +60,6 @@ const useRecipes = () => {
 
   const [getUserFilters] = useLazyQuery(GET_USER_FILTERS, {
     onCompleted({ userFilters }) {
-      console.log('userFilters; ', userFilters)
       if (isHandledError(userFilters)) {
         return Banner.Error(userFilters.message)
       }
