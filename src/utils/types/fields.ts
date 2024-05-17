@@ -1,7 +1,12 @@
-import { ChangeEventHandler } from 'react'
+import { ChangeEventHandler, KeyboardEventHandler } from 'react'
 
 export interface FieldInputProps {
   value: string
+  error: string
+}
+
+export interface ListInputProps {
+  value: string[]
   error: string
 }
 
@@ -12,5 +17,12 @@ export interface TextFieldProps {
   label: string
   onChange: ChangeEventHandler
   disabled?: boolean
+  onKeyDown?: KeyboardEventHandler
   variant?: 'outlined' | 'standard' | 'filled'
+}
+
+export interface RecipeFormProps {
+  form: any
+  handleChange: ChangeEventHandler
+  handleNonFormEventChange: (data: any, name: string) => void
 }

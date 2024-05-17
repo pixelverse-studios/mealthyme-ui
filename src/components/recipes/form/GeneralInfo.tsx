@@ -1,5 +1,5 @@
 'use client'
-import { useState, useEffect, ChangeEventHandler } from 'react'
+import { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { useLazyQuery } from '@apollo/client'
 import {
@@ -8,23 +8,20 @@ import {
   createFilterOptions
 } from '@mui/material'
 
-const filter = createFilterOptions<{ _id: string; label: string }[]>()
-
 import { TextField, NumberField } from '@/components/fields'
 import { GET_USER_CATEGORIES } from '@/lib/gql/queries/categories'
 import { isHandledError } from '@/utils/gql'
 import Banner from '@/components/banner'
 import Upload from '@/components/upload'
+import { RecipeFormProps } from '@/utils/types/fields'
+
+const filter = createFilterOptions<{ _id: string; label: string }[]>()
 
 const GeneralInfo = ({
   form,
   handleChange,
   handleNonFormEventChange
-}: {
-  form: any
-  handleChange: ChangeEventHandler
-  handleNonFormEventChange: (data: any, name: string) => void
-}) => {
+}: RecipeFormProps) => {
   const { profile } = useSelector((state: any) => state.user)
 
   const [categories, setCategories] = useState<

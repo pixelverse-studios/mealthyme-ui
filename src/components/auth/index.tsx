@@ -19,14 +19,14 @@ const AuthWrapper = ({ children }: { children: React.ReactNode }) => {
     fetchUserFilters,
     fetchUserRecipes
   } = hooks.useRecipes()
-  const { fetchUser } = hooks.useAuth()
+  const { fetchUser, handleGoogleLogOut } = hooks.useAuth()
 
   useEffect(() => {
     if (!loading && profile?._id == '') {
       const { profile, expired } = getValidatedUser()
       dispatch(setProfileLoading(true))
       if (expired) {
-        fetchUser(profile?.email ?? '', profile?._id ?? '')
+        handleGoogleLogOut()
       } else {
         fetchUserRecipes(profile?._id ?? '').then(() => {
           fetchUserFilters(profile?._id ?? '')
@@ -40,6 +40,7 @@ const AuthWrapper = ({ children }: { children: React.ReactNode }) => {
     fetchUser,
     fetchUserFilters,
     fetchUserRecipes,
+    handleGoogleLogOut,
     loading,
     profile
   ])

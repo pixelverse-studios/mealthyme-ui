@@ -2,6 +2,7 @@
 
 import hooks from '@/hooks'
 import GeneralInfo from './GeneralInfo'
+import AdditionalInfo from './AdditionalInfo'
 import { initialRecipeForm } from './utils'
 import FormValidations from '@/utils/validations/form'
 import styles from './RecipeForm.module.scss'
@@ -35,7 +36,11 @@ const RecipeForm = () => {
         handleChange={handleChange}
         handleNonFormEventChange={handleNonFormEventChange}
       />
-      <div>placeholder for rest of form</div>
+      <AdditionalInfo
+        form={form}
+        handleChange={handleChange}
+        handleNonFormEventChange={handleNonFormEventChange}
+      />
     </div>
   )
 }

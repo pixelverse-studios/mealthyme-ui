@@ -15,7 +15,6 @@ export const getValidatedUser = (): {
   const isExpired = diff <= 0
 
   const profile = { ...storedUser }
-  delete profile.expires
   if (isExpired) return { profile, expired: true }
 
   return { profile, expired: false }

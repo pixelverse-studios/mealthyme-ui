@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import { Rating } from '@mui/material'
-import { LocalDining } from '@mui/icons-material'
+import { Place, PlaceOutlined } from '@mui/icons-material'
 
 import { RecipeType } from '@/utils/types/recipes'
 import recipeFallbackImg from '@/assets/recipe_placeholder.jpg'
@@ -47,7 +47,8 @@ const FeedItem = ({
           />
           <Rating
             name="recipe-rating"
-            icon={<LocalDining />}
+            icon={<Place />}
+            emptyIcon={<PlaceOutlined />}
             readOnly
             precision={0.5}
             value={rating}

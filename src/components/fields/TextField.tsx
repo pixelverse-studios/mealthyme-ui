@@ -22,7 +22,8 @@ const TextField = ({
   rows,
   required,
   variant = 'outlined',
-  hideHelperText = true
+  hideHelperText = true,
+  onKeyDown
 }: TextFieldTypes) => {
   const isTextArea = type === 'textarea'
   return (
@@ -44,6 +45,7 @@ const TextField = ({
         value={field.value}
         required={required}
         rows={isTextArea ? rows : ''}
+        onKeyDown={onKeyDown}
       />
       <FormHelperText id={id}>{field.error}</FormHelperText>
       {isTextArea && !hideHelperText && (

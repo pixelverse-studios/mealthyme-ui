@@ -13,8 +13,4 @@ export const initialRecipeForm = {
   tags: { value: [] },
   image: { value: '' },
   imgPublicId: { value: '' }
-  // image: {
-  //   publicId: null,
-  //   src: ''
-  // }
 }
