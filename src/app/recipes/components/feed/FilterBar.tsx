@@ -1,4 +1,5 @@
 import { useRouter } from 'next/navigation'
+import { useSelector } from 'react-redux'
 import { TextField, InputAdornment, IconButton, Button } from '@mui/material'
 import { Search, Tune } from '@mui/icons-material'
 import LayoutSelect from './LayoutSelect'
@@ -6,6 +7,7 @@ import LayoutSelect from './LayoutSelect'
 import styles from './Feed.module.scss'
 
 const FilterBar = () => {
+  const { loggedIn } = useSelector((state: any) => state.user)
   const router = useRouter()
 
   const onNewRecipeClick = () => router.push('/recipes/new')
@@ -31,7 +33,10 @@ const FilterBar = () => {
         }}
       />
       <div className={styles.buttonBlock}>
-        <Button variant="outlined" onClick={onNewRecipeClick}>
+        <Button
+          variant="outlined"
+          disabled={!loggedIn}
+          onClick={onNewRecipeClick}>
           Create
         </Button>
       </div>

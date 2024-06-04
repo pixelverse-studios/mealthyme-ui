@@ -13,7 +13,7 @@ export interface ListInputProps {
 export interface TextFieldProps {
   field: FieldInputProps
   id: string
-  type: 'text' | 'email' | 'textarea' | 'password' | 'file'
+  type?: 'text' | 'email' | 'textarea' | 'password' | 'file'
   label: string
   onChange: ChangeEventHandler
   disabled?: boolean

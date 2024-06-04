@@ -2,20 +2,15 @@
 import { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { useLazyQuery } from '@apollo/client'
-import {
-  Autocomplete,
-  TextField as MuiTextField,
-  createFilterOptions
-} from '@mui/material'
 
-import { TextField, NumberField } from '@/components/fields'
+import { TextField, NumberField, AutoComplete } from '@/components/fields'
 import { GET_USER_CATEGORIES } from '@/lib/gql/queries/categories'
 import { isHandledError } from '@/utils/gql'
 import Banner from '@/components/banner'
 import Upload from '@/components/upload'
 import { RecipeFormProps } from '@/utils/types/fields'
-
-const filter = createFilterOptions<{ _id: string; label: string }[]>()
+import FormRow from '@/components/form/Row'
+import styles from './RecipeForm.module.scss'
 
 const GeneralInfo = ({
   form,
@@ -51,59 +46,48 @@ const GeneralInfo = ({
   }, [categories, getAllUserCategories, loadingCategories, profile])
 
   return (
-    <div>
+    <div className={styles.generalInfo}>
       <Upload isEdit={false} />
-      <TextField
-        field={form.title}
-        id="title"
-        type="text"
-        onChange={handleChange}
-        label="Title"
-      />
-      <Autocomplete
-        options={categories}
-        size="small"
-        onChange={(event, newValue) =>
-          handleNonFormEventChange(newValue, 'category')
-        }
-        filterOptions={(options, params) => {
-          const filtered = filter(options, params) as any
-          const { inputValue } = params
-          const isExisting = options.some(option => inputValue === option.title)
-          if (inputValue !== '' && !isExisting) {
-            filtered.push({
-              _id: '',
-              label: inputValue + ''
-            })
-          }
-
-          return filtered
-        }}
-        id="category"
-        value={form.category.value?.label}
-        renderInput={params => <MuiTextField {...params} label="Category" />}
-      />
-      <NumberField
-        field={form.servings}
-        id="servings"
-        label="Servings"
-        onChange={handleNonFormEventChange}
-        variant="outlined"
-      />
-      <NumberField
-        field={form.prepTime}
-        id="prepTime"
-        label="Prep Time"
-        onChange={handleNonFormEventChange}
-        variant="outlined"
-      />
-      <NumberField
-        field={form.cookTime}
-        id="cookTime"
-        label="Cook Time"
-        onChange={handleNonFormEventChange}
-        variant="outlined"
-      />
+      <div className={styles.formFields}>
+        <FormRow>
+          <TextField
+            field={form.title}
+            id="title"
+            type="text"
+            onChange={handleChange}
+            label="Title"
+          />
+        </FormRow>
+        <FormRow>
+          <AutoComplete
+            id="category"
+            label="Category"
+            options={categories}
+            value={form.category.value ?? null}
+            onChange={handleNonFormEventChange}
+          />
+          <NumberField
+            field={form.servings}
+            id="servings"
+            label="Servings"
+            onChange={handleNonFormEventChange}
+          />
+        </FormRow>
+        <FormRow>
+          <NumberField
+            field={form.prepTime}
+            id="prepTime"
+            label="Prep Time"
+            onChange={handleNonFormEventChange}
+          />
+          <NumberField
+            field={form.cookTime}
+            id="cookTime"
+            label="Cook Time"
+            onChange={handleNonFormEventChange}
+          />
+        </FormRow>
+      </div>
     </div>
   )
 }

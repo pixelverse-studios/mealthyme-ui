@@ -7,9 +7,8 @@ import hooks from '@/hooks'
 
 const LogoutButton = () => {
   const router = useRouter()
-  const { handleGoogleLogOut } = hooks.useAuth(router as any)
+  const { handleGoogleLogOut } = hooks.useAuth(router)
   const { loading } = useSelector((state: any) => state.user)
-
   const onLogout = async () => handleGoogleLogOut()
 
   return (

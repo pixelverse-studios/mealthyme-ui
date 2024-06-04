@@ -13,19 +13,21 @@ interface NumberFieldProps {
   field: FieldInputProps
   id: string
   label: string
-  variant: TextFieldVariants
+  variant?: TextFieldVariants
   onChange: (data: any, name: string) => void
   min?: number
   max?: number
+  disabled?: boolean
 }
 const NumberField = ({
   id,
   label,
   onChange,
   field,
-  variant = 'outlined',
+  variant = 'standard',
   min,
-  max
+  max,
+  disabled
 }: NumberFieldProps) => {
   const onValueChange = (e: any) => {
     const { value } = e.target
@@ -45,6 +47,7 @@ const NumberField = ({
   return (
     <FormControl color={setColor(field)} error={Boolean(field.error)}>
       <MuiTextField
+        disabled={disabled}
         size="small"
         color={setColor(field)}
         variant={variant}

@@ -10,7 +10,6 @@ export const getValidatedUser = (): {
 } => {
   const storedUser = getLocalStorageItem(USER_TOKEN)
   if (storedUser == null) return { profile: null, expired: false }
-
   const diff = differenceInDays(new Date(storedUser.expires), new Date())
   const isExpired = diff <= 0
 

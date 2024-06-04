@@ -12,18 +12,20 @@ interface ListDisplayProps {
 
 const ListDisplay = ({ items, onDelete }: ListDisplayProps) => {
   if (items?.length === 0) {
-    return <div>empty list {':('}</div>
+    return <div className={styles.ListDisplay}>empty list {':('}</div>
   }
 
   return (
-    <div>
+    <div className={styles.ListDisplay}>
       {items.map((item: string, key: number) => {
         const order = key + 1
         const padded = order.toString().padStart(2, '0')
         return (
-          <div key={key}>
-            <span className={styles.order}>{padded}</span>
-            <span className={styles.instruction}>{item}</span>
+          <div key={key} className={styles.listItem}>
+            <div>
+              <span className={styles.order}>{padded}</span>
+              <span className={styles.instruction}>{item}</span>
+            </div>
             <DeleteForever onClick={() => onDelete(item)} />
           </div>
         )
@@ -34,10 +36,10 @@ const ListDisplay = ({ items, onDelete }: ListDisplayProps) => {
 
 const ChipDisplay = ({ items, onDelete }: ListDisplayProps) => {
   if (items?.length === 0) {
-    return <div>empty bag of chips {':('}</div>
+    return <div className={styles.ChipDisplay}>empty bag of chips {':('}</div>
   }
   return (
-    <div>
+    <div className={styles.ChipDisplay}>
       {items.map((item: string, key: number) => (
         <Chip key={key} label={item} onDelete={() => onDelete(item)} />
       ))}
@@ -98,7 +100,7 @@ const ListBuilder = ({
   }
 
   return (
-    <Paper>
+    <Paper className={styles.ListBuilder}>
       <div>
         <TextField
           field={{ value, error }}

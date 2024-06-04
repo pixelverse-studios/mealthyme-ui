@@ -10,7 +10,7 @@ interface Nutrient {
   percentOfDailyNeeds: number
 }
 
-interface Ingredient {
+export interface Ingredient {
   foodId: number
   name: string
   image: string

@@ -7,3 +7,5 @@ export const IMG = {
   override: 'filename_override',
   publicUrl: 'https://res.cloudinary.com/mealthyme'
 }
+
+export const BASE_FOOD_IMG = 'https://img.spoonacular.com/ingredients_100x100/'

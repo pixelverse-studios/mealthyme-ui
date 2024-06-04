@@ -1,5 +1,6 @@
 'use client'
 import { useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 import { useSelector } from 'react-redux'
 import { SnackbarProvider } from 'notistack'
 import { useDispatch } from 'react-redux'
@@ -8,8 +9,9 @@ import { getValidatedUser } from '@/lib/auth/utils'
 import hooks from '@/hooks'
 
 const AuthWrapper = ({ children }: { children: React.ReactNode }) => {
+  const router = useRouter()
   const dispatch = useDispatch()
-  const { loading, profile } = useSelector((state: any) => state.user)
+  const { loading, loggedIn } = useSelector((state: any) => state.user)
   const { loading: recipeLoading, all } = useSelector(
     (state: any) => state.recipes
   )
@@ -19,30 +21,32 @@ const AuthWrapper = ({ children }: { children: React.ReactNode }) => {
     fetchUserFilters,
     fetchUserRecipes
   } = hooks.useRecipes()
-  const { fetchUser, handleGoogleLogOut } = hooks.useAuth()
+  const { handleGoogleLogOut } = hooks.useAuth(router)
 
+  const { profile: validated, expired } = getValidatedUser()
   useEffect(() => {
-    if (!loading && profile?._id == '') {
-      const { profile, expired } = getValidatedUser()
-      dispatch(setProfileLoading(true))
+    if (!loading && !loggedIn) {
       if (expired) {
+        dispatch(setProfileLoading(true))
         handleGoogleLogOut()
-      } else {
-        fetchUserRecipes(profile?._id ?? '').then(() => {
-          fetchUserFilters(profile?._id ?? '')
-          dispatch(setProfile(profile))
+      } else if (validated?._id !== undefined && validated?._id !== '') {
+        dispatch(setProfileLoading(true))
+        fetchUserRecipes(validated?._id ?? '').then(() => {
+          fetchUserFilters(validated?._id ?? '')
+          dispatch(setProfile(validated))
           dispatch(setProfileLoading(false))
         })
       }
     }
   }, [
     dispatch,
-    fetchUser,
+    expired,
     fetchUserFilters,
     fetchUserRecipes,
     handleGoogleLogOut,
     loading,
-    profile
+    loggedIn,
+    validated
   ])
 
   useEffect(() => {

@@ -9,7 +9,6 @@ const LoginButton = () => {
   const router = useRouter()
   const { handleGoogleSignIn } = hooks.useAuth(router as any)
   const { loading } = useSelector((state: any) => state.user)
-
   const onLogin = async () => handleGoogleSignIn()
 
   return (

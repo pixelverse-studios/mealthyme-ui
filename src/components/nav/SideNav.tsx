@@ -20,7 +20,7 @@ function SideNav() {
   const pathname = usePathname()
   const dispatch = useDispatch()
 
-  const { profile } = useSelector((state: any) => state.user)
+  const { loggedIn } = useSelector((state: any) => state.user)
   const { isMobile, showMobile, destroy } = useSelector(
     (state: any) => state.nav
   )
@@ -39,7 +39,6 @@ function SideNav() {
     if (!isMobile) return
     dispatch(setShowMobile(false))
   }
-  const isLoggedIn = profile?._id != null || profile?._id?.length > 0
 
   return (
     <NavDrawer
@@ -60,7 +59,7 @@ function SideNav() {
               Recipes
             </AccordionSummary>
             <AccordionDetails className={styles.links}>
-              {recipeLinks(isLoggedIn).map(({ label, route }: NavItemType) => (
+              {recipeLinks(loggedIn).map(({ label, route }: NavItemType) => (
                 <div
                   className={route === pathname ? styles.selected : ''}
                   onClick={() => onItemClick(route)}
@@ -83,7 +82,7 @@ function SideNav() {
               Resources
             </AccordionSummary>
             <AccordionDetails className={styles.links}>
-              {resources(isLoggedIn).map(({ label, route }: NavItemType) => (
+              {resources(loggedIn).map(({ label, route }: NavItemType) => (
                 <div
                   className={route === pathname ? styles.selected : ''}
                   onClick={() => onItemClick(route)}

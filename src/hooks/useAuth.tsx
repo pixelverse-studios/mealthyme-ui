@@ -20,7 +20,7 @@ import Banner from '@/components/banner'
 import { RECIPE_ROUTES } from '@/components/nav/utils'
 import hooks from '.'
 
-const useAuth = (router?: any) => {
+const useAuth = (router: any) => {
   const auth = getAuth()
   const dispatch = useDispatch()
   const { user: userRecipes, loading } = useSelector(
@@ -34,6 +34,7 @@ const useAuth = (router?: any) => {
         return Banner.Error(data.message)
       } else {
         await fetchUserRecipes(data._id)
+        console.log('sign in')
         dispatch(setProfile(data))
         setLocalStorageItem(USER_TOKEN, data)
         Banner.LoggedIn()
@@ -72,8 +73,10 @@ const useAuth = (router?: any) => {
       clearLocalStorageItem(USER_TOKEN)
       dispatch(removeProfile())
       Banner.LoggedOut()
+      dispatch(setProfileLoading(false))
       return router.push(RECIPE_ROUTES.all)
     } catch (error) {
+      dispatch(setProfileLoading(false))
       return Banner.LoggedOutError()
     }
   }

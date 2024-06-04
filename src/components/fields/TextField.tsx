@@ -8,10 +8,11 @@ import { setColor } from './utils'
 import { TextFieldProps } from '@/utils/types/fields'
 
 const CHARACTER_COUNT = 600
-interface TextFieldTypes extends TextFieldProps {
+export interface TextFieldTypes extends TextFieldProps {
   rows?: number
   required?: boolean
   hideHelperText?: boolean
+  onKeyUp?: any
 }
 const TextField = ({
   id,
@@ -21,9 +22,11 @@ const TextField = ({
   field,
   rows,
   required,
-  variant = 'outlined',
+  variant = 'standard',
   hideHelperText = true,
-  onKeyDown
+  onKeyDown,
+  disabled = false,
+  onKeyUp
 }: TextFieldTypes) => {
   const isTextArea = type === 'textarea'
   return (
@@ -41,11 +44,13 @@ const TextField = ({
         name={id}
         label={label}
         title={label}
+        onKeyUp={onKeyUp}
         onChange={onChange}
         value={field.value}
         required={required}
         rows={isTextArea ? rows : ''}
         onKeyDown={onKeyDown}
+        disabled={disabled}
       />
       <FormHelperText id={id}>{field.error}</FormHelperText>
       {isTextArea && !hideHelperText && (

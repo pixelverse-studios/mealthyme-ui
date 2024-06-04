@@ -26,7 +26,13 @@ import hooks from '@/hooks'
 
 import styles from './Nav.module.scss'
 
-const NavItems = ({ profile }: { profile: ProfileProps }) => {
+const NavItems = ({
+  profile,
+  loggedIn
+}: {
+  profile: ProfileProps
+  loggedIn: boolean
+}) => {
   const router = useRouter()
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
@@ -36,7 +42,7 @@ const NavItems = ({ profile }: { profile: ProfileProps }) => {
   const handleMenuClose = () => setAnchorEl(null)
 
   const renderAvatar = () => {
-    if (profile == null) return <LoginButton />
+    if (!loggedIn) return <LoginButton />
 
     const { avatar, firstName, lastName } = profile
     if (avatar === '')
@@ -77,9 +83,7 @@ const NavItems = ({ profile }: { profile: ProfileProps }) => {
           open={menuOpen}
           onClose={handleMenuClose}
           onClick={handleMenuClose}>
-          <MenuItem>
-            <LogoutButton />
-          </MenuItem>
+          <MenuItem>{loggedIn ? <LogoutButton /> : <LoginButton />}</MenuItem>
           {userLinks(profile?._id != '').map(
             ({ route, label }: NavItemType) => (
               <MenuItem key={label} onClick={() => onMenuItemClick(route)}>
@@ -105,7 +109,7 @@ const Logo = ({ showText }: { showText: boolean }) => {
 
 function Navbar() {
   const dispatch = useDispatch()
-  const { profile } = useSelector((state: any) => state.user)
+  const { profile, loggedIn } = useSelector((state: any) => state.user)
   const { isMobile, showMobile } = useSelector((state: any) => state.nav)
 
   const { isMobileWidth } = hooks.useScreenSize()
@@ -145,7 +149,7 @@ function Navbar() {
             </IconButton>
             <Logo showText={false} />
           </Box>
-          <NavItems profile={profile} />
+          <NavItems profile={profile} loggedIn={loggedIn} />
         </Toolbar>
       </Container>
     </AppBar>
