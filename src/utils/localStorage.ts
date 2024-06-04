@@ -2,11 +2,14 @@ import { addDays } from 'date-fns'
 
 export const setLocalStorageItem = (key: string, data: any) => {
   const expires = addDays(new Date(), 7)
-  localStorage.setItem(key, JSON.stringify({ ...data, expires }))
+  typeof window !== 'undefined'
+    ? window.localStorage.setItem(key, JSON.stringify({ ...data, expires }))
+    : {}
 }
 
 export const getLocalStorageItem = (key: string) => {
-  const stored = localStorage.getItem(key)
+  const stored =
+    typeof window !== 'undefined' ? window.localStorage.getItem(key) : undefined
   if (stored) {
     return JSON.parse(stored)
   }
@@ -15,4 +18,4 @@ export const getLocalStorageItem = (key: string) => {
 }
 
 export const clearLocalStorageItem = (key: string) =>
-  localStorage.removeItem(key)
+  typeof window !== 'undefined' ? window.localStorage.removeItem(key) : null

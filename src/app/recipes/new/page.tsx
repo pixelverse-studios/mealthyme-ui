@@ -5,7 +5,7 @@ export default function CreateRecipe() {
   return (
     <div>
       New Recipe
-      <RecipeForm isEdit={false} />
+      <RecipeForm />
     </div>
   )
 }

@@ -7,7 +7,7 @@ const ROUTE = '/404'
 export default function NotFoundPage() {
   const router = useRouter()
   const path = usePathname()
-  if (path !== ROUTE) {
+  if (typeof window !== 'undefined' && path !== ROUTE) {
     return router.push(ROUTE)
   }
 

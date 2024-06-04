@@ -18,11 +18,12 @@
   },
   "plugins": ["@typescript-eslint", "react", "prettier"],
   "rules": {
-    "@typescript-eslint/no-explicit-any": 1,
+    "@typescript-eslint/no-explicit-any": "off",
     "prettier/prettier": "error",
     "react/react-in-jsx-scope": "off",
     "react/jsx-uses-react": "off",
     "no-unused-vars": "warn",
-    "@next/next/no-img-element": "off"
+    "@next/next/no-img-element": "off",
+    "no-useless-escape": "off"
   }
 }

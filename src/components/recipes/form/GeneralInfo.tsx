@@ -47,7 +47,7 @@ const GeneralInfo = ({
 
   return (
     <div className={styles.generalInfo}>
-      <Upload isEdit={false} />
+      <Upload />
       <div className={styles.formFields}>
         <FormRow>
           <TextField

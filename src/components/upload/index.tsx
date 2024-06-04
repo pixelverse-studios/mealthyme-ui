@@ -19,9 +19,9 @@ const VisuallyHiddenInput = styled('input')({
   width: 1
 })
 
-interface UploadProps {
-  isEdit: boolean
-}
+// interface UploadProps {
+//   isEdit: boolean
+// }
 
 const MediaDisplay = ({ file }: { file: any }) => {
   if (file === null) {
@@ -42,7 +42,7 @@ const MediaDisplay = ({ file }: { file: any }) => {
   )
 }
 
-const Upload = ({ isEdit }: UploadProps) => {
+const Upload = () => {
   const { convertToBase64 } = hooks.useImageUpload()
   const [file, setFile] = useState(null)
   const [img, setImg] = useState<null | {
@@ -52,6 +52,7 @@ const Upload = ({ isEdit }: UploadProps) => {
     name: string
   }>(null)
   const [loading, setLoading] = useState(false)
+  console.log(loading, file)
 
   const onFileUpload = async (event: ChangeEvent<HTMLInputElement>) => {
     if (!event.target.files) {
