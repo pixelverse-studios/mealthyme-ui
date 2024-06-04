@@ -6,7 +6,7 @@ import { USER_TOKEN } from '@/utils/constants'
 const URI =
   process.env.NODE_ENV === 'development'
     ? 'http://localhost:5050/graphql'
-    : 'TODO: INSERT LIVE SERVER URL'
+    : 'https://mealthyme-server-rxtkj.ondigitalocean.app/graphql'
 const httpLink = new HttpLink({ uri: URI })
 const authLink = setContext((_, { headers }) => {
   const token = localStorage.getItem(USER_TOKEN)
