@@ -1,12 +1,11 @@
-import Image from 'next/image'
 import { Rating } from '@mui/material'
 import { Place, PlaceOutlined } from '@mui/icons-material'
 
 import { RecipeType } from '@/utils/types/recipes'
-import recipeFallbackImg from '@/assets/recipe_placeholder.jpg'
 import styles from './Feed.module.scss'
 
-// title, image (not too much image), rating, difficulty, prep/cook/total time, ingredient count, user, macros,category
+const recipeFallbackImg =
+  'https://res.cloudinary.com/mealthyme/image/upload/mealthyme/placeholders/recipe_placeholder_yszhtf.jpg'
 
 const FeedItem = ({
   recipe: {
@@ -25,6 +24,7 @@ const FeedItem = ({
 }: {
   recipe: RecipeType
 }) => {
+  console.log(recipeFallbackImg)
   return (
     <div className={styles.FeedItem}>
       <div className={styles.topPanel}>
@@ -32,7 +32,7 @@ const FeedItem = ({
           <h2>{title}</h2>
           <h3>{category.label}</h3>
         </div>
-        <Image
+        <img
           src={image === '' ? recipeFallbackImg : image}
           alt={`${title} image`}
         />

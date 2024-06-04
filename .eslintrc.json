@@ -22,6 +22,7 @@
     "prettier/prettier": "error",
     "react/react-in-jsx-scope": "off",
     "react/jsx-uses-react": "off",
-    "no-unused-vars": "warn"
+    "no-unused-vars": "warn",
+    "@next/next/no-img-element": "off"
   }
 }
