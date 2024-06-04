@@ -12,12 +12,14 @@ const Drawer = ({
   onClose: () => void
   overlayContent: boolean
   children: any
-}) => (
-  <div
-    className={`${styles.Drawer} ${overlayContent ? styles.overlay : ''} ${open ? styles.open : styles.closed}`}>
-    {overlayContent ? <Close onClick={onClose} /> : null}
-    <div className={styles.drawerContent}>{children}</div>
-  </div>
-)
+}) => {
+  const classes = `${styles.Drawer} ${overlayContent ? styles.overlay : ''} ${open ? styles.open : styles.closed}`
+  return (
+    <div className={classes}>
+      {overlayContent ? <Close onClick={onClose} /> : null}
+      <div className={styles.drawerContent}>{children}</div>
+    </div>
+  )
+}
 
 export default Drawer

@@ -1,49 +1,65 @@
 'use client'
 import { useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 import { useSelector } from 'react-redux'
-import { useLazyQuery } from '@apollo/client'
 import { SnackbarProvider } from 'notistack'
 import { useDispatch } from 'react-redux'
-import { GET_USER } from '@/lib/gql/queries/user'
 import { setProfile, setProfileLoading } from '@/lib/redux/slices/user'
 import { getValidatedUser } from '@/lib/auth/utils'
-import Banner from '../banner'
+import hooks from '@/hooks'
 
 const AuthWrapper = ({ children }: { children: React.ReactNode }) => {
+  const router = useRouter()
   const dispatch = useDispatch()
-  const { loading, profile } = useSelector((state: any) => state.user)
+  const { loading, loggedIn } = useSelector((state: any) => state.user)
+  const { loading: recipeLoading, all } = useSelector(
+    (state: any) => state.recipes
+  )
+  const {
+    fetchAllFilters,
+    fetchAllRecipes,
+    fetchUserFilters,
+    fetchUserRecipes
+  } = hooks.useRecipes()
+  const { handleGoogleLogOut } = hooks.useAuth(router)
 
-  const [getUser] = useLazyQuery(GET_USER, {
-    onCompleted({ getUser: data }) {
-      if (data.__typename === 'Errors') {
-        return Banner.Error(data.message)
-      } else {
-        dispatch(setProfile(data))
-        Banner.LoggedIn()
+  const { profile: validated, expired } = getValidatedUser()
+  useEffect(() => {
+    if (!loading && !loggedIn) {
+      if (expired) {
+        dispatch(setProfileLoading(true))
+        handleGoogleLogOut()
+      } else if (validated?._id !== undefined && validated?._id !== '') {
+        dispatch(setProfileLoading(true))
+        fetchUserRecipes(validated?._id ?? '').then(() => {
+          fetchUserFilters(validated?._id ?? '')
+          dispatch(setProfile(validated))
+          dispatch(setProfileLoading(false))
+        })
       }
-    },
-    onError() {
-      return Banner.TechDiff()
     }
-  })
+  }, [
+    dispatch,
+    expired,
+    fetchUserFilters,
+    fetchUserRecipes,
+    handleGoogleLogOut,
+    loading,
+    loggedIn,
+    validated
+  ])
 
   useEffect(() => {
-    if (!loading && profile?._id == '') {
-      const { profile, expired } = getValidatedUser()
-      dispatch(setProfileLoading(true))
-      if (expired) {
-        getUser({ variables: { email: profile?.email } })
-      } else {
-        dispatch(setProfile(profile))
-        dispatch(setProfileLoading(false))
-      }
+    if (!recipeLoading && all?.length === 0) {
+      fetchAllFilters()
+      fetchAllRecipes()
     }
-  }, [dispatch, getUser, loading, profile])
+  }, [all, dispatch, fetchAllFilters, fetchAllRecipes, recipeLoading])
 
   return (
     <>
       {children}
-      <SnackbarProvider hideIconVariant />
+      <SnackbarProvider hideIconVariant autoHideDuration={5000} />
     </>
   )
 }

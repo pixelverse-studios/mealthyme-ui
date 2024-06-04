@@ -20,7 +20,7 @@ function SideNav() {
   const pathname = usePathname()
   const dispatch = useDispatch()
 
-  const { profile } = useSelector((state: any) => state.user)
+  const { loggedIn } = useSelector((state: any) => state.user)
   const { isMobile, showMobile, destroy } = useSelector(
     (state: any) => state.nav
   )
@@ -59,16 +59,14 @@ function SideNav() {
               Recipes
             </AccordionSummary>
             <AccordionDetails className={styles.links}>
-              {recipeLinks(profile?._id != '').map(
-                ({ label, route }: NavItemType) => (
-                  <div
-                    className={route === pathname ? styles.selected : ''}
-                    onClick={() => onItemClick(route)}
-                    key={label}>
-                    {label}
-                  </div>
-                )
-              )}
+              {recipeLinks(loggedIn).map(({ label, route }: NavItemType) => (
+                <div
+                  className={route === pathname ? styles.selected : ''}
+                  onClick={() => onItemClick(route)}
+                  key={label}>
+                  {label}
+                </div>
+              ))}
             </AccordionDetails>
           </Accordion>
           <Accordion
@@ -84,16 +82,14 @@ function SideNav() {
               Resources
             </AccordionSummary>
             <AccordionDetails className={styles.links}>
-              {resources(profile?._id != '').map(
-                ({ label, route }: NavItemType) => (
-                  <div
-                    className={route === pathname ? styles.selected : ''}
-                    onClick={() => onItemClick(route)}
-                    key={label}>
-                    {label}
-                  </div>
-                )
-              )}
+              {resources(loggedIn).map(({ label, route }: NavItemType) => (
+                <div
+                  className={route === pathname ? styles.selected : ''}
+                  onClick={() => onItemClick(route)}
+                  key={label}>
+                  {label}
+                </div>
+              ))}
             </AccordionDetails>
           </Accordion>
         </div>

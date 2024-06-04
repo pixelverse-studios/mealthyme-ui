@@ -1,0 +1,13 @@
+.FormRow {
+  display: flex;
+  gap: 0.5rem;
+  width: 100%;
+
+  & > * {
+    flex: 1;
+  }
+
+  @media screen and (max-width: 850px) {
+    flex-direction: column;
+  }
+}

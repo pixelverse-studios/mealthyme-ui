@@ -22,7 +22,8 @@ export const initialState = {
     newUser: false,
     tier: ''
   } as ProfileProps,
-  loading: false as boolean
+  loading: false as boolean,
+  loggedIn: false as boolean
 }
 
 export const userSlice = createSlice({
@@ -32,12 +33,14 @@ export const userSlice = createSlice({
     setProfile: (state, action) => {
       state.loading = false
       state.profile = action.payload
+      state.loggedIn = action.payload?._id !== '' || action.payload !== null
     },
     setProfileLoading: (state, action) => {
       state.loading = action.payload
     },
     removeProfile: state => {
       state.profile = initialState.profile
+      state.loggedIn = false
     }
   }
 })
