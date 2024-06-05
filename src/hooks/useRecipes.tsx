@@ -13,7 +13,7 @@ import {
   setUserRecipes,
   setUserFilters,
   setAllFilters
-} from '@/lib/redux/slices/recipes'
+} from '@/lib/redux/slices/recipes.ts'
 import Banner from '@/components/banner'
 import { isHandledError } from '@/utils/gql'
 

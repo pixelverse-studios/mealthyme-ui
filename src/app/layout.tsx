@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
-import ApolloWrapper from '@/lib/gql/ApolloWrapper'
-import ReduxWrapper from '@/lib/redux/ReduxWrapper'
-import AuthWrapper from '@/components/auth'
+import ApolloWrapper from '@/lib/gql/ApolloWrapper.ts'
+import ReduxWrapper from '@/lib/redux/ReduxWrapper.ts'
+import AuthWrapper from '@/components/auth/index.ts'
 import Navbar from '@/components/nav'
 import SideNav from '@/components/nav/SideNav'
 

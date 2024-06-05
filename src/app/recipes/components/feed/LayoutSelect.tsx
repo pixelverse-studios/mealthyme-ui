@@ -2,7 +2,7 @@ import { useState, MouseEvent } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Menu, MenuItem, IconButton } from '@mui/material'
 import { TableRows, ViewAgenda, Window } from '@mui/icons-material'
-import { setLayout, COZY, COMPACT, GRID } from '@/lib/redux/slices/recipes'
+import { setLayout, COZY, COMPACT, GRID } from '@/lib/redux/slices/recipes.ts'
 
 import styles from './Feed.module.scss'
 
