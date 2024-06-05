@@ -1,7 +1,7 @@
 import { Rating } from '@mui/material'
 import { Place, PlaceOutlined } from '@mui/icons-material'
 
-import { RecipeType } from '@/utils/types/recipes'
+import { RecipeType } from '../../../../utils/types/recipes'
 import styles from './Feed.module.scss'
 
 const recipeFallbackImg =

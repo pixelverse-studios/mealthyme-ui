@@ -1,10 +1,10 @@
 'use client'
 
-import hooks from '@/hooks'
+import hooks from '../../../hooks'
 import GeneralInfo from './GeneralInfo'
 import AdditionalInfo from './AdditionalInfo'
 import { initialRecipeForm } from './utils'
-import FormValidations from '@/utils/validations/form'
+import FormValidations from '../../../utils/validations/form'
 import styles from './RecipeForm.module.scss'
 
 const validations = {

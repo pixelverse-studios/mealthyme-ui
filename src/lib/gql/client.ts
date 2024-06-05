@@ -1,7 +1,7 @@
 import { setContext } from '@apollo/client/link/context'
 import { ApolloClient, InMemoryCache, HttpLink } from '@apollo/client'
 
-import { USER_TOKEN } from '@/utils/constants'
+import { USER_TOKEN } from '../../utils/constants'
 
 const URI =
   process.env.NODE_ENV === 'development'

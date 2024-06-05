@@ -1,14 +1,15 @@
 import { ChangeEvent, useState, useCallback, useEffect, useMemo } from 'react'
 import { useLazyQuery } from '@apollo/client'
 import { MenuItem, Menu, Button, LinearProgress } from '@mui/material'
-import { SearchResultType } from '@/utils/types/food'
-import { TextField, SelectField, NumberField } from '@/components/fields'
-import Banner from '@/components/banner'
-import hooks from '@/hooks'
-import { GET_SEARCH_RESULTS, GET_FOOD } from '@/lib/gql/queries/food'
-import FormValidations from '@/utils/validations/form'
-import { isHandledError } from '@/utils/gql'
-import { capitalizeFirstLetters } from '@/utils/validations/strings'
+
+import { SearchResultType } from '../../../utils/types/food'
+import { TextField, SelectField, NumberField } from '../../fields'
+import Banner from '../../banner'
+import hooks from '../../../hooks'
+import { GET_SEARCH_RESULTS, GET_FOOD } from '../../../lib/gql/queries/food'
+import FormValidations from '../../../utils/validations/form'
+import { isHandledError } from '../../../utils/gql'
+import { capitalizeFirstLetters } from '../../../utils/validations/strings'
 import styles from './RecipeForm.module.scss'
 
 interface ResultProps {

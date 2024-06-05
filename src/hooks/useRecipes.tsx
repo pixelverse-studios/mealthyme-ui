@@ -6,16 +6,16 @@ import {
   GET_USER_RECIPES,
   GET_USER_FILTERS,
   GET_ALL_FILTERS
-} from '@/lib/gql/queries/recipes'
+} from '../lib/gql/queries/recipes'
 import {
   setAllRecipes,
   setLoadingRecipes,
   setUserRecipes,
   setUserFilters,
   setAllFilters
-} from '@/lib/redux/slices/recipes.ts'
-import Banner from '@/components/banner'
-import { isHandledError } from '@/utils/gql'
+} from '../lib/redux/slices/recipes'
+import Banner from '../components/banner'
+import { isHandledError } from '../utils/gql'
 
 const useRecipes = () => {
   const dispatch = useDispatch()

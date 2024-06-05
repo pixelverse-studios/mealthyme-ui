@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-import { ProfileProps } from '@/utils/types/user'
-import { USER_TOKEN } from '@/utils/constants'
+import { ProfileProps } from '../../../utils/types/user'
+import { USER_TOKEN } from '../../../utils/constants'
 import { AppDispatch } from '../store'
 
 export const logout = (dispatch: AppDispatch, router: any) => {

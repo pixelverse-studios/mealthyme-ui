@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux'
 
-import { RecipeType } from '@/utils/types/recipes'
+import { RecipeType } from '../../../../utils/types/recipes'
 import FilterBar from './FilterBar'
 import FeedItem from './FeedItem'
 

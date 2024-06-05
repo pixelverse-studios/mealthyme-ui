@@ -5,7 +5,7 @@ import {
 } from '@mui/material'
 
 import { setColor } from './utils'
-import { TextFieldProps } from '@/utils/types/fields'
+import { TextFieldProps } from '../../utils/types/fields'
 
 const CHARACTER_COUNT = 600
 export interface TextFieldTypes extends TextFieldProps {

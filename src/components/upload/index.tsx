@@ -4,7 +4,7 @@ import { useState, ChangeEvent } from 'react'
 import { IconButton, Card, CardActions, CardMedia } from '@mui/material'
 import { CloudUpload, QuestionMark, Cancel } from '@mui/icons-material'
 import { styled } from '@mui/material/styles'
-import hooks from '@/hooks'
+import hooks from '../../hooks'
 import styles from './Upload.module.scss'
 
 const VisuallyHiddenInput = styled('input')({

@@ -4,9 +4,10 @@ import { useRouter } from 'next/navigation'
 import { useSelector } from 'react-redux'
 import { SnackbarProvider } from 'notistack'
 import { useDispatch } from 'react-redux'
-import { setProfile, setProfileLoading } from '@/lib/redux/slices/user'
-import { getValidatedUser } from '@/lib/auth/utils'
-import hooks from '@/hooks'
+
+import { setProfile, setProfileLoading } from '../../lib/redux/slices/user'
+import { getValidatedUser } from '../../lib/auth/utils'
+import hooks from '../../hooks'
 
 const AuthWrapper = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter()

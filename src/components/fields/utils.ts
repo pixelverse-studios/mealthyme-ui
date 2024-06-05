@@ -1,4 +1,4 @@
-import { FieldInputProps } from '@/utils/types/fields'
+import { FieldInputProps } from '../../utils/types/fields'
 
 export const setColor = (
   field: FieldInputProps

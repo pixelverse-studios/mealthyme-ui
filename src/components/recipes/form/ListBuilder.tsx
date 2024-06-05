@@ -1,8 +1,8 @@
 import { useState, ChangeEvent, KeyboardEvent } from 'react'
 import { Paper, Button, Chip } from '@mui/material'
 import { DeleteForever } from '@mui/icons-material'
-import { TextField } from '@/components/fields'
-import { RecipeFormProps, ListInputProps } from '@/utils/types/fields'
+import { RecipeFormProps, ListInputProps } from '../../../utils/types/fields'
+import { TextField } from '../../fields'
 import styles from './RecipeForm.module.scss'
 
 interface ListDisplayProps {

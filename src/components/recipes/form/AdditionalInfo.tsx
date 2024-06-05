@@ -2,11 +2,11 @@
 import { Paper } from '@mui/material'
 import { Star, StarBorder, Favorite, FavoriteBorder } from '@mui/icons-material'
 
-import { RatingField } from '@/components/fields'
+import { RatingField } from '../../fields'
 import ListBuilder from './ListBuilder'
 import IngredientList from './IngredientList'
-import { RecipeFormProps } from '@/utils/types/fields'
-import FormValidations from '@/utils/validations/form'
+import { RecipeFormProps } from '../../../utils/types/fields'
+import FormValidations from '../../../utils/validations/form'
 
 const AdditionalInfo = ({
   form,

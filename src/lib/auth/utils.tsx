@@ -1,8 +1,8 @@
 import { differenceInDays } from 'date-fns'
 
-import { ProfileProps } from '@/utils/types/user'
-import { getLocalStorageItem } from '@/utils/localStorage'
-import { USER_TOKEN } from '@/utils/constants'
+import { ProfileProps } from '../../utils/types/user'
+import { getLocalStorageItem } from '../../utils/localStorage'
+import { USER_TOKEN } from '../../utils/constants'
 
 export const getValidatedUser = (): {
   profile: ProfileProps | null

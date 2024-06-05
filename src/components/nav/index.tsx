@@ -15,14 +15,14 @@ import {
 import { Fastfood, Menu as MenuIcon } from '@mui/icons-material'
 import LoginButton from '../auth/LoginButton'
 import LogoutButton from '../auth/LogoutButton'
-import { ProfileProps } from '@/utils/types/user'
+import { ProfileProps } from '../../utils/types/user'
 import {
   setIsMobile,
   setShowMobile,
   toggleDestroy
-} from '@/lib/redux/slices/nav'
+} from '../../lib/redux/slices/nav'
 import { userLinks, NavItemType } from './utils'
-import hooks from '@/hooks'
+import hooks from '../../hooks'
 
 import styles from './Nav.module.scss'
 

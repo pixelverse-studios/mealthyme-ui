@@ -1,5 +1,6 @@
-import { IMG } from '@/utils/constants'
 import { format } from 'date-fns'
+
+import { IMG } from '../utils/constants'
 
 interface CloudinaryProps {
   base64: string

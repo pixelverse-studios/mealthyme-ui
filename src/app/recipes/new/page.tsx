@@ -1,5 +1,5 @@
 'use client'
-import RecipeForm from '@/components/recipes/form/index.ts'
+import RecipeForm from '../../../components/recipes/form'
 
 export default function CreateRecipe() {
   return (

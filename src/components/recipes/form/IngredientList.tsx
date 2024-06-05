@@ -3,9 +3,9 @@ import { useMemo, useState } from 'react'
 import { Tooltip, ClickAwayListener, Fade } from '@mui/material'
 import { Info } from '@mui/icons-material'
 
-import hooks from '@/hooks'
+import hooks from '../../../hooks'
 import IngredientListItem from './IngredientListItem'
-import { RecipeFormProps, ListInputProps } from '@/utils/types/fields'
+import { RecipeFormProps, ListInputProps } from '../../../utils/types/fields'
 // import { Ingredient } from '@/utils/types/recipes'
 import styles from './RecipeForm.module.scss'
 

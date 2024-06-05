@@ -3,7 +3,7 @@ import {
   TextField as MuiTextField,
   createFilterOptions
 } from '@mui/material'
-import { isMatchingString } from '@/utils/validations/strings'
+import { isMatchingString } from '../../utils/validations/strings'
 
 interface OptionProps {
   _id: string

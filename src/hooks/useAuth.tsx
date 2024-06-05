@@ -2,22 +2,22 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { signInWithPopup, signOut, getAuth } from 'firebase/auth'
 import { useLazyQuery, useMutation } from '@apollo/client'
-import { SIGN_IN } from '@/lib/gql/mutations/user'
-import { GET_USER } from '@/lib/gql/queries/user'
+import { SIGN_IN } from '../lib/gql/mutations/user'
+import { GET_USER } from '../lib/gql/queries/user'
 import {
   setProfileLoading,
   setProfile,
   removeProfile
-} from '@/lib/redux/slices/user'
-import { USER_TOKEN } from '@/utils/constants'
+} from '../lib/redux/slices/user'
+import { USER_TOKEN } from '../utils/constants'
 import {
   setLocalStorageItem,
   clearLocalStorageItem
-} from '@/utils/localStorage'
-import { isHandledError } from '@/utils/gql'
-import { authProvider } from '@/lib/auth'
-import Banner from '@/components/banner'
-import { RECIPE_ROUTES } from '@/components/nav/utils'
+} from '../utils/localStorage'
+import { isHandledError } from '../utils/gql'
+import { authProvider } from '../lib/auth'
+import Banner from '../components/banner'
+import { RECIPE_ROUTES } from '../components/nav/utils'
 import hooks from '.'
 
 const useAuth = (router: any) => {

@@ -6,8 +6,8 @@ import {
 } from '@mui/material'
 
 import { setColor } from './utils'
-import { FieldInputProps } from '@/utils/types/fields'
-import { VALID_FLOATS } from '@/utils/validations/regex'
+import { FieldInputProps } from '../../utils/types/fields'
+import { VALID_FLOATS } from '../../utils/validations/regex'
 
 interface NumberFieldProps {
   field: FieldInputProps
