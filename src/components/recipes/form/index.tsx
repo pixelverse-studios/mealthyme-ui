@@ -1,46 +1,74 @@
 'use client'
+import { useSelector } from 'react-redux'
 
-import hooks from '../../../hooks'
+import { useForm, useImageUpload, useRecipes } from '../../../hooks'
 import GeneralInfo from './GeneralInfo'
 import AdditionalInfo from './AdditionalInfo'
-import { initialRecipeForm } from './utils'
-import FormValidations from '../../../utils/validations/form'
+import {
+  initialRecipeForm,
+  recipeFormValidations,
+  sanitizeNewRecipe
+} from './utils'
 import styles from './RecipeForm.module.scss'
 
-const validations = {
-  title: FormValidations.validAlphaNumericSpacesSpecials,
-  servings: FormValidations.validNonZeroNumber,
-  ingredients: FormValidations.validArrayData,
-  instructions: FormValidations.validArrayData,
-  cookingMethod: FormValidations.validAlphaNumericWithSpaces,
-  allergies: FormValidations.validArrayData,
-  category: FormValidations.yolo,
-  rating: FormValidations.validFloat,
-  difficulty: FormValidations.validFloat,
-  prepTime: FormValidations.yolo,
-  cookTime: FormValidations.yolo,
-  tags: FormValidations.validArrayData,
-  image: FormValidations.yolo
-}
 // const RecipeForm = ({ isEdit }: { isEdit: boolean }) => {
 const RecipeForm = () => {
-  const { form, handleChange, handleNonFormEventChange } = hooks.useForm(
-    initialRecipeForm,
-    validations
-  )
+  const {
+    form,
+    handleChange,
+    handleNonFormEventChange,
+    isFormValid,
+    handleValidation
+  } = useForm(initialRecipeForm, recipeFormValidations)
+  const { profile } = useSelector((state: any) => state.user)
+
+  const { handleUpload } = useImageUpload()
+  const { submitNewRecipe } = useRecipes()
+
+  const onSubmit = async () => {
+    const { image } = form
+    const payload = { ...form }
+
+    const hasImg = image.value !== ''
+    const res = hasImg
+      ? await handleUpload({
+          base64: image.value.base64,
+          filename: image.value.name
+        })
+      : null
+
+    const sanitizedPayload = sanitizeNewRecipe(
+      payload,
+      res?.url ?? '',
+      res?.public_id ?? ''
+    )
+    submitNewRecipe(profile._id, sanitizedPayload)
+  }
 
   return (
-    <div className={styles.RecipeForm}>
-      <GeneralInfo
-        form={form}
-        handleChange={handleChange}
-        handleNonFormEventChange={handleNonFormEventChange}
-      />
-      <AdditionalInfo
-        form={form}
-        handleChange={handleChange}
-        handleNonFormEventChange={handleNonFormEventChange}
-      />
+    <div className={styles.recipeForm}>
+      <div className={styles.formBlock}>
+        <GeneralInfo
+          form={form}
+          handleChange={handleChange}
+          handleNonFormEventChange={handleNonFormEventChange}
+          handleValidation={handleValidation}
+        />
+        <AdditionalInfo
+          form={form}
+          handleChange={handleChange}
+          handleNonFormEventChange={handleNonFormEventChange}
+          handleValidation={handleValidation}
+        />
+      </div>
+      <div className={styles.buttonRow}>
+        <button
+          onClick={onSubmit}
+          disabled={!isFormValid}
+          className={styles.submitButton}>
+          Create Recipe
+        </button>
+      </div>
     </div>
   )
 }

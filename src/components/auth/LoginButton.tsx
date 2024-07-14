@@ -3,11 +3,11 @@ import { useRouter } from 'next/navigation'
 import { useSelector } from 'react-redux'
 import LoadingButton from '@mui/lab/LoadingButton'
 
-import hooks from '../../hooks'
+import { useAuth } from '../../hooks'
 
 const LoginButton = () => {
   const router = useRouter()
-  const { handleGoogleSignIn } = hooks.useAuth(router as any)
+  const { handleGoogleSignIn } = useAuth(router as any)
   const { loading } = useSelector((state: any) => state.user)
   const onLogin = async () => handleGoogleSignIn()
 

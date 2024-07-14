@@ -1,4 +1,5 @@
 import { format } from 'date-fns'
+import axios from 'axios'
 
 import { IMG } from '../utils/constants'
 
@@ -9,7 +10,7 @@ interface CloudinaryProps {
 
 const useImageUpload = () => {
   const convertToBase64 = async (file: any) => {
-    const base64 = new Promise(resolve => {
+    const base64 = await new Promise(resolve => {
       const reader = new FileReader()
       reader.onloadend = () => {
         const result = reader.result
@@ -35,15 +36,10 @@ const useImageUpload = () => {
 
   const handleUpload = async ({ base64, filename }: CloudinaryProps) => {
     const form = createFormData({ base64, filename })
-    const res = await fetch(IMG.uploadUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(form)
+    const res = await axios.post(IMG.uploadUrl, form, {
+      headers: { 'Content-Type': 'multipart/form-data' }
     })
-    const toJson = res.json()
-    console.log('toJson: ', toJson)
+    return res?.data
   }
 
   return { convertToBase64, handleUpload }

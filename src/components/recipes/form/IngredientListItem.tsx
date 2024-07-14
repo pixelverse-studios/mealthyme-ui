@@ -1,16 +1,25 @@
 import { ChangeEvent, useState, useCallback, useEffect, useMemo } from 'react'
 import { useLazyQuery } from '@apollo/client'
-import { MenuItem, Menu, Button, LinearProgress } from '@mui/material'
+import {
+  MenuItem,
+  Menu,
+  Button,
+  LinearProgress,
+  IconButton
+} from '@mui/material'
+import { Delete } from '@mui/icons-material'
 
 import { SearchResultType } from '../../../utils/types/food'
+import { Ingredient } from '../../../utils/types/recipes'
 import { TextField, SelectField, NumberField } from '../../fields'
 import Banner from '../../banner'
-import hooks from '../../../hooks'
+import { useDebounce } from '../../../hooks'
 import { GET_SEARCH_RESULTS, GET_FOOD } from '../../../lib/gql/queries/food'
 import FormValidations from '../../../utils/validations/form'
 import { isHandledError } from '../../../utils/gql'
-import { capitalizeFirstLetters } from '../../../utils/validations/strings'
+import StringUtils from '../../../utils/validations/strings'
 import styles from './RecipeForm.module.scss'
+import { FieldInputProps } from '../../../utils/types/fields'
 
 interface ResultProps {
   anchor: HTMLElement | null
@@ -36,7 +45,7 @@ const SearchResults = ({
     if (loading) return <MenuItem>Loading...</MenuItem>
     if (results?.length === 0) return <MenuItem>No results</MenuItem>
     return results.map((result: SearchResultType) => {
-      const sanitizedName = capitalizeFirstLetters(result.name)
+      const sanitizedName = StringUtils.capitalizeFirstLetters(result.name)
 
       return (
         <MenuItem key={result.id} onClick={() => onClick(result)}>
@@ -67,26 +76,42 @@ const SearchResults = ({
 interface IngredientItemProps {
   isNew: boolean
   isEditing: boolean
-  item: SearchResultType | null
+  item: Ingredient | null
   label: string
   id: string
-  onNewIngredientAdd: (data: any) => void
+  handleIngredientUpdate: (data: any) => void
+  handleIngredientDelete: (data: any) => void
 }
 
-const DEFAULT_SEARCH = { value: '', error: '' }
+const DEFAULT_SEARCH = {
+  value: '',
+  msgType: '',
+  valid: null,
+  message: FormValidations.validAlphaNumericSpacesSpecials.message
+}
+const DEFAULT_UNIT = {
+  value: '',
+  valid: null,
+  message: 'A unit of measurement is required.',
+  msgType: 'error'
+}
 const IngredientListItem = ({
   id,
   isEditing,
   isNew,
   label,
   item,
-  onNewIngredientAdd
+  handleIngredientUpdate,
+  handleIngredientDelete
 }: IngredientItemProps) => {
   const [menuAnchor, setMenuAnchor] = useState<null | HTMLElement>(null)
-  const [search, setSearch] = useState<{ value: string; error: string }>(
-    DEFAULT_SEARCH
-  )
-  const debouncedValue = hooks.useDebounce(search.value, 500)
+  const [search, setSearch] = useState<{
+    value: string
+    msgType: string
+    valid: boolean | null
+    message: string
+  }>(DEFAULT_SEARCH)
+  const debouncedValue = useDebounce(search.value, 500)
 
   const [results, setResults] = useState<SearchResultType[] | []>([])
   const [loadingSearch, setLoadingSearch] = useState<boolean>(false)
@@ -125,38 +150,50 @@ const IngredientListItem = ({
   const onSearch = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     setMenuAnchor(event.currentTarget)
     const { value } = event.target
-    const error = !FormValidations.validAlphaNumericSpacesSpecials.test(value)
-      ? FormValidations.validAlphaNumericSpacesSpecials.message
-      : ''
-    const sanitizedValue = capitalizeFirstLetters(value)
+    const valid = !FormValidations.validAlphaNumericSpacesSpecials.test(value)
+    const sanitizedValue = StringUtils.capitalizeFirstLetters(value)
     setSearch({
       value: sanitizedValue,
-      error
+      message: valid
+        ? ''
+        : FormValidations.validAlphaNumericSpacesSpecials.message,
+      msgType: valid ? '' : 'error',
+      valid
     })
   }, [])
 
   const [loadingFood, setLoadingFood] = useState<boolean>(false)
+  const [selectedUnit, setSelectedUnit] = useState<{
+    value: string
+    valid: boolean | null
+    message: string
+    msgType: string
+  } | null>(DEFAULT_UNIT)
 
   const resetForm = () => {
     setResults([])
     setMenuAnchor(null)
     setSearch(DEFAULT_SEARCH)
-    setSelectedUnit('')
+    setSelectedUnit(null)
     setAmount('')
   }
+
+  const onUnitSelect = (value: string) =>
+    setSelectedUnit({ ...DEFAULT_UNIT, value })
+
   const [getFood] = useLazyQuery(GET_FOOD, {
     async onCompleted({ getFood: data }) {
       if (isHandledError(data)) return Banner.Error(data.message)
       setLoadingFood(false)
-      onNewIngredientAdd(data)
+      handleIngredientUpdate({ ...data, name: selected?.name ?? data.name })
       resetForm()
+      setSelected(null)
     },
     onError() {
       setLoadingFood(false)
       return Banner.Error('There was an issue fetching search results.')
     }
   })
-  const [selectedUnit, setSelectedUnit] = useState<string>('')
   const [amount, setAmount] = useState<string>('')
 
   const onClearClick = () => {
@@ -175,15 +212,18 @@ const IngredientListItem = ({
       variables: {
         foodId: selected?.id,
         amount: parseFloat(amount),
-        units: selectedUnit
+        units: selectedUnit?.value
       }
     })
   }
+
+  const onIngredientRemove = (item: any) => handleIngredientDelete(item.id)
+
   const disableAdd = useMemo(
-    () => selected == null || amount === '' || selectedUnit === '',
+    () => selected == null || amount === '' || selectedUnit?.value === '',
     [amount, selected, selectedUnit]
   )
-
+  // TODO FIX DISABLE ADD
   if (isNew) {
     return (
       <div className={styles.newIngredient}>
@@ -193,23 +233,32 @@ const IngredientListItem = ({
             label={selected === null ? label : 'Ingredient'}
             field={{
               value: selected === null ? search.value : selected.name,
-              error: ''
+              msgType: '',
+              valid: true,
+              message: 'At least 1 ingredient is required'
             }}
             onChange={onSearch}
+            onBlur={() => null}
             type="text"
           />
           <NumberField
             disabled={selected === null}
-            field={{ value: amount, error: '' }}
+            field={{
+              value: amount,
+              msgType: 'error',
+              valid: true,
+              message: ''
+            }}
             id="amount"
             label="Amount"
             onChange={onAmountChange}
           />
           <SelectField
             disabled={selected === null}
-            value={selectedUnit}
+            onBlur={() => null}
+            field={selectedUnit as FieldInputProps}
             label="Units"
-            onChange={setSelectedUnit}
+            onChange={onUnitSelect}
             options={selected?.units ?? []}
           />
         </div>
@@ -254,7 +303,13 @@ const IngredientListItem = ({
         <TextField
           label={label}
           id={id}
-          field={{ value: search.value, error: '' }}
+          field={{
+            value: search.value,
+            message: '',
+            valid: true,
+            msgType: 'error'
+          }}
+          onBlur={() => null}
           onChange={onSearch}
           type="text"
         />
@@ -270,16 +325,39 @@ const IngredientListItem = ({
       </div>
     )
   }
+  // const macroRows = item?.nutrition.filter(nutrient => {
+  //   if (
+  //     nutrient.name === 'Calories' ||
+  //     nutrient.name === 'Protein' ||
+  //     nutrient.name === 'Carbohydrates' ||
+  //     nutrient.name === 'Fat'
+  //   ) {
+  //     return nutrient
+  //   }
+  // })
+
   return (
     <div className={styles.existingIngredient}>
-      <TextField
-        label={''}
-        id={''}
-        field={{ value: item?.name ?? '', error: '' }}
-        onChange={onSearch}
-        disabled
-        type="text"
-      />
+      <div className={styles.keyFields}>
+        <span>{item?.name}</span>
+        <div className={styles.weight}>
+          <div>{item?.amount}</div>
+          <div className={styles.border} />
+          <div>{item?.units?.long}</div>
+        </div>
+        <IconButton
+          onClick={() => onIngredientRemove(item)}
+          className={styles.deleteIngr}>
+          <Delete />
+        </IconButton>
+      </div>
+      {/* <div className={styles.macros}>
+        Calories: {macroRows?.find(item => item.name === 'Calories')?.amount}
+        Protein: {macroRows?.find(item => item.name === 'Protein')?.amount}
+        Carbohydrates:{' '}
+        {macroRows?.find(item => item.name === 'Carbohydrates')?.amount}
+        Fat: {macroRows?.find(item => item.name === 'Fat')?.amount}
+      </div> */}
     </div>
   )
 }

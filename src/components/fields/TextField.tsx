@@ -15,44 +15,50 @@ export interface TextFieldTypes extends TextFieldProps {
   onKeyUp?: any
 }
 const TextField = ({
+  disabled = false,
+  field,
+  hideHelperText = true,
   id,
   label,
-  type,
+  onBlur,
   onChange,
-  field,
-  rows,
-  required,
-  variant = 'standard',
-  hideHelperText = true,
   onKeyDown,
-  disabled = false,
-  onKeyUp
+  onKeyUp,
+  required,
+  rows,
+  type,
+  variant = 'standard'
 }: TextFieldTypes) => {
   const isTextArea = type === 'textarea'
+
   return (
-    <FormControl color={setColor(field)} error={Boolean(field.error)}>
+    <FormControl color={setColor(field)} error={field.valid === false}>
       <MuiTextField
-        size="small"
+        error={field.valid === false}
         color={setColor(field)}
-        multiline={isTextArea}
+        disabled={disabled}
+        id={id}
         inputProps={{
           maxLength: isTextArea ? CHARACTER_COUNT : 999999999
         }}
-        variant={variant}
-        type={type}
-        id={id}
-        name={id}
         label={label}
-        title={label}
-        onKeyUp={onKeyUp}
+        multiline={isTextArea}
+        name={id}
+        onBlur={onBlur}
         onChange={onChange}
-        value={field.value}
+        onKeyDown={onKeyDown}
+        onKeyUp={onKeyUp}
         required={required}
         rows={isTextArea ? rows : ''}
-        onKeyDown={onKeyDown}
-        disabled={disabled}
+        size="small"
+        title={label}
+        type={type}
+        value={field.value}
+        variant={variant}
       />
-      <FormHelperText id={id}>{field.error}</FormHelperText>
+      {field.valid ? null : (
+        <FormHelperText id={id}>{field.message}</FormHelperText>
+      )}
       {isTextArea && !hideHelperText && (
         <FormHelperText id={id}>
           Max Characters: {field.value.length}/{CHARACTER_COUNT}

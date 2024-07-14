@@ -1,6 +1,6 @@
 'use client'
 import { useDispatch } from 'react-redux'
-import { useLazyQuery } from '@apollo/client'
+import { useLazyQuery, useMutation } from '@apollo/client'
 import {
   GET_ALL_RECIPES,
   GET_USER_RECIPES,
@@ -16,6 +16,7 @@ import {
 } from '../lib/redux/slices/recipes'
 import Banner from '../components/banner'
 import { isHandledError } from '../utils/gql'
+import { CREATE_NEW_RECIPE } from '../lib/gql/mutations/recipes'
 
 const useRecipes = () => {
   const dispatch = useDispatch()
@@ -85,12 +86,27 @@ const useRecipes = () => {
   })
   const fetchAllFilters = () => getAllFilters()
 
+  const [createRecipe] = useMutation(CREATE_NEW_RECIPE, {
+    onCompleted({ createRecipe: data }) {
+      console.log(data)
+    },
+    onError() {
+      return Banner.Error('There was an issue creating your recipe.')
+    }
+  })
+
+  const submitNewRecipe = async (userId: string, payload: any) => {
+    dispatch(setLoadingRecipes(true))
+    await createRecipe({ variables: { userId, payload } })
+  }
+
   return {
     fetchAllFilters,
     fetchAllRecipes,
     fetchUserFilters,
     fetchUserRecipes,
-    resetUserRecipes
+    resetUserRecipes,
+    submitNewRecipe
   }
 }
 

@@ -5,7 +5,7 @@ import useImageUpload from './useImageUpload'
 import useForm from './useForm'
 import useDebounce from './useDebounce'
 
-const hooks = {
+export {
   useAuth,
   useImageUpload,
   useRecipes,
@@ -13,4 +13,3 @@ const hooks = {
   useForm,
   useDebounce
 }
-export default hooks

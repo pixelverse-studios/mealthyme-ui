@@ -4,7 +4,7 @@ import RecipeForm from '../../../components/recipes/form'
 export default function CreateRecipe() {
   return (
     <div>
-      New Recipe
+      <h1>New Recipe</h1>
       <RecipeForm />
     </div>
   )

@@ -41,11 +41,11 @@ const NumberField = ({
       if (isGreaterThan) isValid = false
     }
     if (isValid) {
-      onChange(value, id)
+      onChange(parseFloat(value), id)
     }
   }
   return (
-    <FormControl color={setColor(field)} error={Boolean(field.error)}>
+    <FormControl color={setColor(field)} error={Boolean(field.msgType)}>
       <MuiTextField
         disabled={disabled}
         size="small"
@@ -56,9 +56,9 @@ const NumberField = ({
         label={label}
         title={label}
         onChange={onValueChange}
-        value={field.value}
+        value={field.value.toString()}
       />
-      <FormHelperText id={id}>{field.error}</FormHelperText>
+      <FormHelperText id={id}>{field.message}</FormHelperText>
     </FormControl>
   )
 }

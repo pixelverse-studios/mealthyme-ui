@@ -1,40 +1,60 @@
+import { FocusEventHandler } from 'react'
 import {
   FormControl,
+  FormHelperText,
   InputLabel,
   MenuItem,
   Select,
   SelectChangeEvent
 } from '@mui/material'
+import { FieldInputProps } from '../../utils/types/fields'
+import { setColor } from './utils'
 
 interface SelectFieldProps {
-  value: string
+  field: FieldInputProps | null
   label: string
   onChange: (option: any) => void
   options: string[]
   disabled?: boolean
+  onBlur: FocusEventHandler
 }
 
 const SelectField = ({
-  value,
+  disabled,
+  field,
   label,
+  onBlur,
   onChange,
-  options,
-  disabled
+  options
 }: SelectFieldProps) => {
   const onSelect = (event: SelectChangeEvent<string>) =>
     onChange(event.target.value)
+
   return (
-    <FormControl disabled={disabled}>
+    <FormControl
+      color={setColor(field)}
+      error={field?.valid === false}
+      disabled={disabled}>
       <InputLabel size="small" variant="standard">
         {label}
       </InputLabel>
-      <Select onChange={onSelect} variant="standard" size="small" value={value}>
+      <Select
+        onBlur={onBlur}
+        onChange={onSelect}
+        variant="standard"
+        size="small"
+        value={field?.value}>
         {options.map((option, index) => (
           <MenuItem value={option} key={index}>
             {option}
           </MenuItem>
         ))}
       </Select>
+      {!field?.valid ? null : (
+        <FormHelperText id={label.toLowerCase()}>
+          {field?.message}
+        </FormHelperText>
+      )}
     </FormControl>
   )
 }

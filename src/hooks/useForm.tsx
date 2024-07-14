@@ -2,9 +2,12 @@ import {
   useState,
   useEffect,
   useReducer,
+  useMemo,
   ChangeEventHandler,
   FormEvent
 } from 'react'
+
+const ERROR = 'error'
 
 export const FORM_ACTIONS = {
   UPDATE: 'UPDATE',
@@ -21,9 +24,9 @@ const { UPDATE, RESET, IMPORT } = FORM_ACTIONS
 function reducer(state: any, action: ActionState) {
   switch (action.type) {
     case UPDATE: {
-      const { name, value, error } = action.payload
+      const { name, value, msgType, valid } = action.payload
 
-      return { ...state, [name]: { value, error } }
+      return { ...state, [name]: { value, msgType, valid } }
     }
     case IMPORT: {
       return { ...state, ...action.payload }
@@ -53,30 +56,54 @@ const useForm = (initialState: any, validations: any, store?: any) => {
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = event => {
     const { value, name } = event.target
-
-    const error = !validations[name]?.test(value.trim())
-      ? validations[name]?.message
-      : ''
+    const { message, test } = validations[name]
+    const valid = test(value)
 
     dispatch({
       type: UPDATE,
       payload: {
         name,
         value,
-        error
+        msgType: valid ? '' : message,
+        valid
       }
     })
   }
 
   const handleNonFormEventChange = (data: any, name: string) => {
-    const hasValidation = validations[name]?.message
+    let valid = true
+    let statusMessage = ''
+    if (validations[name]) {
+      const { message, test } = validations[name]
+      statusMessage = message
+      valid = test(data)
+    }
 
     dispatch({
       type: UPDATE,
       payload: {
+        message: valid ? '' : statusMessage,
+        msgType: valid ? '' : ERROR,
         name,
-        value: data,
-        error: hasValidation ? !validations[name].test(data) : ''
+        valid,
+        value: data
+      }
+    })
+  }
+
+  const handleValidation = (event: any) => {
+    const { value, name } = event.target
+    const { message, test } = validations[name]
+    const valid = test(value)
+
+    dispatch({
+      type: UPDATE,
+      payload: {
+        message: valid ? '' : message,
+        msgType: valid ? '' : ERROR,
+        name,
+        valid,
+        value
       }
     })
   }
@@ -114,7 +141,15 @@ const useForm = (initialState: any, validations: any, store?: any) => {
     dispatch({ type: RESET, payload: initialState })
   }
 
-  const isFormValid = Object.keys(form).every(label => !form[label].error)
+  const isFormValid = useMemo(() => {
+    const hasErrors = Object.keys(form).every(
+      label => form[label].valid === false
+    )
+    const requiredFieldsValid = Object.keys(validations).every(
+      key => validations[key].required && form[key].valid
+    )
+    return !hasErrors && requiredFieldsValid
+  }, [form, validations])
 
   return {
     disableSubmit,
@@ -123,6 +158,7 @@ const useForm = (initialState: any, validations: any, store?: any) => {
     handleChange,
     handleClearField,
     handleFormSubmit,
+    handleValidation,
     handleImport,
     handleNonFormEventChange,
     handleReset,

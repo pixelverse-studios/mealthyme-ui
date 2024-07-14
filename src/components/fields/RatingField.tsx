@@ -10,7 +10,12 @@ import { setColor } from './utils'
 import styles from './Fields.module.scss'
 
 interface RatingProps {
-  field: { value: string; error: string }
+  field: {
+    value: string
+    valid: boolean
+    msgType: string
+    message: string
+  }
   id: string
   label: string
   onChange: (data: any, label: string) => void
@@ -32,7 +37,7 @@ const RatingField = ({
       <FormControl
         className={styles.RatingField}
         color={color}
-        error={Boolean(field.error)}>
+        error={Boolean(field.valid === false)}>
         <Typography component="legend">{label}</Typography>
         <Rating
           color={color}
@@ -41,9 +46,10 @@ const RatingField = ({
           value={parseFloat(field.value) === 0 ? null : parseFloat(field.value)}
           icon={icon}
           emptyIcon={emptyIcon}
-          precision={0.5}
         />
-        <FormHelperText id={id}>{field.error}</FormHelperText>
+        {field.valid === false ? (
+          <FormHelperText id={id}>{field.message}</FormHelperText>
+        ) : null}
       </FormControl>
     </Box>
   )

@@ -11,7 +11,7 @@ interface Nutrient {
 }
 
 export interface Ingredient {
-  foodId: number
+  id: number
   name: string
   image: string
   units: {
@@ -19,6 +19,7 @@ export interface Ingredient {
     short: string
     long: string
   }
+  amount: number
   possibleUnits: string[]
   nutrition: Nutrient[]
   caloricBreakdown: {
@@ -58,10 +59,12 @@ export interface RecipeType {
   cookingMethod: string
   allergies: string[]
   category: Category
-  rating: number
   difficulty: number
   tags: string[]
-  image: string
+  image: {
+    src: null | string
+    publicId: null | string
+  }
   prepTime: number
   cookTime: number
   totalTime: number

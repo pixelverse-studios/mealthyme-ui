@@ -67,10 +67,12 @@ export const GET_ALL_RECIPES = gql`
             _id
             label
           }
-          rating
           difficulty
           tags
-          image
+          image {
+            src
+            publicId
+          }
           createdAt
           updatedAt
         }
@@ -152,10 +154,12 @@ export const GET_USER_RECIPES = gql`
             _id
             label
           }
-          rating
           difficulty
           tags
-          image
+          image {
+            src
+            publicId
+          }
           createdAt
           updatedAt
         }
@@ -206,11 +210,6 @@ export const GET_USER_FILTERS = gql`
           label
         }
         allergies
-        rating {
-          min
-          max
-          step
-        }
         difficulty {
           min
           max
@@ -290,11 +289,6 @@ export const GET_ALL_FILTERS = gql`
           label
         }
         allergies
-        rating {
-          min
-          max
-          step
-        }
         difficulty {
           min
           max

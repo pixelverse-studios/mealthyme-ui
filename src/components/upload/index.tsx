@@ -1,10 +1,9 @@
 'use client'
 
 import { useState, ChangeEvent } from 'react'
-import { IconButton, Card, CardActions, CardMedia } from '@mui/material'
-import { CloudUpload, QuestionMark, Cancel } from '@mui/icons-material'
+import { Edit, Delete, CameraAlt } from '@mui/icons-material'
 import { styled } from '@mui/material/styles'
-import hooks from '../../hooks'
+import { useImageUpload } from '../../hooks'
 import styles from './Upload.module.scss'
 
 const VisuallyHiddenInput = styled('input')({
@@ -19,76 +18,64 @@ const VisuallyHiddenInput = styled('input')({
   width: 1
 })
 
-// interface UploadProps {
-//   isEdit: boolean
-// }
-
-const MediaDisplay = ({ file }: { file: any }) => {
-  if (file === null) {
-    return (
-      <CardMedia className={styles.display} component="div">
-        <QuestionMark />
-      </CardMedia>
-    )
-  }
-
-  return (
-    <CardMedia
-      className={styles.display}
-      component="img"
-      alt="recipe image"
-      image={file.thumbnail}
-    />
-  )
+export interface ImageProps {
+  base64: string
+  thumbnail: string
+  type: string
+  name: string
 }
 
-const Upload = () => {
-  const { convertToBase64 } = hooks.useImageUpload()
-  const [file, setFile] = useState(null)
-  const [img, setImg] = useState<null | {
-    base64: any
-    thumbnail: any
-    type: string
-    name: string
-  }>(null)
-  const [loading, setLoading] = useState(false)
-  console.log(loading, file)
-
+const Upload = ({ callback }: { callback: (img: ImageProps) => void }) => {
+  const { convertToBase64 } = useImageUpload()
+  const [img, setImg] = useState<null | ImageProps>(null)
   const onFileUpload = async (event: ChangeEvent<HTMLInputElement>) => {
     if (!event.target.files) {
       return
     }
-    setLoading(true)
     const { thumbnail, base64, type, name } = await convertToBase64(
       event.target.files[0]
     )
-    setImg({ thumbnail, base64, type, name })
+    const payload = { thumbnail, base64, type, name }
+    setImg(payload)
+    callback(payload)
   }
 
-  const onClear = () => {
-    setImg(null)
-    setFile(null)
+  const onClear = () => setImg(null)
+
+  if (img !== null) {
+    return (
+      <div className={styles.ThumbnailContainer}>
+        <img src={img.thumbnail} alt="uploaded_img_for_recipe" />
+        <div className={styles.actions}>
+          <label>
+            <Edit />
+            <VisuallyHiddenInput
+              type="file"
+              onChange={onFileUpload}
+              accept="image/png, image/jpeg, image/jpg"
+            />
+          </label>
+          <button onClick={onClear}>
+            <Delete />
+          </button>
+        </div>
+      </div>
+    )
   }
 
   return (
-    <Card className={styles.UploadContainer}>
-      <MediaDisplay file={img} />
-      <CardActions>
-        <IconButton component="label">
-          <CloudUpload />
-          <VisuallyHiddenInput
-            type="file"
-            onChange={onFileUpload}
-            accept="image/png, image/jpeg, image/jpg"
-          />
-        </IconButton>
-        {img !== null ? (
-          <IconButton onClick={onClear}>
-            <Cancel />
-          </IconButton>
-        ) : null}
-      </CardActions>
-    </Card>
+    <label className={styles.UploadContainer}>
+      <CameraAlt />
+      <p>
+        Upload Photo <span>(not required)</span>
+      </p>
+      <span className={styles.tagline}>PNG or JPG</span>
+      <VisuallyHiddenInput
+        type="file"
+        onChange={onFileUpload}
+        accept="image/png, image/jpeg, image/jpg"
+      />
+    </label>
   )
 }
 

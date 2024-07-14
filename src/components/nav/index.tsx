@@ -22,7 +22,7 @@ import {
   toggleDestroy
 } from '../../lib/redux/slices/nav'
 import { userLinks, NavItemType } from './utils'
-import hooks from '../../hooks'
+import { useScreenSize } from '../../hooks'
 
 import styles from './Nav.module.scss'
 
@@ -112,7 +112,7 @@ function Navbar() {
   const { profile, loggedIn } = useSelector((state: any) => state.user)
   const { isMobile, showMobile } = useSelector((state: any) => state.nav)
 
-  const { isMobileWidth } = hooks.useScreenSize()
+  const { isMobileWidth } = useScreenSize()
   useEffect(() => {
     if (isMobileWidth && !isMobile) {
       dispatch(setIsMobile(true))

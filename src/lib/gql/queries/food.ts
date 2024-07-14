@@ -39,6 +39,7 @@ export const GET_FOOD = gql`
           percentOfDailyNeeds
         }
         estimatedCost
+        amount
         caloricBreakdown {
           calories {
             percent

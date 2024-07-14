@@ -1,15 +1,72 @@
-.RecipeForm {
-  display: grid;
-  grid-template-columns: 25rem 1fr;
-  grid-gap: 1rem;
+.recipeForm {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 
-  @media screen and (max-width: 1000px) {
-    grid-template-columns: 1fr;
+  .formBlock {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 1rem;
+    align-items: flex-start;
+
+    @media screen and (max-width: 1000px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .buttonRow {
+    display: flex;
+    justify-content: flex-end;
+
+    .submitButton {
+      background-color: #3e9f3e;
+      color: white;
+      font-weight: bold;
+      border: 1px solid transparent;
+      border-radius: 4px;
+      width: 12rem;
+      padding: 7px;
+      cursor: pointer;
+      transition: var(--hover-transition);
+
+      &:hover {
+        border-color: #3e9f3e;
+        color: #3e9f3e;
+        background-color: white;
+      }
+
+      &:disabled {
+        background-color: darkgray;
+        border-color: darkgray;
+        color: white;
+        cursor: default;
+      }
+
+      @media screen and (max-width: 1000px) {
+        width: 100%;
+      }
+    }
   }
 }
 
-.ListBuilder {
-  padding: 1rem;
+.generalInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  .genInfoKeyFields {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 15rem 1fr;
+    grid-gap: 0.5rem;
+    padding: 1rem;
+  }
+}
+
+.additionalInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 .ListDisplay {
@@ -50,16 +107,6 @@
       border-bottom: 1px solid lightgray;
     }
   }
-}
-
-.ChipDisplay {
-}
-
-.generalInfo {
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: 1fr auto;
-  grid-gap: 0.5rem;
 }
 
 .formFields {
@@ -114,6 +161,37 @@
 
     .loader {
       width: 100%;
+    }
+  }
+}
+
+.existingIngredient {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+
+  .keyFields {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px;
+
+    .weight {
+      border: 1px solid lightgray;
+      border-radius: var(--border-radius);
+      display: grid;
+      grid-template-columns: 1fr 1px 1fr;
+
+      div {
+        padding: 3px;
+      }
+
+      .border {
+        padding: 0;
+        width: 1px;
+        height: 100%;
+        background-color: lightgray;
+      }
     }
   }
 }

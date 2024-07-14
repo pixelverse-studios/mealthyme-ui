@@ -1,3 +1,4 @@
+import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter'
 import type { Metadata } from 'next'
 import ApolloWrapper from '../lib/gql/ApolloWrapper'
 import ReduxWrapper from '../lib/redux/ReduxWrapper'
@@ -20,17 +21,19 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <ApolloWrapper>
-          <ReduxWrapper>
-            <AuthWrapper>
-              <Navbar />
-              <div className="content">
-                <SideNav />
-                <main>{children}</main>
-              </div>
-            </AuthWrapper>
-          </ReduxWrapper>
-        </ApolloWrapper>
+        <AppRouterCacheProvider>
+          <ApolloWrapper>
+            <ReduxWrapper>
+              <AuthWrapper>
+                <Navbar />
+                <div className="content">
+                  <SideNav />
+                  <main>{children}</main>
+                </div>
+              </AuthWrapper>
+            </ReduxWrapper>
+          </ApolloWrapper>
+        </AppRouterCacheProvider>
       </body>
     </html>
   )

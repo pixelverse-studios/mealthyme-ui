@@ -18,7 +18,7 @@ import { isHandledError } from '../utils/gql'
 import { authProvider } from '../lib/auth'
 import Banner from '../components/banner'
 import { RECIPE_ROUTES } from '../components/nav/utils'
-import hooks from '.'
+import { useRecipes } from '.'
 
 const useAuth = (router: any) => {
   const auth = getAuth()
@@ -26,7 +26,7 @@ const useAuth = (router: any) => {
   const { user: userRecipes, loading } = useSelector(
     (state: any) => state.recipes
   )
-  const { fetchUserRecipes, fetchUserFilters } = hooks.useRecipes()
+  const { fetchUserRecipes, fetchUserFilters } = useRecipes()
 
   const [signIn] = useMutation(SIGN_IN, {
     async onCompleted({ signIn: data }) {
@@ -34,7 +34,6 @@ const useAuth = (router: any) => {
         return Banner.Error(data.message)
       } else {
         await fetchUserRecipes(data._id)
-        console.log('sign in')
         dispatch(setProfile(data))
         setLocalStorageItem(USER_TOKEN, data)
         Banner.LoggedIn()

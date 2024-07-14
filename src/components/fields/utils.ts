@@ -1,17 +1,18 @@
 import { FieldInputProps } from '../../utils/types/fields'
 
 export const setColor = (
-  field: FieldInputProps
+  field: FieldInputProps | null
 ): 'primary' | 'error' | 'success' => {
-  if (field.value === '' && field.error === '') {
+  if (field == null) return 'primary'
+  if (field.value === '' && field.msgType === '') {
     return 'primary'
   }
 
-  if (field.error) {
+  if (field.msgType === 'error') {
     return 'error'
   }
 
-  if (field.value && !field.error) {
+  if (field.value && !field.msgType) {
     return 'primary'
   }
 

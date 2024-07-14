@@ -1,12 +1,13 @@
-import { Rating } from '@mui/material'
-import { Place, PlaceOutlined } from '@mui/icons-material'
+import { Whatshot } from '@mui/icons-material'
 
+import { RatingField } from '../../../../components/fields'
 import { RecipeType } from '../../../../utils/types/recipes'
 import styles from './Feed.module.scss'
 
 const recipeFallbackImg =
   'https://res.cloudinary.com/mealthyme/image/upload/mealthyme/placeholders/recipe_placeholder_yszhtf.jpg'
 
+console.log(recipeFallbackImg)
 const FeedItem = ({
   recipe: {
     title,
@@ -24,7 +25,6 @@ const FeedItem = ({
 }: {
   recipe: RecipeType
 }) => {
-  console.log(recipeFallbackImg)
   return (
     <div className={styles.FeedItem}>
       <div className={styles.topPanel}>
@@ -33,25 +33,24 @@ const FeedItem = ({
           <h3>{category.label}</h3>
         </div>
         <img
-          src={image === '' ? recipeFallbackImg : image}
+          src={image.src === null ? recipeFallbackImg : image.src ?? ''}
           alt={`${title} image`}
         />
       </div>
       <div className={styles.infoPanel}>
         <div className={styles.ratings}>
-          <Rating
-            name="recipe-rating"
-            readOnly
-            precision={0.5}
-            value={rating}
-          />
-          <Rating
-            name="recipe-rating"
-            icon={<Place />}
-            emptyIcon={<PlaceOutlined />}
-            readOnly
-            precision={0.5}
-            value={rating}
+          <RatingField
+            field={{
+              value: rating.toString(),
+              msgType: '',
+              valid: true,
+              message: ''
+            }}
+            id="difficulty"
+            label=""
+            onChange={() => null}
+            icon={<Whatshot />}
+            emptyIcon={<Whatshot />}
           />
         </div>
         <div>

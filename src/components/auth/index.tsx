@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux'
 
 import { setProfile, setProfileLoading } from '../../lib/redux/slices/user'
 import { getValidatedUser } from '../../lib/auth/utils'
-import hooks from '../../hooks'
+import { useRecipes, useAuth } from '../../hooks'
 
 const AuthWrapper = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter()
@@ -21,8 +21,8 @@ const AuthWrapper = ({ children }: { children: React.ReactNode }) => {
     fetchAllRecipes,
     fetchUserFilters,
     fetchUserRecipes
-  } = hooks.useRecipes()
-  const { handleGoogleLogOut } = hooks.useAuth(router)
+  } = useRecipes()
+  const { handleGoogleLogOut } = useAuth(router)
 
   const { profile: validated, expired } = getValidatedUser()
   useEffect(() => {

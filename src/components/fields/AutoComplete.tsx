@@ -3,7 +3,7 @@ import {
   TextField as MuiTextField,
   createFilterOptions
 } from '@mui/material'
-import { isMatchingString } from '../../utils/validations/strings'
+import StringUtils from '../../utils/validations/strings'
 
 interface OptionProps {
   _id: string
@@ -35,7 +35,7 @@ const AutoComplete = ({
         const filtered = filter(options, params) as any
         const { inputValue } = params
         const isExisting = options.some(option =>
-          isMatchingString(inputValue, option.label)
+          StringUtils.isMatching(inputValue, option.label)
         )
         if (inputValue !== '' && !isExisting) {
           filtered.push({

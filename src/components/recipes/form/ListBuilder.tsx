@@ -1,5 +1,5 @@
 import { useState, ChangeEvent, KeyboardEvent } from 'react'
-import { Paper, Button, Chip } from '@mui/material'
+import { Button, Chip } from '@mui/material'
 import { DeleteForever } from '@mui/icons-material'
 import { RecipeFormProps, ListInputProps } from '../../../utils/types/fields'
 import { TextField } from '../../fields'
@@ -12,7 +12,7 @@ interface ListDisplayProps {
 
 const ListDisplay = ({ items, onDelete }: ListDisplayProps) => {
   if (items?.length === 0) {
-    return <div className={styles.ListDisplay}>empty list {':('}</div>
+    return <div className={styles.ListDisplay} />
   }
 
   return (
@@ -36,7 +36,7 @@ const ListDisplay = ({ items, onDelete }: ListDisplayProps) => {
 
 const ChipDisplay = ({ items, onDelete }: ListDisplayProps) => {
   if (items?.length === 0) {
-    return <div className={styles.ChipDisplay}>empty bag of chips {':('}</div>
+    return <div className={styles.ChipDisplay} />
   }
   return (
     <div className={styles.ChipDisplay}>
@@ -52,10 +52,6 @@ interface ListBuilderProps extends RecipeFormProps {
   id: string
   field: ListInputProps
   display: 'chip' | 'list'
-  validation: {
-    test: (item: string) => boolean
-    message: string
-  }
 }
 
 const ListBuilder = ({
@@ -63,21 +59,12 @@ const ListBuilder = ({
   id,
   field,
   handleNonFormEventChange,
-  display,
-  validation
+  display
 }: ListBuilderProps) => {
   const [value, setValue] = useState<string>('')
-  const [error, setError] = useState<string>('')
 
   const onFieldUpdate = (event: ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target
-
-    if (!validation.test(value)) {
-      setError(validation.message)
-    } else {
-      setError('')
-    }
-
     setValue(value)
   }
 
@@ -85,7 +72,6 @@ const ListBuilder = ({
     const newList = [...field.value, value]
     handleNonFormEventChange(newList, id)
     setValue('')
-    setError('')
   }
 
   const onDelete = (item: string) => {
@@ -100,15 +86,16 @@ const ListBuilder = ({
   }
 
   return (
-    <Paper className={styles.ListBuilder}>
+    <div className={styles.ListBuilder}>
       <div>
         <TextField
-          field={{ value, error }}
+          field={{ value, msgType: '', message: '', valid: true }}
           id={id}
           label={label}
           onChange={onFieldUpdate}
           type="text"
           onKeyDown={onKeyDown}
+          onBlur={() => null}
         />
         <Button onClick={onAdd}>Add</Button>
       </div>
@@ -117,7 +104,7 @@ const ListBuilder = ({
       ) : (
         <ListDisplay onDelete={onDelete} items={field.value} />
       )}
-    </Paper>
+    </div>
   )
 }
 
