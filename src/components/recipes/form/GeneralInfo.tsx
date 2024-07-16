@@ -14,6 +14,7 @@ import { RecipeFormProps } from '../../../utils/types/fields'
 import FormRow from '../../form/Row'
 import { ImageProps } from '../../upload'
 import styles from './RecipeForm.module.scss'
+import stripTypenames from '../../../utils/stripTypenames'
 
 const GeneralInfo = ({
   form,
@@ -33,7 +34,7 @@ const GeneralInfo = ({
       if (isHandledError(data)) {
         return Banner.Error(data.message)
       } else {
-        setCategories(data.UsersCategories)
+        setCategories(stripTypenames(data.UsersCategories))
         return setLoadingCategories(false)
       }
     },

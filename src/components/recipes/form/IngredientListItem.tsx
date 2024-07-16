@@ -1,20 +1,16 @@
 import { ChangeEvent, useState, useCallback, useEffect, useMemo } from 'react'
 import { useLazyQuery } from '@apollo/client'
-import {
-  MenuItem,
-  Menu,
-  Button,
-  LinearProgress,
-  IconButton
-} from '@mui/material'
+import { MenuItem, Menu, Button, IconButton } from '@mui/material'
 import { Delete } from '@mui/icons-material'
 
+import stripTypenames from '../../../utils/stripTypenames'
 import { SearchResultType } from '../../../utils/types/food'
 import { Ingredient } from '../../../utils/types/recipes'
 import { TextField, SelectField, NumberField } from '../../fields'
 import Banner from '../../banner'
 import { useDebounce } from '../../../hooks'
 import { GET_SEARCH_RESULTS, GET_FOOD } from '../../../lib/gql/queries/food'
+import { LinearLoader } from '../../elements'
 import FormValidations from '../../../utils/validations/form'
 import { isHandledError } from '../../../utils/gql'
 import StringUtils from '../../../utils/validations/strings'
@@ -118,7 +114,7 @@ const IngredientListItem = ({
   const [getSearchResults] = useLazyQuery(GET_SEARCH_RESULTS, {
     async onCompleted({ getSearchResults: data }) {
       if (isHandledError(data)) return Banner.Error(data.message)
-      setResults(data.Autocompletes)
+      setResults(stripTypenames(data.Autocompletes))
       setLoadingSearch(false)
     },
     onError() {
@@ -279,11 +275,7 @@ const IngredientListItem = ({
               Clear
             </Button>
           </div>
-          {loadingFood ? (
-            <div className={styles.loader}>
-              <LinearProgress />
-            </div>
-          ) : null}
+          <LinearLoader loading={loadingFood} />
         </div>
         <SearchResults
           loading={loadingSearch}
@@ -325,16 +317,6 @@ const IngredientListItem = ({
       </div>
     )
   }
-  // const macroRows = item?.nutrition.filter(nutrient => {
-  //   if (
-  //     nutrient.name === 'Calories' ||
-  //     nutrient.name === 'Protein' ||
-  //     nutrient.name === 'Carbohydrates' ||
-  //     nutrient.name === 'Fat'
-  //   ) {
-  //     return nutrient
-  //   }
-  // })
 
   return (
     <div className={styles.existingIngredient}>
@@ -351,13 +333,6 @@ const IngredientListItem = ({
           <Delete />
         </IconButton>
       </div>
-      {/* <div className={styles.macros}>
-        Calories: {macroRows?.find(item => item.name === 'Calories')?.amount}
-        Protein: {macroRows?.find(item => item.name === 'Protein')?.amount}
-        Carbohydrates:{' '}
-        {macroRows?.find(item => item.name === 'Carbohydrates')?.amount}
-        Fat: {macroRows?.find(item => item.name === 'Fat')?.amount}
-      </div> */}
     </div>
   )
 }

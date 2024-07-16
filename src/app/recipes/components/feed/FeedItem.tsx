@@ -7,13 +7,12 @@ import styles from './Feed.module.scss'
 const recipeFallbackImg =
   'https://res.cloudinary.com/mealthyme/image/upload/mealthyme/placeholders/recipe_placeholder_yszhtf.jpg'
 
-console.log(recipeFallbackImg)
 const FeedItem = ({
   recipe: {
     title,
     category,
     image,
-    rating,
+    difficulty,
     macros: { protein, carbs, fat, calories },
     tags,
     user,
@@ -41,7 +40,7 @@ const FeedItem = ({
         <div className={styles.ratings}>
           <RatingField
             field={{
-              value: rating.toString(),
+              value: difficulty?.toString(),
               msgType: '',
               valid: true,
               message: ''
