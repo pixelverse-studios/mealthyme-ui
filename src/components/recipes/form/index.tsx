@@ -58,7 +58,6 @@ const RecipeForm = () => {
 
   return (
     <div className={styles.recipeForm}>
-      <button onClick={onSuccess}>toggle recap</button>
       <div className={styles.formBlock}>
         <GeneralInfo
           form={form}
