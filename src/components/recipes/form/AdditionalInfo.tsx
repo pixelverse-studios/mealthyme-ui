@@ -4,7 +4,6 @@ import { Card } from '../../elements'
 import ListBuilder from './ListBuilder'
 import IngredientList from './IngredientList'
 import { RecipeFormProps } from '../../../utils/types/fields'
-import FormValidations from '../../../utils/validations/form'
 import styles from './RecipeForm.module.scss'
 
 const AdditionalInfo = ({
@@ -32,7 +31,6 @@ const AdditionalInfo = ({
           field={form.instructions}
           handleNonFormEventChange={handleNonFormEventChange}
           display="list"
-          validation={FormValidations.validAlphaNumericSpacesSpecials}
         />
       </Card>
       <Card>
@@ -43,7 +41,6 @@ const AdditionalInfo = ({
           field={form.allergies}
           handleNonFormEventChange={handleNonFormEventChange}
           display="chip"
-          validation={FormValidations.validAlphaNumeric}
         />
       </Card>
       <Card>
@@ -54,7 +51,6 @@ const AdditionalInfo = ({
           field={form.tags}
           handleNonFormEventChange={handleNonFormEventChange}
           display="chip"
-          validation={FormValidations.validAlphaNumeric}
         />
       </Card>
     </section>
