@@ -23,8 +23,7 @@ import {
 } from '../../lib/redux/slices/nav'
 import { userLinks, NavItemType } from './utils'
 import { useScreenSize } from '../../hooks'
-import MtLogo from '../../assets/logo.png'
-
+import Logo from './Logo'
 import styles from './Nav.module.scss'
 
 const NavItems = ({
@@ -75,7 +74,7 @@ const NavItems = ({
     <Box
       className={styles.navBody}
       sx={{ display: { xs: 'none', md: 'flex' } }}>
-      <Logo />
+      <Logo loggedIn={loggedIn} />
       <div className={styles.navItems}>
         {renderAvatar()}
         <Menu
@@ -95,15 +94,6 @@ const NavItems = ({
         </Menu>
       </div>
     </Box>
-  )
-}
-
-const Logo = () => {
-  const router = useRouter()
-  return (
-    <div className={styles.logoBlock} onClick={() => router.push('/recipes')}>
-      <img src={MtLogo.src} alt="mealthyme_logo" />
-    </div>
   )
 }
 
@@ -139,7 +129,7 @@ function Navbar() {
           <Box
             className={styles.mobileNav}
             sx={{ display: { xs: 'flex', md: 'none' } }}>
-            <Logo />
+            <Logo loggedIn={loggedIn} />
             <IconButton
               size="large"
               aria-label="account of current user"
