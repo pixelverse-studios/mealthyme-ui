@@ -19,7 +19,11 @@ const FeedItem = ({
           <h3>{category.label}</h3>
         </div>
         <img
-          src={image.src === null ? recipeFallbackImg : image.src ?? ''}
+          src={
+            image.src === null || image.src === ''
+              ? recipeFallbackImg
+              : image.src ?? ''
+          }
           alt={`${title} image`}
         />
       </div>
@@ -32,11 +36,13 @@ const FeedItem = ({
             <LocalDiningTwoTone /> {servings ?? 0}
           </p>
         </div>
-        <div className={styles.tags}>
-          {tags.map(tag => (
-            <div key={tag}>#{tag}</div>
-          ))}
-        </div>
+        {tags?.length > 0 ? (
+          <div className={styles.tags}>
+            {tags.map(tag => (
+              <div key={tag}>#{tag}</div>
+            ))}
+          </div>
+        ) : null}
       </div>
     </div>
   )
