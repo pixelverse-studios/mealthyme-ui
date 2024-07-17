@@ -12,7 +12,7 @@ import {
   MenuItem,
   Toolbar
 } from '@mui/material'
-import { Fastfood, Menu as MenuIcon } from '@mui/icons-material'
+import { Menu as MenuIcon } from '@mui/icons-material'
 import LoginButton from '../auth/LoginButton'
 import LogoutButton from '../auth/LogoutButton'
 import { ProfileProps } from '../../utils/types/user'
@@ -23,6 +23,7 @@ import {
 } from '../../lib/redux/slices/nav'
 import { userLinks, NavItemType } from './utils'
 import { useScreenSize } from '../../hooks'
+import MtLogo from '../../assets/logo.png'
 
 import styles from './Nav.module.scss'
 
@@ -74,7 +75,7 @@ const NavItems = ({
     <Box
       className={styles.navBody}
       sx={{ display: { xs: 'none', md: 'flex' } }}>
-      <Logo showText />
+      <Logo />
       <div className={styles.navItems}>
         {renderAvatar()}
         <Menu
@@ -97,12 +98,11 @@ const NavItems = ({
   )
 }
 
-const Logo = ({ showText }: { showText: boolean }) => {
+const Logo = () => {
   const router = useRouter()
   return (
     <div className={styles.logoBlock} onClick={() => router.push('/recipes')}>
-      <Fastfood className={styles.logo} />
-      {showText ? <span>MealThyme</span> : null}
+      <img src={MtLogo.src} alt="mealthyme_logo" />
     </div>
   )
 }
@@ -113,6 +113,7 @@ function Navbar() {
   const { isMobile, showMobile } = useSelector((state: any) => state.nav)
 
   const { isMobileWidth } = useScreenSize()
+
   useEffect(() => {
     if (isMobileWidth && !isMobile) {
       dispatch(setIsMobile(true))
@@ -138,6 +139,7 @@ function Navbar() {
           <Box
             className={styles.mobileNav}
             sx={{ display: { xs: 'flex', md: 'none' } }}>
+            <Logo />
             <IconButton
               size="large"
               aria-label="account of current user"
@@ -147,7 +149,6 @@ function Navbar() {
               color="inherit">
               <MenuIcon />
             </IconButton>
-            <Logo showText={false} />
           </Box>
           <NavItems profile={profile} loggedIn={loggedIn} />
         </Toolbar>
