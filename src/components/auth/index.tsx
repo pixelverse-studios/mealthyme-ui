@@ -25,6 +25,12 @@ const AuthWrapper = ({ children }: { children: React.ReactNode }) => {
   const { handleGoogleLogOut } = useAuth(router)
 
   const { profile: validated, expired } = getValidatedUser()
+
+  useEffect(() => {
+    const element = document?.querySelector('html')
+    if (element != null) element.setAttribute('data-theme', 'LIGHT')
+  }, [])
+
   useEffect(() => {
     if (!loading && !loggedIn) {
       if (expired) {

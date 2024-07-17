@@ -6,3 +6,20 @@
   --border-radius: 10px;
   --boxshadow-border: 0px 0px 10px 3px rgba(0, 0, 0, 0.1);
 }
+
+[data-theme='LIGHT'] {
+  --text: #040316;
+
+  --background: #fbfbfe;
+  --primary: #86a286;
+  --secondary: #76788f;
+  --accent: #e08d6c;
+}
+[data-theme='DARK'] {
+  --text: #eae9fc;
+
+  --background: #010104;
+  --primary: #5d795d;
+  --secondary: #707389;
+  --accent: #93401f;
+}

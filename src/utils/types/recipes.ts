@@ -54,6 +54,7 @@ export interface RecipeType {
     carbs: number
     fat: number
   }
+  servings: number
   totalEstimatedCost: number
   instructions: string[]
   cookingMethod: string

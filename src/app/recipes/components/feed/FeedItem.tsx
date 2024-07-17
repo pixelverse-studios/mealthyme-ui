@@ -1,6 +1,5 @@
-import { Whatshot } from '@mui/icons-material'
+import { AccessTimeTwoTone, LocalDiningTwoTone } from '@mui/icons-material'
 
-import { RatingField } from '../../../../components/fields'
 import { RecipeType } from '../../../../utils/types/recipes'
 import styles from './Feed.module.scss'
 
@@ -8,19 +7,7 @@ const recipeFallbackImg =
   'https://res.cloudinary.com/mealthyme/image/upload/mealthyme/placeholders/recipe_placeholder_yszhtf.jpg'
 
 const FeedItem = ({
-  recipe: {
-    title,
-    category,
-    image,
-    difficulty,
-    macros: { protein, carbs, fat, calories },
-    tags,
-    user,
-    prepTime,
-    cookTime,
-    totalTime,
-    totalEstimatedCost
-  }
+  recipe: { title, category, image, tags, totalTime, servings }
 }: {
   recipe: RecipeType
 }) => {
@@ -37,36 +24,19 @@ const FeedItem = ({
         />
       </div>
       <div className={styles.infoPanel}>
-        <div className={styles.ratings}>
-          <RatingField
-            field={{
-              value: difficulty?.toString(),
-              msgType: '',
-              valid: true,
-              message: ''
-            }}
-            id="difficulty"
-            label=""
-            onChange={() => null}
-            icon={<Whatshot />}
-            emptyIcon={<Whatshot />}
-          />
+        <div className={styles.singleRow}>
+          <p>
+            <AccessTimeTwoTone /> {totalTime}
+          </p>
+          <p>
+            <LocalDiningTwoTone /> {servings ?? 0}
+          </p>
         </div>
-        <div>
-          {protein} {carbs} {fat} {calories}
-        </div>
-        <div>
+        <div className={styles.tags}>
           {tags.map(tag => (
-            <span key={tag}>{tag},</span>
+            <div key={tag}>#{tag}</div>
           ))}
         </div>
-        <div>
-          Prep: {prepTime}
-          Cook: {cookTime}
-          Total: {totalTime}
-        </div>
-        <div>{totalEstimatedCost}</div>
-        <div>{user.email}</div>
       </div>
     </div>
   )
