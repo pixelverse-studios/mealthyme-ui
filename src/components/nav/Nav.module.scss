@@ -1,5 +1,4 @@
 .mobileNav {
-  flex-grow: 1;
   gap: 1rem;
 
   display: flex;
@@ -9,12 +8,24 @@
 
 .Nav {
   box-shadow: none;
+  height: 64px;
 }
 
 .navBody {
-  flex-grow: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 5px;
+  min-height: var(--nav-offset) !important;
+}
+
+.userMenu {
   gap: 1rem;
   justify-content: space-between;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .logoBlock {
@@ -36,10 +47,8 @@
   width: var(--sidebar-width);
   height: 100%;
   padding-right: 1rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: 5px;
+  display: grid;
+  grid-template-rows: 88vh 5rem;
   position: fixed;
 
   .accordion {
@@ -82,7 +91,10 @@
   }
 
   @media screen and (max-width: 900px) {
-    height: calc(100% - 4rem);
+    display: grid;
+    justify-content: flex-start;
+    grid-template-rows: 85vh 2rem;
     padding-bottom: 1rem;
+    background-color: white; // This is specifically to ensure the transparent gradient doesnt look bad. Remove this if we remove the gradient
   }
 }

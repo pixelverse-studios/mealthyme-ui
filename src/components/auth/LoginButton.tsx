@@ -9,6 +9,7 @@ const LoginButton = () => {
   const router = useRouter()
   const { handleGoogleSignIn } = useAuth(router as any)
   const { loading } = useSelector((state: any) => state.user)
+
   const onLogin = async () => handleGoogleSignIn()
 
   return (

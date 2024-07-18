@@ -1,4 +1,4 @@
-import { AccessTimeTwoTone, LocalDiningTwoTone } from '@mui/icons-material'
+import { AccessTimeTwoTone, PeopleAltTwoTone } from '@mui/icons-material'
 
 import { RecipeType } from '../../../../utils/types/recipes'
 import styles from './Feed.module.scss'
@@ -33,7 +33,7 @@ const FeedItem = ({
             <AccessTimeTwoTone /> {totalTime}
           </p>
           <p>
-            <LocalDiningTwoTone /> {servings ?? 0}
+            <PeopleAltTwoTone /> {servings ?? 0}
           </p>
         </div>
         {tags?.length > 0 ? (

@@ -8,6 +8,7 @@ import {
   COMPACT,
   GRID
 } from '../../../../lib/redux/slices/recipes'
+import { useScreenSize } from '../../../../hooks'
 
 import styles from './Feed.module.scss'
 
@@ -19,6 +20,8 @@ layoutMap.set(GRID, { label: GRID, icon: <Window /> })
 const LayoutSelect = () => {
   const dispatch = useDispatch()
   const { layout } = useSelector((state: any) => state.recipes)
+
+  const { isMobileWidth } = useScreenSize()
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const open = Boolean(anchorEl)
@@ -60,11 +63,13 @@ const LayoutSelect = () => {
           value={layoutMap.get(COMPACT).label}>
           {layoutMap.get(COMPACT).icon}
         </MenuItem>
-        <MenuItem
-          onClick={() => onLayoutChange(layoutMap.get(GRID).label)}
-          value={layoutMap.get(GRID).label}>
-          {layoutMap.get(GRID).icon}
-        </MenuItem>
+        {isMobileWidth ? null : (
+          <MenuItem
+            onClick={() => onLayoutChange(layoutMap.get(GRID).label)}
+            value={layoutMap.get(GRID).label}>
+            {layoutMap.get(GRID).icon}
+          </MenuItem>
+        )}
       </Menu>
     </div>
   )

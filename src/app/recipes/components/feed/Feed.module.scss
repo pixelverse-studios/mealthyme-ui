@@ -1,32 +1,31 @@
 .Feed {
-  padding: 1rem;
   position: relative;
 
   .feedContent {
     transition: var(--hover-transition);
-    padding-top: 1rem;
+    padding: 1rem;
   }
 
   &.Cozy {
     .feedContent {
-      display: flex;
-      flex-direction: column;
-      gap: 2rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+      grid-gap: 2.5rem;
     }
   }
 
   &.Compact {
     .feedContent {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+      grid-gap: 1rem;
     }
   }
 
   &.Grid {
     .feedContent {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
       grid-gap: 1rem;
 
       @media screen and (max-width: 700px) {
@@ -34,9 +33,15 @@
       }
     }
   }
+
+  @media screen and (max-width: 850) {
+    padding: 0 1rem;
+  }
 }
 
 .FeedItem {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
   border-radius: var(--border-radius);
   width: 100%;
   box-shadow: var(--boxshadow-border);
@@ -88,12 +93,14 @@
       p {
         display: flex;
         align-items: center;
+        font-size: 1.1rem;
       }
     }
 
     .tags {
       display: flex;
       align-items: center;
+      flex-wrap: wrap;
       gap: 5px;
 
       div {
@@ -135,11 +142,11 @@
   gap: 1rem;
   position: sticky;
   width: 100%;
-  top: 64px;
+  top: 58px;
   z-index: 10;
   background-color: white;
   border-bottom: 1px solid lightgray;
-  padding: 1rem 0;
+  padding: 0.5rem 1rem;
 
   .buttonBlock {
     display: flex;
@@ -147,6 +154,9 @@
 
     button {
       border-radius: var(--border-radius);
+    }
+    &:nth-of-type(3) {
+      justify-content: flex-end;
     }
   }
 

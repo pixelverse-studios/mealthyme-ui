@@ -1,7 +1,7 @@
 import { useRouter } from 'next/navigation'
 import { useSelector } from 'react-redux'
-import { TextField, InputAdornment, IconButton, Button } from '@mui/material'
-import { Search, Tune } from '@mui/icons-material'
+import { TextField, InputAdornment, IconButton } from '@mui/material'
+import { Search, Tune, AddCircle } from '@mui/icons-material'
 import LayoutSelect from './LayoutSelect'
 
 import styles from './Feed.module.scss'
@@ -33,12 +33,9 @@ const FilterBar = () => {
         }}
       />
       <div className={styles.buttonBlock}>
-        <Button
-          variant="outlined"
-          disabled={!loggedIn}
-          onClick={onNewRecipeClick}>
-          Create
-        </Button>
+        <IconButton disabled={!loggedIn} onClick={onNewRecipeClick}>
+          <AddCircle />
+        </IconButton>
       </div>
     </div>
   )

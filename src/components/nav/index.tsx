@@ -14,19 +14,19 @@ import {
 } from '@mui/material'
 import { Menu as MenuIcon } from '@mui/icons-material'
 import LoginButton from '../auth/LoginButton'
-import LogoutButton from '../auth/LogoutButton'
 import { ProfileProps } from '../../utils/types/user'
 import {
   setIsMobile,
   setShowMobile,
   toggleDestroy
 } from '../../lib/redux/slices/nav'
+import AuthButton from '../auth/AuthButton'
 import { userLinks, NavItemType } from './utils'
 import { useScreenSize } from '../../hooks'
 import Logo from './Logo'
 import styles from './Nav.module.scss'
 
-const NavItems = ({
+const NavUserMenu = ({
   profile,
   loggedIn
 }: {
@@ -45,6 +45,7 @@ const NavItems = ({
     if (!loggedIn) return <LoginButton />
 
     const { avatar, firstName, lastName } = profile
+
     if (avatar === '')
       return (
         <IconButton onClick={onMenuClick}>
@@ -71,29 +72,24 @@ const NavItems = ({
   }
 
   return (
-    <Box
-      className={styles.navBody}
-      sx={{ display: { xs: 'none', md: 'flex' } }}>
-      <Logo loggedIn={loggedIn} />
-      <div className={styles.navItems}>
-        {renderAvatar()}
-        <Menu
-          anchorEl={anchorEl}
-          id="account-menu"
-          open={menuOpen}
-          onClose={handleMenuClose}
-          onClick={handleMenuClose}>
-          <MenuItem>{loggedIn ? <LogoutButton /> : <LoginButton />}</MenuItem>
-          {userLinks(profile?._id != '').map(
-            ({ route, label }: NavItemType) => (
-              <MenuItem key={label} onClick={() => onMenuItemClick(route)}>
-                {label}
-              </MenuItem>
-            )
-          )}
-        </Menu>
-      </div>
-    </Box>
+    <div className={styles.userMenu}>
+      {renderAvatar()}
+      <Menu
+        anchorEl={anchorEl}
+        id="account-menu"
+        open={menuOpen}
+        onClose={handleMenuClose}
+        onClick={handleMenuClose}>
+        <MenuItem>
+          <AuthButton loggedIn={loggedIn} />
+        </MenuItem>
+        {userLinks(profile?._id != '').map(({ route, label }: NavItemType) => (
+          <MenuItem key={label} onClick={() => onMenuItemClick(route)}>
+            {label}
+          </MenuItem>
+        ))}
+      </Menu>
+    </div>
   )
 }
 
@@ -125,11 +121,10 @@ function Navbar() {
   return (
     <AppBar position="fixed" className={styles.Nav}>
       <Container maxWidth="xl">
-        <Toolbar disableGutters>
+        <Toolbar disableGutters className={styles.navBody}>
           <Box
             className={styles.mobileNav}
             sx={{ display: { xs: 'flex', md: 'none' } }}>
-            <Logo loggedIn={loggedIn} />
             <IconButton
               size="large"
               aria-label="account of current user"
@@ -140,7 +135,8 @@ function Navbar() {
               <MenuIcon />
             </IconButton>
           </Box>
-          <NavItems profile={profile} loggedIn={loggedIn} />
+          <Logo loggedIn={loggedIn} />
+          <NavUserMenu profile={profile} loggedIn={loggedIn} />
         </Toolbar>
       </Container>
     </AppBar>

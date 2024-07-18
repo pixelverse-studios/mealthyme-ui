@@ -40,13 +40,7 @@
     background-color: transparent;
 
     .drawerContent {
-      background-image: linear-gradient(
-        to right,
-        #fff,
-        #fff,
-        #fff,
-        transparent
-      );
+      background-image: linear-gradient(to right, #fff, #fff, #fff);
     }
   }
 
@@ -62,8 +56,8 @@
   & > svg {
     position: absolute;
     z-index: 1;
-    right: 0.5rem;
-    top: 0.5rem;
+    right: 1rem;
+    top: 1rem;
     cursor: pointer;
 
     &:hover {

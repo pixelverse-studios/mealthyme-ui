@@ -9,6 +9,7 @@ const LogoutButton = () => {
   const router = useRouter()
   const { handleGoogleLogOut } = useAuth(router)
   const { loading } = useSelector((state: any) => state.user)
+
   const onLogout = async () => handleGoogleLogOut()
 
   return (

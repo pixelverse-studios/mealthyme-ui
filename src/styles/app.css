@@ -15,19 +15,21 @@ body {
 .content {
   display: grid;
   grid-template-columns: var(--sidebar-width) 1fr;
-  /* height: var(--content-height); */
-  padding: 1rem;
-  padding-top: var(--nav-offset);
+  padding: 0 1rem 1rem 1rem;
+  margin-top: var(--nav-offset);
+  height: 100vh;
 }
 
 @media screen and (max-width: 900px) {
   .content {
     grid-template-columns: 1fr;
+    padding: unset;
   }
 
   main {
     padding: 0;
-    padding-top: 1rem;
+    /* padding-top: 1rem; */
+    width: 100vw;
   }
 }
 

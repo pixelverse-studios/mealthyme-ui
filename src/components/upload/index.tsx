@@ -69,7 +69,6 @@ const Upload = ({ callback }: { callback: (img: ImageProps) => void }) => {
       <p>
         Upload Photo <span>(not required)</span>
       </p>
-      <span className={styles.tagline}>PNG or JPG</span>
       <VisuallyHiddenInput
         type="file"
         onChange={onFileUpload}
