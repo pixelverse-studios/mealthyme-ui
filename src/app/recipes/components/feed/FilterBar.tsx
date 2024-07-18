@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux'
 import { TextField, InputAdornment, IconButton } from '@mui/material'
 import { Search, Tune, AddCircle } from '@mui/icons-material'
 import LayoutSelect from './LayoutSelect'
+import { ToolTip } from '../../../../components/elements'
 
 import styles from './Feed.module.scss'
 
@@ -15,10 +16,14 @@ const FilterBar = () => {
   return (
     <div className={styles.FilterBar}>
       <div className={styles.buttonBlock}>
-        <LayoutSelect />
-        <IconButton>
-          <Tune />
-        </IconButton>
+        <ToolTip info="Layout options">
+          <LayoutSelect />
+        </ToolTip>
+        <ToolTip info="Filters">
+          <IconButton>
+            <Tune />
+          </IconButton>
+        </ToolTip>
       </div>
       <TextField
         className={styles.search}
@@ -33,9 +38,11 @@ const FilterBar = () => {
         }}
       />
       <div className={styles.buttonBlock}>
-        <IconButton disabled={!loggedIn} onClick={onNewRecipeClick}>
-          <AddCircle />
-        </IconButton>
+        <ToolTip info="Create a new recipe">
+          <IconButton disabled={!loggedIn} onClick={onNewRecipeClick}>
+            <AddCircle />
+          </IconButton>
+        </ToolTip>
       </div>
     </div>
   )
