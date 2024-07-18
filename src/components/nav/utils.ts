@@ -11,7 +11,12 @@ export const userLinks = (loggedIn: boolean): NavItemType[] =>
       ]
     : []
 
-export const RECIPE_ROUTES = { all: '/recipes/all', mine: '/recipes/mine' }
+export const RECIPE_ROUTES = {
+  all: '/recipes/all',
+  mine: '/recipes/mine',
+  create: '/recipes/new',
+  recap: '/recipes/new/recap'
+}
 const baseRecipeLinks = [{ label: 'All', route: RECIPE_ROUTES.all }]
 const additionalRecipeLinks = [{ label: 'Mine', route: RECIPE_ROUTES.mine }]
 export const recipeLinks = (loggedIn: boolean): NavItemType[] =>

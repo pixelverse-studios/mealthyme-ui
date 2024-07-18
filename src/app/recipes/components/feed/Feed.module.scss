@@ -39,6 +39,24 @@
   }
 }
 
+.firstRecipeMsg {
+  border-radius: var(--border-radius);
+  box-shadow: var(--boxshadow-border);
+  padding: 1rem;
+  width: 50%;
+  margin: auto;
+  height: 5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  cursor: pointer;
+
+  svg {
+    color: var(--primary);
+  }
+}
+
 .FeedItem {
   display: grid;
   grid-template-rows: 1fr 1fr;

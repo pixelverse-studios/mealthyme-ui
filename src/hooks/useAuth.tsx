@@ -38,7 +38,7 @@ const useAuth = (router: any) => {
         setLocalStorageItem(USER_TOKEN, data)
         Banner.LoggedIn()
         // TODO: Decide how to handle if user should be routed home, or kept on their current page when logged in
-        return router.push(RECIPE_ROUTES.mine)
+        return router.push(RECIPE_ROUTES.all)
       }
     },
     onError() {

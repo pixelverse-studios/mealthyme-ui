@@ -4,6 +4,7 @@ import { TextField, InputAdornment, IconButton } from '@mui/material'
 import { Search, Tune, AddCircle } from '@mui/icons-material'
 import LayoutSelect from './LayoutSelect'
 import { ToolTip } from '../../../../components/elements'
+import { RECIPE_ROUTES } from '../../../../components/nav/utils'
 
 import styles from './Feed.module.scss'
 
@@ -11,7 +12,7 @@ const FilterBar = () => {
   const { loggedIn } = useSelector((state: any) => state.user)
   const router = useRouter()
 
-  const onNewRecipeClick = () => router.push('/recipes/new')
+  const onNewRecipeClick = () => router.push(RECIPE_ROUTES.create)
 
   return (
     <div className={styles.FilterBar}>

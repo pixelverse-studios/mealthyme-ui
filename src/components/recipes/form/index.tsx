@@ -12,6 +12,7 @@ import {
   sanitizeNewRecipe
 } from './utils'
 import Banner from '../../banner'
+import { RECIPE_ROUTES } from '../../nav/utils'
 import styles from './RecipeForm.module.scss'
 
 const RecipeForm = () => {
@@ -29,7 +30,7 @@ const RecipeForm = () => {
   const { handleUpload } = useImageUpload()
   const { submitNewRecipe } = useRecipes()
 
-  const onSuccess = () => router.push('/recipes/new/recap')
+  const onSuccess = () => router.push(RECIPE_ROUTES.recap)
 
   const onSubmit = async () => {
     try {
