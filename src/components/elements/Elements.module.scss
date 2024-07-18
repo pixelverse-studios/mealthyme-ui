@@ -13,10 +13,6 @@
 
 .IconLoader {
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
   z-index: 9999;
   background: rgba(0, 0, 0, 0.4);
   border-radius: var(--border-radius);
@@ -24,9 +20,9 @@
   left: 50%;
   transform: translate(-50%, -50%);
   width: 14rem;
-  height: 14rem;
+  height: 18rem;
 
-  @media screen and (max-width: 1000px) {
+  @media screen and (max-width: 800px) {
     top: 15rem;
   }
 }

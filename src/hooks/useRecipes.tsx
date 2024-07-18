@@ -47,6 +47,7 @@ const useRecipes = () => {
       if (isHandledError(allRecipes)) {
         return Banner.Error(allRecipes.message)
       }
+      console.log('got all recipes')
       dispatch(setLoadingRecipes(false))
       return dispatch(setAllRecipes(allRecipes.Recipes))
     },
@@ -56,6 +57,7 @@ const useRecipes = () => {
     }
   })
   const fetchAllRecipes = async () => {
+    console.log('fetch all recipes')
     dispatch(setLoadingRecipes(true))
     await getRecipes()
   }
