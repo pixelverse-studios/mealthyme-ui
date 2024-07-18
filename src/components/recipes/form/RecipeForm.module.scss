@@ -70,25 +70,47 @@
   gap: 1rem;
 }
 
+.ListBuilder {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  .search {
+    display: flex;
+    gap: 5px;
+    align-items: flex-end;
+  }
+}
+
+.ChipDisplay {
+  display: flex;
+  gap: 0.5rem;
+}
+
 .ListDisplay {
   padding: 1rem 7px;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  max-height: 10rem;
+  overflow: auto;
 
   .listItem {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 1.5rem 1.5rem;
+    grid-gap: 0.5rem;
     align-items: center;
-    justify-content: space-between;
-    gap: 0.5rem;
     margin-bottom: 3px;
     padding-bottom: 3px;
 
-    span {
-      margin-right: 7px;
+    .instruction {
+      display: grid;
+      grid-template-columns: 1.6rem 1fr;
+      grid-gap: 5px;
+    }
 
+    span {
       &:nth-of-type(1) {
-        padding-right: 7px;
         border-right: 1px solid lightgray;
       }
     }

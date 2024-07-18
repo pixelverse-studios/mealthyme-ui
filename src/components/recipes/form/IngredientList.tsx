@@ -1,12 +1,10 @@
 'use client'
-import { useMemo, useState } from 'react'
-import { Tooltip, ClickAwayListener, Fade } from '@mui/material'
 import { Info } from '@mui/icons-material'
 
-import { useScreenSize } from '../../../hooks'
 import IngredientListItem from './IngredientListItem'
 import { RecipeFormProps } from '../../../utils/types/fields'
 import { Ingredient } from '../../../utils/types/recipes'
+import { ToolTip } from '../../elements'
 import styles from './RecipeForm.module.scss'
 
 interface IngredientListProps extends RecipeFormProps {
@@ -22,23 +20,6 @@ const IngredientList = ({
   handleNonFormEventChange,
   field
 }: IngredientListProps) => {
-  const { isMobileWidth } = useScreenSize()
-  const [showInfo, setShowInfo] = useState<boolean>(false)
-
-  const tooltipProps = useMemo(
-    () =>
-      isMobileWidth
-        ? {
-            PopperProps: { disablePortal: true },
-            onClose: () => setShowInfo(false),
-            open: showInfo,
-            disableFocusListener: true,
-            disableHoverListener: true,
-            disableTouchListener: true
-          }
-        : {},
-    [isMobileWidth, showInfo]
-  )
   const onIngredientUpdate = (data: any) =>
     handleNonFormEventChange([...field.value, data], 'ingredients')
 
@@ -52,16 +33,9 @@ const IngredientList = ({
     <div className={styles.IngredientList}>
       <h4>
         Ingredients{' '}
-        <ClickAwayListener onClickAway={() => setShowInfo(false)}>
-          <Tooltip
-            TransitionComponent={Fade}
-            TransitionProps={{ timeout: 500 }}
-            title={INFO}
-            arrow
-            {...tooltipProps}>
-            <Info onClick={() => setShowInfo(true)} />
-          </Tooltip>
-        </ClickAwayListener>
+        <ToolTip info={INFO}>
+          <Info />
+        </ToolTip>
       </h4>
       <div className={styles.ingredients}>
         {field.value?.length > 0
