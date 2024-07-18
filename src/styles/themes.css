@@ -1,6 +1,7 @@
 :root {
   --content-height: 100%;
   --nav-offset: 64px;
+  --max-width: 1500px;
   --sidebar-width: 15rem;
   --hover-transition: 0.25s ease-in-out;
   --border-radius: 10px;

@@ -16,8 +16,10 @@ body {
   display: grid;
   grid-template-columns: var(--sidebar-width) 1fr;
   padding: 0 1rem 1rem 1rem;
-  margin-top: var(--nav-offset);
   height: 100vh;
+  max-width: var(--max-width);
+  margin: auto;
+  margin-top: var(--nav-offset);
 }
 
 @media screen and (max-width: 900px) {

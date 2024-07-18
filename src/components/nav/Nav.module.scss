@@ -17,6 +17,8 @@
   align-items: center;
   gap: 5px;
   min-height: var(--nav-offset) !important;
+  max-width: var(--max-width);
+  margin: auto;
 }
 
 .userMenu {
