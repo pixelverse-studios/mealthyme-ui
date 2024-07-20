@@ -83,7 +83,7 @@ const NavUserMenu = ({
         <MenuItem>
           <AuthButton loggedIn={loggedIn} />
         </MenuItem>
-        {userLinks(profile?._id != '').map(({ route, label }: NavItemType) => (
+        {userLinks(false).map(({ route, label }: NavItemType) => (
           <MenuItem key={label} onClick={() => onMenuItemClick(route)}>
             {label}
           </MenuItem>

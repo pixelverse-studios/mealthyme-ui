@@ -39,7 +39,7 @@ const FeedItem = ({
         {tags?.length > 0 ? (
           <div className={styles.tags}>
             {tags.map(tag => (
-              <div key={tag}>#{tag}</div>
+              <div key={tag}>{tag}</div>
             ))}
           </div>
         ) : null}

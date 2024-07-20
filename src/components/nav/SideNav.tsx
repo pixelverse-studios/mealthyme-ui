@@ -7,12 +7,12 @@ import { Accordion, AccordionSummary, AccordionDetails } from '@mui/material'
 import { ExpandMore } from '@mui/icons-material'
 
 import { NavDrawer } from '../drawer/NavDrawer'
-import { recipeLinks, resources, NavItemType } from './utils'
+import { recipeLinks, NavItemType } from './utils'
 import { setShowMobile } from '../../lib/redux/slices/nav'
 import styles from './Nav.module.scss'
 
 const RECIPE_BLOCK = 'recipes'
-const RESOURCE_BLOCK = 'resources'
+// const RESOURCE_BLOCK = 'resources'
 const isExpanded = (panel: string, panels: string[]) => panels.includes(panel)
 
 function SideNav() {
@@ -69,7 +69,7 @@ function SideNav() {
               ))}
             </AccordionDetails>
           </Accordion>
-          <Accordion
+          {/* <Accordion
             className={`${styles.accordion} ${
               isExpanded(RESOURCE_BLOCK, accordions) ? styles.expanded : ''
             }`}
@@ -91,7 +91,7 @@ function SideNav() {
                 </div>
               ))}
             </AccordionDetails>
-          </Accordion>
+          </Accordion> */}
         </div>
         <footer>&copy; MealThyme {new Date().getFullYear()}</footer>
       </div>
