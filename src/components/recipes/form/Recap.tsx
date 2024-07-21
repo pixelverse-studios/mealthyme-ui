@@ -20,7 +20,7 @@ const RecipeRecap = () => {
 
   const chartData = useMemo(
     () =>
-      Object.entries(recap.macros)
+      Object.entries(recap?.macros ?? {})
         .map(([key, data]: [key: string, value: any], index: number) => ({
           id: index,
           value: NumberUtils.handleRoundNumber(data),
