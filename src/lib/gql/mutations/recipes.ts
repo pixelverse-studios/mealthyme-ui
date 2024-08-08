@@ -13,7 +13,7 @@ export const CREATE_NEW_RECIPE = gql`
         title
         servings
         ingredients {
-          foodId
+          id
           name
           image
           units {

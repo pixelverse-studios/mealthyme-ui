@@ -20,8 +20,8 @@ export const GET_SEARCH_RESULTS = gql`
 `
 
 export const GET_FOOD = gql`
-  query getFood($foodId: Float!, $amount: Float!, $units: String!) {
-    getFood(id: $foodId, amount: $amount, units: $units) {
+  query getFood($id: Float!, $amount: Float!, $units: String!) {
+    getFood(id: $id, amount: $amount, units: $units) {
       ... on Food {
         id
         name

@@ -59,7 +59,7 @@
 
 .FeedItem {
   display: grid;
-  grid-template-rows: 1fr 1fr;
+  grid-template-rows: 12rem 1fr;
   border-radius: var(--border-radius);
   width: 100%;
   box-shadow: var(--boxshadow-border);
@@ -86,7 +86,7 @@
     }
 
     img {
-      height: 10rem;
+      height: 100%;
       width: 100%;
       object-fit: cover;
       border-top-right-radius: var(--border-radius);
@@ -101,6 +101,8 @@
     padding: 1rem;
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
     gap: 1rem;
 
     .singleRow {
@@ -112,6 +114,7 @@
         display: flex;
         align-items: center;
         font-size: 1.1rem;
+        gap: 5px;
       }
     }
 
@@ -135,6 +138,20 @@
         }
         &:nth-of-type(3) {
           background-color: var(--accent);
+        }
+      }
+    }
+    .actions {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+
+      svg {
+        cursor: pointer;
+        transition: var(--hover-transition);
+        
+        &:hover {
+          color: teal;
         }
       }
     }

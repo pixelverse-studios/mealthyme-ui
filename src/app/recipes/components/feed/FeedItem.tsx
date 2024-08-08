@@ -1,5 +1,14 @@
-import { AccessTimeTwoTone, PeopleAltTwoTone } from '@mui/icons-material'
+import {
+  AccessTimeTwoTone,
+  PeopleAltTwoTone,
+  Visibility,
+  Edit,
+  Delete
+} from '@mui/icons-material'
+// import { IconButton } from '@mui/material'
+import { useRouter } from 'next/navigation'
 
+import { RECIPE_ROUTES } from '../../../../components/nav/utils'
 import { RecipeType } from '../../../../utils/types/recipes'
 import styles from './Feed.module.scss'
 
@@ -7,10 +16,14 @@ const recipeFallbackImg =
   'https://res.cloudinary.com/mealthyme/image/upload/mealthyme/placeholders/recipe_placeholder_yszhtf.jpg'
 
 const FeedItem = ({
-  recipe: { title, category, image, tags, totalTime, servings }
+  recipe: { title, category, image, tags, totalTime, servings, _id }
 }: {
   recipe: RecipeType
 }) => {
+  const router = useRouter()
+
+  const onViewClick = () => router.push(`${RECIPE_ROUTES.view}/${_id}`)
+
   return (
     <div className={styles.FeedItem}>
       <div className={styles.topPanel}>
@@ -43,6 +56,11 @@ const FeedItem = ({
             ))}
           </div>
         ) : null}
+        <div className={styles.actions}>
+          <Visibility onClick={onViewClick} />
+          <Edit />
+          <Delete />
+        </div>
       </div>
     </div>
   )

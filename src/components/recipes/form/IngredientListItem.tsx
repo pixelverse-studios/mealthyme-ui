@@ -185,7 +185,8 @@ const IngredientListItem = ({
       resetForm()
       setSelected(null)
     },
-    onError() {
+    onError(error) {
+      console.log(error)
       setLoadingFood(false)
       return Banner.Error('There was an issue fetching search results.')
     }
@@ -206,7 +207,7 @@ const IngredientListItem = ({
     setLoadingFood(true)
     getFood({
       variables: {
-        foodId: selected?.id,
+        id: selected?.id,
         amount: parseFloat(amount),
         units: selectedUnit?.value
       }

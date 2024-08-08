@@ -72,6 +72,7 @@ export const sanitizeNewRecipe = (
   imgSrc: string,
   imgPublicId: string
 ) => {
+  console.log(payload.ingredients)
   return {
     allergies: stripTypenames(payload.allergies.value),
     category: stripTypenames(payload.category.value._id),
