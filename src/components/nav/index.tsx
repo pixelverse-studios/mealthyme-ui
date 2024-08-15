@@ -1,7 +1,7 @@
 'use client'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import {
   AppBar,
   Avatar,
@@ -15,11 +15,7 @@ import {
 import { Menu as MenuIcon } from '@mui/icons-material'
 import LoginButton from '../auth/LoginButton'
 import { ProfileProps } from '../../utils/types/user'
-import {
-  setIsMobile,
-  setShowMobile,
-  toggleDestroy
-} from '../../lib/redux/slices/nav'
+import { useNavStore } from '../../lib/store'
 import AuthButton from '../auth/AuthButton'
 import { userLinks, NavItemType } from './utils'
 import { useScreenSize } from '../../hooks'
@@ -94,29 +90,42 @@ const NavUserMenu = ({
 }
 
 function Navbar() {
-  const dispatch = useDispatch()
+  // const dispatch = useDispatch()
   const { profile, loggedIn } = useSelector((state: any) => state.user)
-  const { isMobile, showMobile } = useSelector((state: any) => state.nav)
+  const {
+    showMobile,
+    isMobile,
+    toggleMobile,
+    setShowMobile,
+    toggleDestroyNav
+  } = useNavStore()
 
   const { isMobileWidth } = useScreenSize()
 
   useEffect(() => {
     if (isMobileWidth && !isMobile) {
-      dispatch(setIsMobile(true))
-      dispatch(setShowMobile(false))
-      toggleDestroy(dispatch)
+      setShowMobile(true)
+      toggleMobile(false)
+      toggleDestroyNav()
     }
 
     if (!isMobileWidth && isMobile) {
-      dispatch(setIsMobile(false))
+      toggleMobile(false)
     }
 
     if (!isMobile && !isMobileWidth && !showMobile) {
-      dispatch(setShowMobile(true))
+      setShowMobile(true)
     }
-  }, [dispatch, isMobile, isMobileWidth, showMobile])
+  }, [
+    isMobile,
+    isMobileWidth,
+    setShowMobile,
+    showMobile,
+    toggleDestroyNav,
+    toggleMobile
+  ])
 
-  const onMenuClick = () => dispatch(setShowMobile(!showMobile))
+  const onMenuClick = () => setShowMobile(!showMobile)
 
   return (
     <AppBar position="fixed" className={styles.Nav}>

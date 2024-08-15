@@ -1,6 +1,6 @@
 'use client'
 import { useState } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { useRouter } from 'next/navigation'
 import { usePathname } from 'next/navigation'
 import { Accordion, AccordionSummary, AccordionDetails } from '@mui/material'
@@ -8,7 +8,7 @@ import { ExpandMore } from '@mui/icons-material'
 
 import { NavDrawer } from '../drawer/NavDrawer'
 import { recipeLinks, NavItemType, resources } from './utils'
-import { setShowMobile } from '../../lib/redux/slices/nav'
+import { useNavStore } from '../../lib/store'
 import styles from './Nav.module.scss'
 
 const RECIPE_BLOCK = 'recipes'
@@ -18,12 +18,10 @@ const isExpanded = (panel: string, panels: string[]) => panels.includes(panel)
 function SideNav() {
   const router = useRouter()
   const pathname = usePathname()
-  const dispatch = useDispatch()
+
+  const { setShowMobile, isMobile, showMobile, destroy } = useNavStore()
 
   const { loggedIn } = useSelector((state: any) => state.user)
-  const { isMobile, showMobile, destroy } = useSelector(
-    (state: any) => state.nav
-  )
   const [accordions, setAccordions] = useState<string[]>([RECIPE_BLOCK])
 
   const onAccordionClick = (panel: string) => {
@@ -37,7 +35,7 @@ function SideNav() {
   const onItemClick = (route: string) => router.push(route)
   const onDrawerClose = () => {
     if (!isMobile) return
-    dispatch(setShowMobile(false))
+    setShowMobile(false)
   }
 
   return (
