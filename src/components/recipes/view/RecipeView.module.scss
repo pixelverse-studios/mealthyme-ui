@@ -4,6 +4,42 @@
   gap: 1rem;
   padding: 1rem;
 
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+
+    .title {
+    }
+
+    .actions {
+      min-width: 4rem;
+
+      button {
+        border-radius: var(--border-radius);
+        height: 2rem;
+        width: 2rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: var(--hover-transition);
+        cursor: pointer;
+
+        &.delete {
+          color: lightcoral;
+          background-color: transparent;
+          border: none;
+
+          &:hover {
+            color: white;
+            background-color: lightcoral;
+          }
+        }
+      }
+    }
+  }
+
   .recipeInfo {
     display: flex;
     gap: 1rem;
@@ -37,7 +73,7 @@
         align-items: center;
         flex-wrap: wrap;
 
-        p {
+        div {
           display: flex;
           flex-direction: column;
           border-radius: var(--border-radius);

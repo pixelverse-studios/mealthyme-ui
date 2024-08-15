@@ -1,5 +1,10 @@
 import Card from './Card'
-import { LinearLoader, IconLoader, RadialLoader } from './Loaders'
+import {
+  LinearLoader,
+  IconLoader,
+  RadialLoader,
+  FourDotsLoader
+} from './Loaders'
 import ToolTip from './ToolTip'
 
-export { Card, IconLoader, LinearLoader, RadialLoader, ToolTip }
+export { Card, FourDotsLoader, IconLoader, LinearLoader, RadialLoader, ToolTip }

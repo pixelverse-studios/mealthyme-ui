@@ -1,12 +1,28 @@
+import { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { useRouter } from 'next/navigation'
 import { AddPhotoAlternate, PeopleAlt, AccessTime } from '@mui/icons-material'
+import { FaTrashCan } from 'react-icons/fa6'
+import { ActionIcon } from '@mantine/core'
+import { useMutation } from '@apollo/client'
 
+import { removeDeletedRecipe } from '../../../lib/redux/slices/recipes'
 import { RecipeType } from '../../../utils/types/recipes'
+import { DELETE_RECIPE } from '../../../lib/gql/mutations/recipes'
+import Banner from '../../banner'
 import NumberUtils from '../../../utils/numbers'
 import Rating from '../rating'
+import { RECIPE_ROUTES } from '../../nav/utils'
 import styles from './RecipeView.module.scss'
 
 const RecipeView = ({ recipe }: { recipe: RecipeType }) => {
+  const [loading, setLoading] = useState<boolean>(false)
+
+  const dispatch = useDispatch()
+  const router = useRouter()
+
   const {
+    _id,
     title,
     allergies,
     category,
@@ -23,12 +39,41 @@ const RecipeView = ({ recipe }: { recipe: RecipeType }) => {
     totalTime
   } = recipe
 
+  const [deleteRecipe] = useMutation(DELETE_RECIPE, {
+    onCompleted() {
+      dispatch(removeDeletedRecipe(_id))
+      setLoading(false)
+      return router.push(RECIPE_ROUTES.mine)
+    },
+    onError() {
+      return Banner.Error('There was an issue deleting your recipe.')
+    }
+  })
+
+  const onDeleteClick = async () => {
+    setLoading(true)
+    deleteRecipe({ variables: { id: _id } })
+  }
+
   return (
     <section className={styles.RecipeView}>
-      <div>
-        <h1>{title}</h1>
-        <h2>{category.label}</h2>
-      </div>
+      <header>
+        <div className={styles.title}>
+          <h1>{title}</h1>
+          <h2>{category.label}</h2>
+        </div>
+        <div className={styles.actions}>
+          <ActionIcon
+            aria-label="Delete Recipe"
+            color="tomato"
+            loading={loading}
+            onClick={onDeleteClick}
+            radius="md"
+            variant="subtle">
+            <FaTrashCan />
+          </ActionIcon>
+        </div>
+      </header>
       <div className={styles.recipeInfo}>
         <div className={styles.details}>
           <div className={styles.infoBlock}>
@@ -62,22 +107,22 @@ const RecipeView = ({ recipe }: { recipe: RecipeType }) => {
         <div className={styles.details}>
           <div className={styles.infoBlock}>
             <div className={styles.macros}>
-              <p>
+              <div>
                 <span>{NumberUtils.handleRoundNumber(macros.calories)}g</span>
                 <span>Calories</span>
-              </p>
-              <p>
+              </div>
+              <div>
                 <span>{NumberUtils.handleRoundNumber(macros.carbs)}g</span>
                 <span>Carbs</span>
-              </p>
-              <p>
+              </div>
+              <div>
                 <span>{NumberUtils.handleRoundNumber(macros.protein)}g</span>
                 <span>Protein</span>
-              </p>
-              <p>
+              </div>
+              <div>
                 <span>{NumberUtils.handleRoundNumber(macros.fat)}g</span>
                 <span>Fat</span>
-              </p>
+              </div>
             </div>
           </div>
           <div className={styles.infoBlock}>

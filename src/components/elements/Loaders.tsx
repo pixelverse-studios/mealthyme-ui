@@ -25,3 +25,6 @@ export const IconLoader = ({ loading }: LoaderProps) =>
       <div className={styles.agPreload}></div>
     </div>
   ) : null
+
+export const FourDotsLoader = ({ loading }: LoaderProps) =>
+  loading ? <div className={styles.loader} /> : null

@@ -49,6 +49,16 @@ export const recipesSlice = createSlice({
     },
     setAllFilters: (state, action) => {
       state.allFilters = action.payload
+    },
+    removeDeletedRecipe: (state, action) => {
+      const updatedAllRecipes = [...state.all].filter(
+        recipe => recipe._id !== action.payload
+      )
+      const updatedUserRecipes = [...state.user].filter(
+        recipe => recipe._id !== action.payload
+      )
+      state.all = updatedAllRecipes
+      state.user = updatedUserRecipes
     }
   }
 })
@@ -56,6 +66,7 @@ export const recipesSlice = createSlice({
 export const {
   addNewRecipe,
   clearFilters,
+  removeDeletedRecipe,
   setAllFilters,
   setAllRecipes,
   setFilteredResults,

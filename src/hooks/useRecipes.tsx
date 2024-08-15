@@ -17,9 +17,9 @@ import {
   setUserFilters,
   setUserRecipes
 } from '../lib/redux/slices/recipes'
+import { CREATE_NEW_RECIPE } from '../lib/gql/mutations/recipes'
 import Banner from '../components/banner'
 import { isHandledError } from '../utils/gql'
-import { CREATE_NEW_RECIPE } from '../lib/gql/mutations/recipes'
 
 const useRecipes = () => {
   const dispatch = useDispatch()
