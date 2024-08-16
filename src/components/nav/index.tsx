@@ -1,7 +1,6 @@
 'use client'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { useSelector } from 'react-redux'
 import {
   AppBar,
   Avatar,
@@ -14,6 +13,8 @@ import {
 } from '@mui/material'
 import { Menu as MenuIcon } from '@mui/icons-material'
 import LoginButton from '../auth/LoginButton'
+
+import { useUserStore } from '../../lib/store'
 import { ProfileProps } from '../../utils/types/user'
 import { useNavStore } from '../../lib/store'
 import AuthButton from '../auth/AuthButton'
@@ -91,7 +92,7 @@ const NavUserMenu = ({
 
 function Navbar() {
   // const dispatch = useDispatch()
-  const { profile, loggedIn } = useSelector((state: any) => state.user)
+  const { profile, loggedIn } = useUserStore()
   const {
     showMobile,
     isMobile,

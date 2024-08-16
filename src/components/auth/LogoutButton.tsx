@@ -1,6 +1,6 @@
 'use client'
 import { useRouter } from 'next/navigation'
-import { useSelector } from 'react-redux'
+import { useUserStore } from '../../lib/store'
 import LoadingButton from '@mui/lab/LoadingButton'
 
 import { useAuth } from '../../hooks'
@@ -8,7 +8,7 @@ import { useAuth } from '../../hooks'
 const LogoutButton = () => {
   const router = useRouter()
   const { handleGoogleLogOut } = useAuth(router)
-  const { loading } = useSelector((state: any) => state.user)
+  const { loading } = useUserStore()
 
   const onLogout = async () => handleGoogleLogOut()
 

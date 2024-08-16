@@ -1,18 +1,17 @@
 'use client'
 import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { SnackbarProvider } from 'notistack'
-import { useDispatch } from 'react-redux'
 
-import { setProfile, setProfileLoading } from '../../lib/redux/slices/user'
+import { useUserStore } from '../../lib/store'
 import { getValidatedUser } from '../../lib/auth/utils'
 import { useRecipes, useAuth } from '../../hooks'
 
 const AuthWrapper = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter()
   const dispatch = useDispatch()
-  const { loading, loggedIn } = useSelector((state: any) => state.user)
+  const { loading, loggedIn, setProfileLoading, setProfile } = useUserStore()
   const { loading: recipeLoading, all } = useSelector(
     (state: any) => state.recipes
   )
@@ -34,14 +33,14 @@ const AuthWrapper = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     if (!loading && !loggedIn) {
       if (expired) {
-        dispatch(setProfileLoading(true))
+        setProfileLoading(true)
         handleGoogleLogOut()
       } else if (validated?._id !== undefined && validated?._id !== '') {
-        dispatch(setProfileLoading(true))
+        setProfileLoading(true)
         fetchUserRecipes(validated?._id ?? '').then(() => {
           fetchUserFilters(validated?._id ?? '')
-          dispatch(setProfile(validated))
-          dispatch(setProfileLoading(false))
+          setProfile(validated)
+          setProfileLoading(false)
         })
       }
     }
@@ -53,6 +52,8 @@ const AuthWrapper = ({ children }: { children: React.ReactNode }) => {
     handleGoogleLogOut,
     loading,
     loggedIn,
+    setProfile,
+    setProfileLoading,
     validated
   ])
 

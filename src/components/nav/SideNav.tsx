@@ -1,11 +1,11 @@
 'use client'
 import { useState } from 'react'
-import { useSelector } from 'react-redux'
 import { useRouter } from 'next/navigation'
 import { usePathname } from 'next/navigation'
 import { Accordion, AccordionSummary, AccordionDetails } from '@mui/material'
 import { ExpandMore } from '@mui/icons-material'
 
+import { useUserStore } from '../../lib/store'
 import { NavDrawer } from '../drawer/NavDrawer'
 import { recipeLinks, NavItemType, resources } from './utils'
 import { useNavStore } from '../../lib/store'
@@ -21,7 +21,7 @@ function SideNav() {
 
   const { setShowMobile, isMobile, showMobile, destroy } = useNavStore()
 
-  const { loggedIn } = useSelector((state: any) => state.user)
+  const { loggedIn } = useUserStore()
   const [accordions, setAccordions] = useState<string[]>([RECIPE_BLOCK])
 
   const onAccordionClick = (panel: string) => {

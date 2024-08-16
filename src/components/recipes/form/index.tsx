@@ -2,6 +2,7 @@
 import { useSelector } from 'react-redux'
 import { useRouter } from 'next/navigation'
 
+import { useUserStore } from '../../../lib/store'
 import { RadialLoader } from '../../elements'
 import { useForm, useImageUpload, useRecipes } from '../../../hooks'
 import GeneralInfo from './GeneralInfo'
@@ -24,7 +25,7 @@ const RecipeForm = () => {
     isFormValid,
     handleValidation
   } = useForm(initialRecipeForm, recipeFormValidations)
-  const { profile } = useSelector((state: any) => state.user)
+  const { profile } = useUserStore()
   const { loading } = useSelector((state: any) => state.recipes)
 
   const { handleUpload } = useImageUpload()

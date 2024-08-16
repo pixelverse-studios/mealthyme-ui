@@ -1,3 +1,4 @@
 import useNavStore from './navStore'
+import useUserStore from './userStore'
 
-export { useNavStore }
+export { useNavStore, useUserStore }

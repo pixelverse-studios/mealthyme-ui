@@ -1,9 +1,9 @@
 'use client'
 import { useState, useEffect } from 'react'
-import { useSelector } from 'react-redux'
 import { useLazyQuery } from '@apollo/client'
 import { Whatshot } from '@mui/icons-material'
 
+import { useUserStore } from '../../../lib/store'
 import { Card } from '../../elements'
 import { TextField, NumberField, AutoComplete, RatingField } from '../../fields'
 import { GET_USER_CATEGORIES } from '../../../lib/gql/queries/categories'
@@ -22,7 +22,7 @@ const GeneralInfo = ({
   handleNonFormEventChange,
   handleValidation
 }: RecipeFormProps) => {
-  const { profile } = useSelector((state: any) => state.user)
+  const { profile } = useUserStore()
 
   const [categories, setCategories] = useState<
     { _id: string; label: string }[]

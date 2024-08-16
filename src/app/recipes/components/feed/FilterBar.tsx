@@ -1,5 +1,5 @@
 import { useRouter } from 'next/navigation'
-import { useSelector } from 'react-redux'
+import { useUserStore } from '../../../../lib/store'
 import { TextField, InputAdornment, IconButton } from '@mui/material'
 import { Search, Tune, AddCircle } from '@mui/icons-material'
 import LayoutSelect from './LayoutSelect'
@@ -8,7 +8,7 @@ import { RECIPE_ROUTES } from '../../../../components/nav/utils'
 import styles from './Feed.module.scss'
 
 const FilterBar = () => {
-  const { loggedIn } = useSelector((state: any) => state.user)
+  const { loggedIn } = useUserStore()
   const router = useRouter()
 
   const onNewRecipeClick = () => router.push(RECIPE_ROUTES.create)

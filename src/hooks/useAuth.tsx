@@ -1,14 +1,10 @@
 'use client'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { signInWithPopup, signOut, getAuth } from 'firebase/auth'
 import { useLazyQuery, useMutation } from '@apollo/client'
 import { SIGN_IN } from '../lib/gql/mutations/user'
 import { GET_USER } from '../lib/gql/queries/user'
-import {
-  setProfileLoading,
-  setProfile,
-  removeProfile
-} from '../lib/redux/slices/user'
+import { useUserStore } from '../lib/store'
 import { USER_TOKEN } from '../utils/constants'
 import {
   setLocalStorageItem,
@@ -22,7 +18,7 @@ import { useRecipes } from '.'
 
 const useAuth = (router: any) => {
   const auth = getAuth()
-  const dispatch = useDispatch()
+  const { setProfile, setProfileLoading, removeProfile } = useUserStore()
   const { user: userRecipes, loading } = useSelector(
     (state: any) => state.recipes
   )
@@ -34,7 +30,7 @@ const useAuth = (router: any) => {
         return Banner.Error(data.message)
       } else {
         await fetchUserRecipes(data._id)
-        dispatch(setProfile(data))
+        setProfile(data)
         setLocalStorageItem(USER_TOKEN, data)
         Banner.LoggedIn()
         // TODO: Decide how to handle if user should be routed home, or kept on their current page when logged in
@@ -47,7 +43,7 @@ const useAuth = (router: any) => {
   })
 
   const handleGoogleSignIn = async () => {
-    dispatch(setProfileLoading(true))
+    setProfileLoading(true)
     try {
       const { user: gUser } = await signInWithPopup(auth, authProvider)
       const { email, photoURL, displayName, providerId } = gUser.providerData[0]
@@ -62,7 +58,7 @@ const useAuth = (router: any) => {
     } catch (error) {
       return Banner.LoggingInError()
     } finally {
-      dispatch(setProfileLoading(false))
+      setProfileLoading(false)
     }
   }
 
@@ -70,12 +66,12 @@ const useAuth = (router: any) => {
     try {
       await signOut(auth)
       clearLocalStorageItem(USER_TOKEN)
-      dispatch(removeProfile())
+      removeProfile()
       Banner.LoggedOut()
-      dispatch(setProfileLoading(false))
+      setProfileLoading(false)
       return router.push(RECIPE_ROUTES.all)
     } catch (error) {
-      dispatch(setProfileLoading(false))
+      setProfileLoading(false)
       return Banner.LoggedOutError()
     }
   }
@@ -88,7 +84,7 @@ const useAuth = (router: any) => {
         if (userRecipes.length === 0 && !loading) {
           await fetchUserRecipes(user._id)
         }
-        dispatch(setProfile(user))
+        setProfile(user)
         Banner.LoggedIn()
       }
     },
