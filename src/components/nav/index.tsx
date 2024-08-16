@@ -104,8 +104,8 @@ function Navbar() {
 
   useEffect(() => {
     if (isMobileWidth && !isMobile) {
-      setShowMobile(true)
-      toggleMobile(false)
+      toggleMobile(true)
+      setShowMobile(false)
       toggleDestroyNav()
     }
 
