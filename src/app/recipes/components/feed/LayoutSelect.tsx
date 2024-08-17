@@ -1,13 +1,8 @@
 import { useState, MouseEvent } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
 import { Menu, MenuItem, IconButton } from '@mui/material'
 import { TableRows, ViewAgenda, Window } from '@mui/icons-material'
-import {
-  setLayout,
-  COZY,
-  COMPACT,
-  GRID
-} from '../../../../lib/redux/slices/recipes'
+import { COZY, COMPACT, GRID } from '../../../../lib/store/recipeStore'
+import { useRecipeStore } from '../../../../lib/store/index'
 import { useScreenSize } from '../../../../hooks'
 
 import styles from './Feed.module.scss'
@@ -18,15 +13,14 @@ layoutMap.set(COMPACT, { label: COMPACT, icon: <TableRows /> })
 layoutMap.set(GRID, { label: GRID, icon: <Window /> })
 
 const LayoutSelect = () => {
-  const dispatch = useDispatch()
-  const { layout } = useSelector((state: any) => state.recipes)
+  const { setLayout, layout } = useRecipeStore()
 
   const { isMobileWidth } = useScreenSize()
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const open = Boolean(anchorEl)
   const onLayoutChange = (value: string) => {
-    dispatch(setLayout(value))
+    setLayout(value)
     setAnchorEl(null)
   }
 

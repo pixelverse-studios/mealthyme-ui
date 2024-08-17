@@ -2,7 +2,6 @@ import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter'
 import type { Metadata } from 'next'
 import { ColorSchemeScript, MantineProvider } from '@mantine/core'
 import ApolloWrapper from '../lib/gql/ApolloWrapper'
-import ReduxWrapper from '../lib/redux/ReduxWrapper'
 import AuthWrapper from '../components/auth'
 import Navbar from '../components/nav'
 import SideNav from '../components/nav/SideNav'
@@ -28,17 +27,15 @@ export default function RootLayout({
       <body>
         <AppRouterCacheProvider>
           <ApolloWrapper>
-            <ReduxWrapper>
-              <MantineProvider>
-                <AuthWrapper>
-                  <Navbar />
-                  <div className="content">
-                    <SideNav />
-                    <main>{children}</main>
-                  </div>
-                </AuthWrapper>
-              </MantineProvider>
-            </ReduxWrapper>
+            <MantineProvider>
+              <AuthWrapper>
+                <Navbar />
+                <div className="content">
+                  <SideNav />
+                  <main>{children}</main>
+                </div>
+              </AuthWrapper>
+            </MantineProvider>
           </ApolloWrapper>
         </AppRouterCacheProvider>
       </body>

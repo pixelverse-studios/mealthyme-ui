@@ -91,7 +91,6 @@ const NavUserMenu = ({
 }
 
 function Navbar() {
-  // const dispatch = useDispatch()
   const { profile, loggedIn } = useUserStore()
   const {
     showMobile,

@@ -1,8 +1,8 @@
 'use client'
-import { useSelector } from 'react-redux'
+import { useRecipeStore } from '../../../lib/store'
 import RecipeFeed from '../components/feed'
 
 export default function MyRecipes() {
-  const { user, loading } = useSelector((state: any) => state.recipes)
+  const { user, loading } = useRecipeStore()
   return <RecipeFeed recipes={user} loading={loading} />
 }

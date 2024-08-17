@@ -1,12 +1,11 @@
 import { useState } from 'react'
-import { useDispatch } from 'react-redux'
 import { useRouter } from 'next/navigation'
 import { AddPhotoAlternate, PeopleAlt, AccessTime } from '@mui/icons-material'
 import { FaTrashCan } from 'react-icons/fa6'
 import { ActionIcon } from '@mantine/core'
 import { useMutation } from '@apollo/client'
 
-import { removeDeletedRecipe } from '../../../lib/redux/slices/recipes'
+import { useRecipeStore } from '../../../lib/store'
 import { RecipeType } from '../../../utils/types/recipes'
 import { DELETE_RECIPE } from '../../../lib/gql/mutations/recipes'
 import Banner from '../../banner'
@@ -18,8 +17,9 @@ import styles from './RecipeView.module.scss'
 const RecipeView = ({ recipe }: { recipe: RecipeType }) => {
   const [loading, setLoading] = useState<boolean>(false)
 
-  const dispatch = useDispatch()
   const router = useRouter()
+
+  const { removeDeletedRecipe } = useRecipeStore()
 
   const {
     _id,
@@ -41,7 +41,7 @@ const RecipeView = ({ recipe }: { recipe: RecipeType }) => {
 
   const [deleteRecipe] = useMutation(DELETE_RECIPE, {
     onCompleted() {
-      dispatch(removeDeletedRecipe(_id))
+      removeDeletedRecipe(_id)
       setLoading(false)
       return router.push(RECIPE_ROUTES.mine)
     },

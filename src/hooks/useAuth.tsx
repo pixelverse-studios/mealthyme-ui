@@ -1,10 +1,9 @@
 'use client'
-import { useSelector } from 'react-redux'
 import { signInWithPopup, signOut, getAuth } from 'firebase/auth'
 import { useLazyQuery, useMutation } from '@apollo/client'
 import { SIGN_IN } from '../lib/gql/mutations/user'
 import { GET_USER } from '../lib/gql/queries/user'
-import { useUserStore } from '../lib/store'
+import { useUserStore, useRecipeStore } from '../lib/store'
 import { USER_TOKEN } from '../utils/constants'
 import {
   setLocalStorageItem,
@@ -19,9 +18,7 @@ import { useRecipes } from '.'
 const useAuth = (router: any) => {
   const auth = getAuth()
   const { setProfile, setProfileLoading, removeProfile } = useUserStore()
-  const { user: userRecipes, loading } = useSelector(
-    (state: any) => state.recipes
-  )
+  const { user: userRecipes, loading } = useRecipeStore()
   const { fetchUserRecipes, fetchUserFilters } = useRecipes()
 
   const [signIn] = useMutation(SIGN_IN, {

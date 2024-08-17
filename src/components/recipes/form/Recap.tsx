@@ -1,17 +1,17 @@
 'use client'
 import { useMemo } from 'react'
-import { useSelector } from 'react-redux'
 import { useRouter } from 'next/navigation'
 import { Button } from '@mui/material'
 import { PieChart } from '@mui/x-charts/PieChart'
 
+import { useRecipeStore } from '../../../lib/store'
 import NumberUtils from '../../../utils/numbers'
 import StringUtils from '../../../utils/validations/strings'
 import { RECIPE_ROUTES } from '../../nav/utils'
 import styles from './RecipeForm.module.scss'
 
 const RecipeRecap = () => {
-  const { recap } = useSelector((state: any) => state.recipes)
+  const { recap } = useRecipeStore()
   const router = useRouter()
 
   const onGoToFeed = () => router.push(RECIPE_ROUTES.mine)

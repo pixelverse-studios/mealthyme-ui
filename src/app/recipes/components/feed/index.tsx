@@ -1,7 +1,7 @@
 import { useRouter } from 'next/navigation'
-import { useSelector } from 'react-redux'
 import { AddBoxTwoTone } from '@mui/icons-material'
 
+import { useRecipeStore } from '../../../../lib/store'
 import { IconLoader } from '../../../../components/elements'
 import { RecipeType } from '../../../../utils/types/recipes'
 import FilterBar from './FilterBar'
@@ -16,7 +16,7 @@ interface RecipeFeedProps {
 }
 
 const RecipeFeed = ({ recipes, loading }: RecipeFeedProps) => {
-  const { layout } = useSelector((state: any) => state.recipes)
+  const { layout } = useRecipeStore()
   const router = useRouter()
 
   const onNewClick = () => router.push(RECIPE_ROUTES.create)

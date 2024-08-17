@@ -1,20 +1,16 @@
 'use client'
 import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { useSelector, useDispatch } from 'react-redux'
 import { SnackbarProvider } from 'notistack'
 
-import { useUserStore } from '../../lib/store'
+import { useUserStore, useRecipeStore } from '../../lib/store'
 import { getValidatedUser } from '../../lib/auth/utils'
 import { useRecipes, useAuth } from '../../hooks'
 
 const AuthWrapper = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter()
-  const dispatch = useDispatch()
   const { loading, loggedIn, setProfileLoading, setProfile } = useUserStore()
-  const { loading: recipeLoading, all } = useSelector(
-    (state: any) => state.recipes
-  )
+  const { loading: recipeLoading, all } = useRecipeStore()
   const {
     fetchAllFilters,
     fetchAllRecipes,
@@ -45,7 +41,6 @@ const AuthWrapper = ({ children }: { children: React.ReactNode }) => {
       }
     }
   }, [
-    dispatch,
     expired,
     fetchUserFilters,
     fetchUserRecipes,
@@ -62,7 +57,7 @@ const AuthWrapper = ({ children }: { children: React.ReactNode }) => {
       fetchAllFilters()
       fetchAllRecipes()
     }
-  }, [all, dispatch, fetchAllFilters, fetchAllRecipes, recipeLoading])
+  }, [all, fetchAllFilters, fetchAllRecipes, recipeLoading])
 
   return (
     <>
