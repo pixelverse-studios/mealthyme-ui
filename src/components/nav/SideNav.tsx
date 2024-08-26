@@ -32,10 +32,14 @@ function SideNav() {
     }
   }
 
-  const onItemClick = (route: string) => router.push(route)
   const onDrawerClose = () => {
     if (!isMobile) return
     setShowMobile(false)
+  }
+
+  const onItemClick = (route: string) => {
+    router.push(route)
+    return setShowMobile(false)
   }
 
   return (

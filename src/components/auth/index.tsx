@@ -53,7 +53,7 @@ const AuthWrapper = ({ children }: { children: React.ReactNode }) => {
   ])
 
   useEffect(() => {
-    if (!recipeLoading && all === null) {
+    if (!recipeLoading && all.length === 0) {
       fetchAllFilters()
       fetchAllRecipes()
     }

@@ -21,7 +21,7 @@ const RecipeFeed = ({ recipes, loading }: RecipeFeedProps) => {
 
   const onNewClick = () => router.push(RECIPE_ROUTES.create)
 
-  if (loading || recipes === null) return <IconLoader loading={true} />
+  if (loading) return <IconLoader loading={true} />
 
   return (
     <div className={`${styles.Feed} ${styles[layout]}`}>
