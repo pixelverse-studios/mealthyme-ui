@@ -24,9 +24,7 @@ function Navigation() {
       <Drawer
         opened={showNav}
         onClose={onDrawerClose}
-        className={styles.navDrawer}
-        // overlayProps={{ backgroundOpacity: 0.5, blur: 4 }}
-      >
+        className={styles.navDrawer}>
         <div className={styles.SideNav}>
           <NavPanel
             label={RECIPE_PANEL}
