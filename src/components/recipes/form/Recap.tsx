@@ -17,12 +17,11 @@ const RecipeRecap = () => {
   return (
     <section className={styles.recipeRecap}>
       <h2>{recap.title} has been created!</h2>
-      <h4>Some stats for the nerds:</h4>
       <div className={styles.actions}>
-        <Button color="primary" onClick={onGoToCreate}>
+        <Button variant="light" color="green" onClick={onGoToCreate}>
           Create another recipe
         </Button>
-        <Button color="secondary" onClick={onGoToFeed}>
+        <Button variant="light" color="blue" onClick={onGoToFeed}>
           Back to my feed
         </Button>
       </div>

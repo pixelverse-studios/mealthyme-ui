@@ -64,28 +64,13 @@ export const CREATE_NEW_RECIPE = gql`
         }
         difficulty
         tags
+        notes
         prepTime
         cookTime
         totalTime
-        author {
-          name
-          authorId
-          rating
-          difficulty
-        }
         image {
           src
           publicId
-        }
-        interactions {
-          ratings {
-            score
-            createdAt
-          }
-          comments {
-            text
-            createdAt
-          }
         }
         createdAt
         updatedAt

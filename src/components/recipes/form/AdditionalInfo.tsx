@@ -40,6 +40,16 @@ const AdditionalInfo = ({
       <Card>
         <ListBuilder
           {...sharedProps}
+          label="Notes"
+          id="notes"
+          field={form.notes}
+          handleNonFormEventChange={handleNonFormEventChange}
+          display="list"
+        />
+      </Card>
+      <Card>
+        <ListBuilder
+          {...sharedProps}
           label="Allergies"
           id="allergies"
           field={form.allergies}

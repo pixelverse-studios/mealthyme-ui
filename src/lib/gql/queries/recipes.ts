@@ -60,6 +60,7 @@ export const GET_RECIPE_BY_ID = gql`
         }
         difficulty
         tags
+        notes
         prepTime
         cookTime
         totalTime
@@ -163,6 +164,7 @@ export const GET_ALL_RECIPES = gql`
           }
           difficulty
           tags
+          notes
           image {
             src
             publicId
@@ -250,6 +252,7 @@ export const GET_USER_RECIPES = gql`
           }
           difficulty
           tags
+          notes
           image {
             src
             publicId
@@ -309,6 +312,7 @@ export const GET_USER_FILTERS = gql`
           step
         }
         tags
+        notes
         createdAt {
           min
           max
@@ -387,6 +391,7 @@ export const GET_ALL_FILTERS = gql`
           step
         }
         tags
+        notes
         createdAt {
           min
           max
