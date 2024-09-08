@@ -1,8 +1,8 @@
 'use client'
 import { useRouter } from 'next/navigation'
 
-import { useUserStore, useRecipeStore } from '../../../lib/store'
-import { RadialLoader } from '../../elements'
+import { useUserStore } from '../../../lib/store'
+// import { useUserStore, useRecipeStore } from '../../../lib/store'
 import { useForm, useImageUpload, useRecipes } from '../../../hooks'
 import GeneralInfo from './GeneralInfo'
 import AdditionalInfo from './AdditionalInfo'
@@ -20,13 +20,13 @@ const RecipeForm = () => {
   const {
     form,
     handleChange,
+    handleNumberChange,
     handleNonFormEventChange,
     isFormValid,
     handleValidation
   } = useForm(initialRecipeForm, recipeFormValidations)
   const { profile } = useUserStore()
-  const { loading } = useRecipeStore()
-
+  // const { loading } = useRecipeStore()
   const { handleUpload } = useImageUpload()
   const { submitNewRecipe } = useRecipes()
 
@@ -63,18 +63,20 @@ const RecipeForm = () => {
         <GeneralInfo
           form={form}
           handleChange={handleChange}
+          handleNumberChange={handleNumberChange}
           handleNonFormEventChange={handleNonFormEventChange}
           handleValidation={handleValidation}
         />
         <AdditionalInfo
           form={form}
+          handleNumberChange={handleNumberChange}
           handleChange={handleChange}
           handleNonFormEventChange={handleNonFormEventChange}
           handleValidation={handleValidation}
         />
       </div>
       <div className={styles.buttonRow}>
-        <RadialLoader loading={loading} />
+        {/* TODO: ADD LOADER */}
         <button
           onClick={onSubmit}
           disabled={!isFormValid}

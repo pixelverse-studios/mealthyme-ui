@@ -1,0 +1,18 @@
+.AppHeader {
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1rem;
+  border-bottom: 1px solid lightgray;
+  background-color: white;
+  width: 100svw;
+  height: var(--header-height);
+  position: fixed;
+  top: 0;
+  z-index: 15;
+
+  .avatar {
+    cursor: pointer;
+  }
+}

@@ -1,7 +1,8 @@
 import { useRouter } from 'next/navigation'
 import { useUserStore } from '../../../../lib/store'
-import { TextField, InputAdornment, IconButton } from '@mui/material'
-import { Search, Tune, AddCircle } from '@mui/icons-material'
+import { FaMagnifyingGlass, FaFilter, FaCirclePlus } from 'react-icons/fa6'
+import { TextInput, ActionIcon } from '@mantine/core'
+
 import LayoutSelect from './LayoutSelect'
 import { RECIPE_ROUTES } from '../../../../components/nav/utils'
 
@@ -17,11 +18,17 @@ const FilterBar = () => {
     <div className={styles.FilterBar}>
       <div className={styles.buttonBlock}>
         <LayoutSelect />
-        <IconButton>
-          <Tune />
-        </IconButton>
+        <ActionIcon variant="subtle" radius="md" size="lg">
+          <FaFilter />
+        </ActionIcon>
       </div>
-      <TextField
+      <TextInput
+        leftSectionPointerEvents="none"
+        leftSection={<FaMagnifyingGlass />}
+        label=""
+        placeholder="Search..."
+      />
+      {/* <TextField
         className={styles.search}
         variant="outlined"
         size="small"
@@ -32,11 +39,16 @@ const FilterBar = () => {
             </InputAdornment>
           )
         }}
-      />
+      /> */}
       <div className={styles.buttonBlock}>
-        <IconButton disabled={!loggedIn} onClick={onNewRecipeClick}>
-          <AddCircle />
-        </IconButton>
+        <ActionIcon
+          variant="subtle"
+          radius="md"
+          size="lg"
+          disabled={!loggedIn}
+          onClick={onNewRecipeClick}>
+          <FaCirclePlus />
+        </ActionIcon>
       </div>
     </div>
   )

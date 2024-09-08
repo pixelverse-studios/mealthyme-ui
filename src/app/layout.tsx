@@ -1,10 +1,9 @@
-import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter'
 import type { Metadata } from 'next'
-import { ColorSchemeScript, MantineProvider } from '@mantine/core'
+import { ColorSchemeScript, MantineProvider, createTheme } from '@mantine/core'
 import ApolloWrapper from '../lib/gql/ApolloWrapper'
 import AuthWrapper from '../components/auth'
-import Navbar from '../components/nav'
-import SideNav from '../components/nav/SideNav'
+import Header from '../components/header'
+import Navigation from '../components/nav/Navigation'
 
 import '@mantine/core/styles.css'
 import '../styles/app.css'
@@ -13,6 +12,10 @@ export const metadata: Metadata = {
   title: 'Meal Thyme',
   description: "It's Meal Thyme!"
 }
+
+const theme = createTheme({
+  primaryColor: 'blue'
+})
 
 export default function RootLayout({
   children
@@ -25,19 +28,17 @@ export default function RootLayout({
         <ColorSchemeScript />
       </head>
       <body>
-        <AppRouterCacheProvider>
-          <ApolloWrapper>
-            <MantineProvider>
-              <AuthWrapper>
-                <Navbar />
-                <div className="content">
-                  <SideNav />
-                  <main>{children}</main>
-                </div>
-              </AuthWrapper>
-            </MantineProvider>
-          </ApolloWrapper>
-        </AppRouterCacheProvider>
+        <ApolloWrapper>
+          <MantineProvider theme={theme}>
+            <AuthWrapper>
+              <Header />
+              <div className="AppWrapper">
+                <Navigation />
+                <main>{children}</main>
+              </div>
+            </AuthWrapper>
+          </MantineProvider>
+        </ApolloWrapper>
       </body>
     </html>
   )

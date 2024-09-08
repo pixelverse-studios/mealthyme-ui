@@ -31,6 +31,7 @@ export interface TextFieldProps {
 export interface RecipeFormProps {
   form: any
   handleChange: ChangeEventHandler
+  handleNumberChange: (value: number | string, id: string) => void
   handleNonFormEventChange: (data: any, name: string) => void
   handleValidation: FocusEventHandler
 }

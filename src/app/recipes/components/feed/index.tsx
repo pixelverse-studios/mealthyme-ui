@@ -1,5 +1,5 @@
 import { useRouter } from 'next/navigation'
-import { AddBoxTwoTone } from '@mui/icons-material'
+import { FaSquarePlus } from 'react-icons/fa6'
 
 import { useRecipeStore } from '../../../../lib/store'
 import { IconLoader } from '../../../../components/elements'
@@ -24,14 +24,14 @@ const RecipeFeed = ({ recipes, loading }: RecipeFeedProps) => {
   if (loading) return <IconLoader loading={true} />
 
   return (
-    <div className={`${styles.Feed} ${styles[layout]}`}>
+    <div className={`${styles.Feed} ${styles[layout.value]}`}>
       <FilterBar />
       <div className={styles.feedContent}>
         {recipes.length > 0 ? (
           recipes.map(recipe => <FeedItem key={recipe._id} recipe={recipe} />)
         ) : (
           <div className={styles.firstRecipeMsg} onClick={onNewClick}>
-            <AddBoxTwoTone />
+            <FaSquarePlus />
             Add your first recipe now!
           </div>
         )}

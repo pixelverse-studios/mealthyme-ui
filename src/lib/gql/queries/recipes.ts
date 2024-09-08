@@ -53,7 +53,6 @@ export const GET_RECIPE_BY_ID = gql`
         }
         totalEstimatedCost
         instructions
-        cookingMethod
         allergies
         category {
           _id
@@ -157,7 +156,6 @@ export const GET_ALL_RECIPES = gql`
           prepTime
           cookTime
           totalTime
-          cookingMethod
           allergies
           category {
             _id
@@ -242,7 +240,6 @@ export const GET_USER_RECIPES = gql`
           }
           totalEstimatedCost
           instructions
-          cookingMethod
           allergies
           prepTime
           cookTime
@@ -301,7 +298,6 @@ export const GET_USER_FILTERS = gql`
           max
           step
         }
-        cookingMethod
         category {
           _id
           label
@@ -380,7 +376,6 @@ export const GET_ALL_FILTERS = gql`
           max
           step
         }
-        cookingMethod
         category {
           _id
           label

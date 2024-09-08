@@ -1,11 +1,4 @@
-import {
-  AccessTimeTwoTone,
-  PeopleAltTwoTone,
-  Visibility,
-  Edit,
-  Delete
-} from '@mui/icons-material'
-// import { IconButton } from '@mui/material'
+import { FaClock, FaEye, FaPeopleGroup, FaTrash } from 'react-icons/fa6'
 import { useRouter } from 'next/navigation'
 
 import { RECIPE_ROUTES } from '../../../../components/nav/utils'
@@ -43,10 +36,10 @@ const FeedItem = ({
       <div className={styles.infoPanel}>
         <div className={styles.singleRow}>
           <p>
-            <AccessTimeTwoTone /> {totalTime}
+            <FaClock /> {totalTime}
           </p>
           <p>
-            <PeopleAltTwoTone /> {servings ?? 0}
+            <FaPeopleGroup /> {servings ?? 0}
           </p>
         </div>
         {tags?.length > 0 ? (
@@ -57,9 +50,8 @@ const FeedItem = ({
           </div>
         ) : null}
         <div className={styles.actions}>
-          <Visibility onClick={onViewClick} />
-          <Edit />
-          <Delete />
+          <FaEye onClick={onViewClick} />
+          <FaTrash />
         </div>
       </div>
     </div>

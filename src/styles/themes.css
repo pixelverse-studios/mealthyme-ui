@@ -1,5 +1,6 @@
 :root {
   --content-height: 100%;
+  --header-height: 4rem;
   --nav-offset: 64px;
   --max-width: 1500px;
   --sidebar-width: 15rem;

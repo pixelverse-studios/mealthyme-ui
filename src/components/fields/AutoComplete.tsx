@@ -1,57 +1,108 @@
-import {
-  Autocomplete,
-  TextField as MuiTextField,
-  createFilterOptions
-} from '@mui/material'
+import { useState } from 'react'
+import { Combobox, TextInput, useCombobox } from '@mantine/core'
+import { FaCircle, FaBan } from 'react-icons/fa6'
+
 import StringUtils from '../../utils/validations/strings'
+import styles from './AutoComplete.module.css'
 
 interface OptionProps {
   _id: string
   label: string
 }
 interface AutoCompleteProps {
-  options: OptionProps[] | []
   id: string
-  value: OptionProps
   label: string
   onChange: (data: any, name: string) => void
+  options: OptionProps[] | []
+  value: OptionProps
 }
 
-const filter = createFilterOptions<OptionProps>()
-
 const AutoComplete = ({
-  options,
   id,
-  value,
+  label,
   onChange,
-  label
+  options,
+  value
 }: AutoCompleteProps) => {
-  return (
-    <Autocomplete
-      options={options}
-      size="small"
-      onChange={(event, newValue) => onChange(newValue, id)}
-      filterOptions={(options, params) => {
-        const filtered = filter(options, params) as any
-        const { inputValue } = params
-        const isExisting = options.some(option =>
-          StringUtils.isMatching(inputValue, option.label)
-        )
-        if (inputValue !== '' && !isExisting) {
-          filtered.push({
-            _id: '',
-            label: inputValue + ''
-          })
-        }
+  const [text, setText] = useState('')
+  const combobox = useCombobox()
 
-        return filtered
+  const filteredItems =
+    text === ''
+      ? options.filter(item => item.label.toLowerCase().includes(text))
+      : [...options, { _id: text, label: text }]
+
+  const items = filteredItems.map(item => (
+    <Combobox.Option
+      className={styles.typeaheadOption}
+      value={item._id}
+      key={item._id}>
+      {item.label}{' '}
+      {item._id === text ? <FaCircle className={styles.newIndicator} /> : null}
+    </Combobox.Option>
+  ))
+
+  const onOptionClick = (val: string) =>
+    onChange(
+      val === text
+        ? { _id: '', label: val }
+        : filteredItems.find(item => item._id === val),
+      id
+    )
+
+  const onResetClick = () => {
+    setText('')
+    onChange({ _id: '', label: '' }, id)
+    combobox.resetSelectedOption()
+  }
+
+  const inputValue =
+    text && StringUtils.isValid(value?.label)
+      ? value.label
+      : text
+        ? text
+        : value?.label
+
+  return (
+    <Combobox
+      onOptionSubmit={optionValue => {
+        onOptionClick(optionValue)
+        combobox.closeDropdown()
       }}
-      id={id}
-      value={value}
-      renderInput={params => (
-        <MuiTextField {...params} variant="standard" label={label} />
-      )}
-    />
+      store={combobox}>
+      <Combobox.Target>
+        <div className={styles.typeahead}>
+          <TextInput
+            variant="default"
+            className={styles.input}
+            label={label}
+            value={inputValue}
+            onChange={event => {
+              if (value === null || value._id === value.label) {
+                setText(event.currentTarget.value)
+              }
+              combobox.openDropdown()
+              combobox.updateSelectedOptionIndex()
+            }}
+            onClick={() => combobox.openDropdown()}
+            onFocus={() => combobox.openDropdown()}
+            onBlur={() => combobox.closeDropdown()}
+          />
+          {StringUtils.isValid(value?.label) || StringUtils.isValid(text) ? (
+            <FaBan onClick={onResetClick} className={styles.clear} />
+          ) : null}
+        </div>
+      </Combobox.Target>
+      <Combobox.Dropdown>
+        <Combobox.Options>
+          {options.length === 0 ? (
+            <Combobox.Empty>Nothing found</Combobox.Empty>
+          ) : (
+            items
+          )}
+        </Combobox.Options>
+      </Combobox.Dropdown>
+    </Combobox>
   )
 }
 

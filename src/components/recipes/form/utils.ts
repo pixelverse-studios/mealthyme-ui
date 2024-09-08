@@ -6,10 +6,8 @@ export const initialRecipeForm = {
   servings: { value: '', valid: null },
   ingredients: { value: [], valid: null },
   instructions: { value: [], valid: null },
-  cookingMethod: { value: '', valid: null },
   allergies: { value: [], valid: null },
   category: { value: null, valid: null },
-  // rating: { value: 0, valid: null },
   difficulty: { value: 0, valid: null },
   prepTime: { value: '', valid: null },
   cookTime: { value: '', valid: null },
@@ -39,11 +37,6 @@ export const recipeFormValidations = {
     message: 'At least one instruction is required',
     test: (instructions: string[]) =>
       instructions.every((instr: any) => StringUtils.isValid(instr))
-  },
-  cookingMethod: {
-    required: true,
-    message: 'A cooking method is required',
-    test: (method: string) => StringUtils.isValid(method)
   },
   category: {
     required: true,
@@ -77,7 +70,6 @@ export const sanitizeNewRecipe = (
     allergies: stripTypenames(payload.allergies.value),
     category: stripTypenames(payload.category.value._id),
     cookTime: stripTypenames(parseFloat(payload.cookTime.value)),
-    cookingMethod: stripTypenames(payload.cookingMethod.value),
     difficulty: stripTypenames(payload.difficulty.value),
     image: { src: imgSrc, publicId: imgPublicId },
     ingredients: stripTypenames(payload.ingredients.value),

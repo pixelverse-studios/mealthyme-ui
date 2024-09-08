@@ -1,11 +1,11 @@
 'use client'
 import { useState, useEffect } from 'react'
 import { useLazyQuery } from '@apollo/client'
-import { Whatshot } from '@mui/icons-material'
+import { Card } from '@mantine/core'
+import { TextInput, NumberInput, Rating } from '@mantine/core'
 
 import { useUserStore } from '../../../lib/store'
-import { Card } from '../../elements'
-import { TextField, NumberField, AutoComplete, RatingField } from '../../fields'
+import { AutoComplete } from '../../fields'
 import { GET_USER_CATEGORIES } from '../../../lib/gql/queries/categories'
 import { isHandledError } from '../../../utils/gql'
 import Banner from '../../banner'
@@ -19,6 +19,7 @@ import stripTypenames from '../../../utils/stripTypenames'
 const GeneralInfo = ({
   form,
   handleChange,
+  handleNumberChange,
   handleNonFormEventChange,
   handleValidation
 }: RecipeFormProps) => {
@@ -59,13 +60,13 @@ const GeneralInfo = ({
         <Upload callback={onImageUpload} />
         <div className={styles.formFields}>
           <FormRow>
-            <TextField
-              onBlur={handleValidation}
-              field={form.title}
+            <TextInput
+              error={form.category.valid}
               id="title"
-              type="text"
-              onChange={handleChange}
               label="Title"
+              onBlur={handleValidation}
+              onChange={handleChange}
+              value={form.title.value}
             />
           </FormRow>
           <FormRow>
@@ -76,45 +77,35 @@ const GeneralInfo = ({
               value={form.category.value ?? null}
               onChange={handleNonFormEventChange}
             />
-            <TextField
-              onBlur={handleValidation}
-              field={form.cookingMethod}
-              id="cookingMethod"
-              type="text"
-              onChange={handleChange}
-              label="Cooking Method"
+            <NumberInput
+              value={form.servings.value}
+              id="servings"
+              onChange={e => handleNumberChange(e, 'servings')}
+              label="Servings"
             />
           </FormRow>
           <FormRow>
-            <NumberField
-              field={form.servings}
-              id="servings"
-              label="Servings"
-              onChange={handleNonFormEventChange}
-            />
-            <NumberField
-              field={form.prepTime}
+            <NumberInput
+              value={form.prepTime.value}
               id="prepTime"
+              onChange={e => handleNumberChange(e, 'prepTime')}
               label="Prep Time"
-              onChange={handleNonFormEventChange}
             />
-            <NumberField
-              field={form.cookTime}
+            <NumberInput
+              value={form.cookTime.value}
               id="cookTime"
+              onChange={e => handleNumberChange(e, 'cookTime')}
               label="Cook Time"
-              onChange={handleNonFormEventChange}
             />
           </FormRow>
         </div>
       </Card>
       <Card>
-        <RatingField
-          field={form.difficulty}
+        <label>Difficulty Level</label>
+        <Rating
+          value={form.difficulty.value}
+          onChange={e => handleNumberChange(e, 'difficulty')}
           id="difficulty"
-          label="Difficulty Level"
-          onChange={handleNonFormEventChange}
-          icon={<Whatshot />}
-          emptyIcon={<Whatshot />}
         />
       </Card>
     </div>

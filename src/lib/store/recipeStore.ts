@@ -1,9 +1,7 @@
 import { create } from 'zustand'
 
 import { RecipeType } from '../../utils/types/recipes'
-export const COZY = 'Cozy'
-export const COMPACT = 'Compact'
-export const GRID = 'Grid'
+import { COZY, layoutMap } from '../../app/recipes/components/feed/LayoutSelect'
 
 type State = {
   all: RecipeType[] | []
@@ -11,7 +9,7 @@ type State = {
   filtered: []
   userFilters: any
   allFilters: any
-  layout: string
+  layout: { label: any; value: string }
   loading: boolean
   recap: any
 }
@@ -24,7 +22,7 @@ type Actions = {
   setFilteredResults: (filters: any) => void
   clearFilters: () => void
   setUserFilters: (filters: any) => void
-  setLayout: (layout: string) => void
+  setLayout: (layout: { label: any; value: string }) => void
   setAllFilters: (filters: any) => void
   removeDeletedRecipe: (id: string) => void
 }
@@ -35,7 +33,7 @@ const useRecipeStore = create<State & Actions>(set => ({
   filtered: [],
   userFilters: {},
   allFilters: {},
-  layout: COZY,
+  layout: layoutMap.get(COZY),
   loading: false,
   recap: {},
   setLoadingRecipes: loading => set(state => ({ ...state, loading })),

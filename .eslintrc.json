@@ -16,7 +16,7 @@
     "ecmaVersion": "latest",
     "sourceType": "module"
   },
-  "plugins": ["@typescript-eslint", "react", "prettier"],
+  "plugins": ["@typescript-eslint", "react-hooks", "react", "prettier"],
   "rules": {
     "@typescript-eslint/no-explicit-any": "off",
     "prettier/prettier": "error",
@@ -24,6 +24,8 @@
     "react/jsx-uses-react": "off",
     "no-unused-vars": "warn",
     "@next/next/no-img-element": "off",
-    "no-useless-escape": "off"
+    "no-useless-escape": "off",
+    "react-hooks/rules-of-hooks": "warn", // Checks rules of Hooks
+    "react-hooks/exhaustive-deps": "warn" // Checks effect dependencies
   }
 }
