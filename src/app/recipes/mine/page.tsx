@@ -4,5 +4,5 @@ import RecipeFeed from '../components/feed'
 
 export default function MyRecipes() {
   const { user, loading } = useRecipeStore()
-  return <RecipeFeed recipes={user} loading={loading} />
+  return <RecipeFeed canDelete recipes={user} loading={loading} />
 }

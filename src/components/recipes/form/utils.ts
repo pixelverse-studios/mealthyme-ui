@@ -12,6 +12,7 @@ export const initialRecipeForm = {
   prepTime: { value: '', valid: null },
   cookTime: { value: '', valid: null },
   tags: { value: [], valid: null },
+  notes: { value: [], valid: null },
   image: { value: '', valid: null },
   imgPublicId: { value: '', valid: null }
 }
@@ -77,6 +78,7 @@ export const sanitizeNewRecipe = (
     prepTime: payload.prepTime.value,
     servings: payload.servings.value,
     tags: payload.tags.value,
+    notes: payload.notes.value,
     title: payload.title.value
   }
 }

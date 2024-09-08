@@ -61,7 +61,7 @@ const GeneralInfo = ({
         <div className={styles.formFields}>
           <FormRow>
             <TextInput
-              error={form.category.valid}
+              error={!form.category.valid}
               id="title"
               label="Title"
               onBlur={handleValidation}

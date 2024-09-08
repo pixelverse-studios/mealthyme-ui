@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import { useRouter } from 'next/navigation'
 import { FaUpload, FaPeopleGroup, FaClock } from 'react-icons/fa6'
 
@@ -6,7 +6,7 @@ import { FaTrashCan } from 'react-icons/fa6'
 import { ActionIcon } from '@mantine/core'
 import { useMutation } from '@apollo/client'
 
-import { useRecipeStore } from '../../../lib/store'
+import { useRecipeStore, useUserStore } from '../../../lib/store'
 import { RecipeType } from '../../../utils/types/recipes'
 import { DELETE_RECIPE } from '../../../lib/gql/mutations/recipes'
 import Banner from '../../banner'
@@ -21,6 +21,7 @@ const RecipeView = ({ recipe }: { recipe: RecipeType }) => {
   const router = useRouter()
 
   const { removeDeletedRecipe } = useRecipeStore()
+  const { profile, loggedIn } = useUserStore()
 
   const {
     _id,
@@ -36,7 +37,8 @@ const RecipeView = ({ recipe }: { recipe: RecipeType }) => {
     prepTime,
     servings,
     tags,
-    totalTime
+    totalTime,
+    user
   } = recipe
 
   const [deleteRecipe] = useMutation(DELETE_RECIPE, {
@@ -55,6 +57,14 @@ const RecipeView = ({ recipe }: { recipe: RecipeType }) => {
     deleteRecipe({ variables: { id: _id } })
   }
 
+  const canDelete = useMemo(() => {
+    if (!loggedIn) return false
+    if (user._id !== profile._id) return false
+
+    return true
+  }, [loggedIn, profile._id, user._id])
+
+  console.log({ canDelete, loggedIn, user, profile })
   return (
     <section className={styles.RecipeView}>
       <header>
@@ -62,17 +72,19 @@ const RecipeView = ({ recipe }: { recipe: RecipeType }) => {
           <h1>{title}</h1>
           <h2>{category.label}</h2>
         </div>
-        <div className={styles.actions}>
-          <ActionIcon
-            aria-label="Delete Recipe"
-            color="tomato"
-            loading={loading}
-            onClick={onDeleteClick}
-            radius="md"
-            variant="subtle">
-            <FaTrashCan />
-          </ActionIcon>
-        </div>
+        {canDelete ? (
+          <div className={styles.actions}>
+            <ActionIcon
+              aria-label="Delete Recipe"
+              color="tomato"
+              loading={loading}
+              onClick={onDeleteClick}
+              radius="md"
+              variant="subtle">
+              <FaTrashCan />
+            </ActionIcon>
+          </div>
+        ) : null}
       </header>
       <div className={styles.recipeInfo}>
         <div className={styles.details}>
@@ -146,7 +158,6 @@ const RecipeView = ({ recipe }: { recipe: RecipeType }) => {
             </p>
             <Rating value={difficulty} />
           </div>
-
           <div className={styles.infoBlock}>
             {allergies.length > 0 ? (
               <>

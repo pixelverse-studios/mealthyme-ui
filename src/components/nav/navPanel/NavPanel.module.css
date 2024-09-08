@@ -1,26 +1,29 @@
 .navPanel {
   padding: 1rem;
 
-  & .panelToggle {
+  .panelToggle {
     cursor: pointer;
 
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 100%;
+    border: 1px solid lightgray;
+    border-radius: var(--border-radius);
+    padding: 0.5rem 0.7rem;
 
-    & .open {
+    .open {
       transition: 0.3s ease-in-out;
       transform: rotate(0deg);
     }
 
-    & .closed {
+    .closed {
       transition: 0.3s ease-in-out;
-      transform: rotate(180deg);
+      transform: rotate(-180deg);
     }
   }
 
-  & .listBlock {
+  .listBlock {
     list-style: none;
     padding: 0 0.7rem;
     font-weight: 600;
@@ -29,9 +32,20 @@
     gap: 0.5rem;
     margin-top: 0.5rem;
 
-    & .panelLink {
+    .panelLink:hover {
+      background-color: var(--accent);
+    }
+
+    .panelLink {
       cursor: pointer;
       font-weight: 500;
+      padding: 0.3rem 0.7rem;
+      border-radius: var(--border-radius);
+      transition: var(--hover-transition);
+
+      &.selected {
+        background-color: var(--primary);
+      }
     }
   }
 }
