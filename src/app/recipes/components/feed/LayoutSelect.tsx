@@ -1,70 +1,52 @@
-import { useState, MouseEvent } from 'react'
-import { Menu, MenuItem, IconButton } from '@mui/material'
-import { TableRows, ViewAgenda, Window } from '@mui/icons-material'
-import { COZY, COMPACT, GRID } from '../../../../lib/store/recipeStore'
+import { Combobox, InputBase, useCombobox } from '@mantine/core'
+// import { FaRectangleList } from 'react-icons/fa6'
+import { BsGridFill, BsGrid3X3GapFill } from 'react-icons/bs'
+
 import { useRecipeStore } from '../../../../lib/store/index'
-import { useScreenSize } from '../../../../hooks'
 
 import styles from './Feed.module.scss'
 
-const layoutMap = new Map()
-layoutMap.set(COZY, { label: COZY, icon: <ViewAgenda /> })
-layoutMap.set(COMPACT, { label: COMPACT, icon: <TableRows /> })
-layoutMap.set(GRID, { label: GRID, icon: <Window /> })
+export const COZY = 'Cozy'
+// export const COMPACT = 'Compact'
+export const GRID = 'Grid'
+export const layoutMap = new Map()
+layoutMap.set(COZY, { value: COZY, label: <BsGridFill /> })
+// layoutMap.set(COMPACT, { value: COMPACT, label: <BsGridFill /> })
+layoutMap.set(GRID, { value: GRID, label: <BsGrid3X3GapFill /> })
 
 const LayoutSelect = () => {
   const { setLayout, layout } = useRecipeStore()
 
-  const { isMobileWidth } = useScreenSize()
+  const combobox = useCombobox()
 
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
-  const open = Boolean(anchorEl)
-  const onLayoutChange = (value: string) => {
-    setLayout(value)
-    setAnchorEl(null)
-  }
-
-  const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget)
-  }
-  const handleClose = () => {
-    setAnchorEl(null)
+  const onClick = (data: any) => {
+    setLayout(layoutMap.get(data))
+    combobox.closeDropdown()
   }
 
   return (
     <div className={styles.LayoutSelect}>
-      <IconButton
-        onClick={handleClick}
-        aria-controls={open ? 'basic-menu' : undefined}
-        aria-haspopup="true"
-        aria-expanded={open ? 'true' : undefined}>
-        {layoutMap.get(layout).icon}
-      </IconButton>
-      <Menu
-        open={open}
-        aria-controls={open ? 'basic-menu' : undefined}
-        aria-haspopup="true"
-        anchorEl={anchorEl}
-        aria-expanded={open ? 'true' : undefined}
-        onClose={handleClose}>
-        <MenuItem
-          onClick={() => onLayoutChange(layoutMap.get(COZY).label)}
-          value={layoutMap.get(COZY).label}>
-          {layoutMap.get(COZY).icon}
-        </MenuItem>
-        <MenuItem
-          onClick={() => onLayoutChange(layoutMap.get(COMPACT).label)}
-          value={layoutMap.get(COMPACT).label}>
-          {layoutMap.get(COMPACT).icon}
-        </MenuItem>
-        {isMobileWidth ? null : (
-          <MenuItem
-            onClick={() => onLayoutChange(layoutMap.get(GRID).label)}
-            value={layoutMap.get(GRID).label}>
-            {layoutMap.get(GRID).icon}
-          </MenuItem>
-        )}
-      </Menu>
+      <Combobox store={combobox} onOptionSubmit={onClick}>
+        <Combobox.Target>
+          <InputBase
+            component="button"
+            type="button"
+            pointer
+            onClick={() => combobox.toggleDropdown()}>
+            {layout.label}
+          </InputBase>
+        </Combobox.Target>
+        <Combobox.Dropdown>
+          <Combobox.Options>
+            <Combobox.Option value={layoutMap.get(COZY).value}>
+              {layoutMap.get(COZY).label}
+            </Combobox.Option>
+            <Combobox.Option value={layoutMap.get(GRID).value}>
+              {layoutMap.get(GRID).label}
+            </Combobox.Option>
+          </Combobox.Options>
+        </Combobox.Dropdown>
+      </Combobox>
     </div>
   )
 }

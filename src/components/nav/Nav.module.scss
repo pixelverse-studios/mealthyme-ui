@@ -46,12 +46,7 @@
 }
 
 .SideNav {
-  width: var(--sidebar-width);
-  height: 100%;
-  padding-right: 1rem;
-  display: grid;
-  grid-template-rows: 88vh 5rem;
-  position: fixed;
+  // height: calc(100vh - 9rem);
 
   .accordion {
     box-shadow: none;
@@ -99,4 +94,10 @@
     padding-bottom: 1rem;
     background-color: white; // This is specifically to ensure the transparent gradient doesnt look bad. Remove this if we remove the gradient
   }
+}
+
+.FullNav {
+  height: calc(100svh - var(--header-height));
+  position: sticky;
+  top: 4rem;
 }

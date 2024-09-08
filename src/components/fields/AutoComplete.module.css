@@ -1,0 +1,25 @@
+.typeaheadOption {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+
+  .newIndicator {
+    font-size: 0.5rem;
+    color: var(--primary);
+  }
+}
+
+.typeahead {
+  position: relative;
+
+  .input {
+  }
+
+  .clear {
+    position: absolute;
+    top: 2.15rem;
+    right: 0.5rem;
+    color: darkgray;
+    cursor: pointer;
+  }
+}

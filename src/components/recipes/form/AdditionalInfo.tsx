@@ -1,8 +1,8 @@
 'use client'
 
-import { Card } from '../../elements'
+import { Card } from '@mantine/core'
 import ListBuilder from './ListBuilder'
-import IngredientList from './IngredientList'
+import Ingredients from './Ingredients'
 import { RecipeFormProps } from '../../../utils/types/fields'
 import styles from './RecipeForm.module.scss'
 
@@ -16,12 +16,16 @@ const AdditionalInfo = ({
     form: null,
     handleChange: () => null,
     handleNonFormEventChange,
-    handleValidation
+    handleValidation,
+    handleNumberChange: () => null
   }
   return (
     <section className={styles.additionalInfo}>
       <Card>
-        <IngredientList {...sharedProps} field={form.ingredients} />
+        <Ingredients
+          handleChange={handleNonFormEventChange}
+          ingredients={form.ingredients.value}
+        />
       </Card>
       <Card>
         <ListBuilder

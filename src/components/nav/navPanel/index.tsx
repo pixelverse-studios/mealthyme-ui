@@ -2,6 +2,7 @@
 import { useState } from 'react'
 import { Collapse } from '@mantine/core'
 import { usePathname, useRouter } from 'next/navigation'
+import { FaChevronUp } from 'react-icons/fa6'
 
 import { NavItemType } from '../utils'
 import styles from './NavPanel.module.css'
@@ -22,17 +23,29 @@ const NavPanel = ({ label, items, initialDisplay }: NavPanelProps) => {
   const onItemClick = (route: string) => router.push(route)
 
   return (
-    <section>
-      <button onClick={onTogglePanel}>{label}</button>
-      <Collapse in={open}>
-        {items.map(({ label, route }: NavItemType) => (
-          <div
-            className={route === pathname ? styles.selected : ''}
-            onClick={() => onItemClick(route)}
-            key={label}>
-            {label}
-          </div>
-        ))}
+    <section className={styles.navPanel}>
+      <button className={styles.panelToggle} onClick={onTogglePanel}>
+        <span>{label}</span>
+        <FaChevronUp className={open ? styles.open : styles.closed} />
+      </button>
+      <Collapse
+        in={open}
+        transitionDuration={150}
+        transitionTimingFunction="linear">
+        <ul className={styles.listBlock}>
+          {items.map(({ label, route }: NavItemType) => (
+            <li
+              className={
+                route === pathname
+                  ? `${styles.selected} ${styles.panelLink}`
+                  : styles.panelLink
+              }
+              onClick={() => onItemClick(route)}
+              key={label}>
+              {label}
+            </li>
+          ))}
+        </ul>
       </Collapse>
     </section>
   )

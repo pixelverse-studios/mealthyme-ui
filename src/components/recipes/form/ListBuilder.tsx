@@ -1,9 +1,9 @@
 import { useState, ChangeEvent, KeyboardEvent } from 'react'
-import { Button, Chip } from '@mui/material'
-import { DeleteOutlineTwoTone, ModeEditTwoTone } from '@mui/icons-material'
+import { TextInput } from '@mantine/core'
+import { FaXmark, FaCheck } from 'react-icons/fa6'
+import { FaTrash, FaPen } from 'react-icons/fa6'
 
 import { RecipeFormProps, ListInputProps } from '../../../utils/types/fields'
-import { TextField } from '../../fields'
 import styles from './RecipeForm.module.scss'
 
 interface ListDisplayProps {
@@ -28,8 +28,8 @@ const ListDisplay = ({ items, onDelete, onEdit }: ListDisplayProps) => {
               <span>{padded}</span>
               <span>{item}</span>
             </div>
-            <ModeEditTwoTone onClick={() => onEdit(key)} />
-            <DeleteOutlineTwoTone onClick={() => onDelete(item)} />
+            <FaPen onClick={() => onEdit(key)} />
+            <FaTrash onClick={() => onDelete(item)} />
           </div>
         )
       })}
@@ -39,19 +39,17 @@ const ListDisplay = ({ items, onDelete, onEdit }: ListDisplayProps) => {
 
 const ChipDisplay = ({ items, onDelete, onEdit }: ListDisplayProps) => {
   if (items?.length === 0) {
-    return <div className={styles.ChipDisplay} />
+    return <div />
   }
   return (
-    <div className={styles.ChipDisplay}>
+    <ul className={styles.ChipDisplay}>
       {items.map((item: string, key: number) => (
-        <Chip
-          key={key}
-          label={item}
-          onClick={() => onEdit(key)}
-          onDelete={() => onDelete(item)}
-        />
+        <li className={styles.chip} key={key}>
+          <span onClick={() => onEdit(key)}>{item}</span>
+          <FaXmark onClick={() => onDelete(item)} />
+        </li>
       ))}
-    </div>
+    </ul>
   )
 }
 
@@ -110,18 +108,14 @@ const ListBuilder = ({
   return (
     <div className={styles.ListBuilder}>
       <div className={styles.search}>
-        <TextField
-          field={{ value, msgType: '', message: '', valid: true }}
-          id={id}
+        <TextInput
+          value={value}
           label={label}
+          id={id}
           onChange={onFieldUpdate}
-          type="text"
           onKeyDown={onKeyDown}
-          onBlur={() => null}
+          rightSection={<FaCheck className={styles.submit} />}
         />
-        <Button onClick={onSubmit} variant="contained">
-          {editIndex === null ? 'Add' : 'Edit'}
-        </Button>
       </div>
       {display === 'chip' ? (
         <ChipDisplay onDelete={onDelete} onEdit={onEdit} items={field.value} />

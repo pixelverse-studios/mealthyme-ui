@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { AddPhotoAlternate, PeopleAlt, AccessTime } from '@mui/icons-material'
+import { FaUpload, FaPeopleGroup, FaClock } from 'react-icons/fa6'
+
 import { FaTrashCan } from 'react-icons/fa6'
 import { ActionIcon } from '@mantine/core'
 import { useMutation } from '@apollo/client'
@@ -27,7 +28,6 @@ const RecipeView = ({ recipe }: { recipe: RecipeType }) => {
     allergies,
     category,
     cookTime,
-    cookingMethod,
     difficulty,
     image,
     ingredients,
@@ -81,7 +81,7 @@ const RecipeView = ({ recipe }: { recipe: RecipeType }) => {
               <img src={image.src ?? ''} alt="recipe_image" />
             ) : (
               <div className={styles.nonImg}>
-                <AddPhotoAlternate />
+                <FaUpload />
               </div>
             )}
           </div>
@@ -128,7 +128,7 @@ const RecipeView = ({ recipe }: { recipe: RecipeType }) => {
           <div className={styles.infoBlock}>
             <h3>Times</h3>
             <div className={styles.timings}>
-              <AccessTime />
+              <FaClock />
               <p>
                 Total <span>{totalTime}</span>
               </p>
@@ -141,9 +141,8 @@ const RecipeView = ({ recipe }: { recipe: RecipeType }) => {
             </div>
           </div>
           <div className={styles.infoBlock}>
-            <p>Cooking method: {cookingMethod}</p>
             <p>
-              <PeopleAlt /> {servings}
+              <FaPeopleGroup /> {servings}
             </p>
             <Rating value={difficulty} />
           </div>

@@ -1,7 +1,7 @@
 'use client'
 import { useRouter } from 'next/navigation'
 import { useUserStore } from '../../lib/store'
-import LoadingButton from '@mui/lab/LoadingButton'
+import { Button } from '@mantine/core'
 
 import { useAuth } from '../../hooks'
 
@@ -13,13 +13,13 @@ const LogoutButton = () => {
   const onLogout = async () => handleGoogleLogOut()
 
   return (
-    <LoadingButton
+    <Button
       loading={loading}
       variant="contained"
       color="secondary"
       onClick={onLogout}>
       LOGOUT
-    </LoadingButton>
+    </Button>
   )
 }
 

@@ -57,7 +57,6 @@ export interface RecipeType {
   servings: number
   totalEstimatedCost: number
   instructions: string[]
-  cookingMethod: string
   allergies: string[]
   category: Category
   difficulty: number

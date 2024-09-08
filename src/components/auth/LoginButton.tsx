@@ -1,7 +1,7 @@
 'use client'
 import { useRouter } from 'next/navigation'
 import { useUserStore } from '../../lib/store'
-import LoadingButton from '@mui/lab/LoadingButton'
+import { Button } from '@mantine/core'
 
 import { useAuth } from '../../hooks'
 
@@ -13,13 +13,13 @@ const LoginButton = () => {
   const onLogin = async () => handleGoogleSignIn()
 
   return (
-    <LoadingButton
+    <Button
       loading={loading}
       variant="contained"
       color="success"
       onClick={onLogin}>
       LOGIN
-    </LoadingButton>
+    </Button>
   )
 }
 

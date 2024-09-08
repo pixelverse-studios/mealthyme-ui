@@ -55,14 +55,28 @@ const useForm = (initialState: any, validations: any, store?: any) => {
   }, [store, form])
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = event => {
-    const { value, name } = event.target
-    const { message, test } = validations[name]
+    const { value, id } = event.currentTarget
+    const { message, test } = validations[id]
     const valid = test(value)
 
     dispatch({
       type: UPDATE,
       payload: {
-        name,
+        name: id,
+        value,
+        msgType: valid ? '' : message,
+        valid
+      }
+    })
+  }
+
+  const handleNumberChange = (value: number | string, id: string) => {
+    const { message, test } = validations[id]
+    const valid = test(value)
+    dispatch({
+      type: UPDATE,
+      payload: {
+        name: id,
         value,
         msgType: valid ? '' : message,
         valid
@@ -92,8 +106,8 @@ const useForm = (initialState: any, validations: any, store?: any) => {
   }
 
   const handleValidation = (event: any) => {
-    const { value, name } = event.target
-    const { message, test } = validations[name]
+    const { value, id } = event.currentTarget
+    const { message, test } = validations[id]
     const valid = test(value)
 
     dispatch({
@@ -101,7 +115,7 @@ const useForm = (initialState: any, validations: any, store?: any) => {
       payload: {
         message: valid ? '' : message,
         msgType: valid ? '' : ERROR,
-        name,
+        name: id,
         valid,
         value
       }
@@ -158,6 +172,7 @@ const useForm = (initialState: any, validations: any, store?: any) => {
     handleChange,
     handleClearField,
     handleFormSubmit,
+    handleNumberChange,
     handleValidation,
     handleImport,
     handleNonFormEventChange,

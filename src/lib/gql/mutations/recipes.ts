@@ -57,7 +57,6 @@ export const CREATE_NEW_RECIPE = gql`
         }
         totalEstimatedCost
         instructions
-        cookingMethod
         allergies
         category {
           _id

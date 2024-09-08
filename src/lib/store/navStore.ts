@@ -2,21 +2,21 @@ import { create } from 'zustand'
 
 type State = {
   isMobile: boolean
-  showMobile: boolean
+  showNav: boolean
   destroy: boolean
 }
 
 type Actions = {
   toggleMobile: (status: boolean) => void
-  setShowMobile: (status: boolean) => void
+  setShowNav: (status: boolean) => void
   toggleDestroyNav: () => void
 }
 
 const useNavStore = create<State & Actions>(set => ({
   isMobile: false,
   toggleMobile: isMobile => set(state => ({ ...state, isMobile })),
-  showMobile: false,
-  setShowMobile: showMobile => set(state => ({ ...state, showMobile })),
+  showNav: false,
+  setShowNav: showNav => set(state => ({ ...state, showNav })),
   destroy: false,
   toggleDestroyNav: () => {
     set(state => ({ ...state, destroy: true }))
