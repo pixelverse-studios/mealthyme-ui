@@ -23,7 +23,7 @@ const NavPanel = ({ label, items, initialDisplay }: NavPanelProps) => {
   const onItemClick = (route: string) => router.push(route)
 
   return (
-    <section className={styles.navPanel}>
+    <li className={styles.navPanel}>
       <button className={styles.panelToggle} onClick={onTogglePanel}>
         <span>{label}</span>
         <FaChevronUp className={open ? styles.open : styles.closed} />
@@ -47,7 +47,7 @@ const NavPanel = ({ label, items, initialDisplay }: NavPanelProps) => {
           ))}
         </ul>
       </Collapse>
-    </section>
+    </li>
   )
 }
 

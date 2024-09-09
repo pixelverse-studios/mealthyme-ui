@@ -24,35 +24,41 @@ function Navigation() {
       <Drawer
         opened={showNav}
         onClose={onDrawerClose}
-        className={styles.navDrawer}>
-        <div className={styles.SideNav}>
-          <NavPanel
-            label={RECIPE_PANEL}
-            items={recipeLinks(loggedIn)}
-            initialDisplay
-          />
-          <NavPanel
-            label={RESOURCE_PANEL}
-            items={resources(loggedIn)}
-            initialDisplay={false}
-          />
-          <footer>&copy; MealThyme {new Date().getFullYear()}</footer>
-        </div>
+        className={styles.navDrawer}
+        withCloseButton={false}
+        overlayProps={{ backgroundOpacity: 0, blur: 0 }}>
+        <nav className={styles.SideNav}>
+          <ul>
+            <NavPanel
+              label={RECIPE_PANEL}
+              items={recipeLinks(loggedIn)}
+              initialDisplay
+            />
+            <NavPanel
+              label={RESOURCE_PANEL}
+              items={resources(loggedIn)}
+              initialDisplay={false}
+            />
+            <footer>&copy; MealThyme {new Date().getFullYear()}</footer>
+          </ul>
+        </nav>
       </Drawer>
     )
 
   return (
     <nav className={styles.FullNav}>
-      <NavPanel
-        label={RECIPE_PANEL}
-        items={recipeLinks(loggedIn)}
-        initialDisplay
-      />
-      <NavPanel
-        label={RESOURCE_PANEL}
-        items={resources(loggedIn)}
-        initialDisplay={false}
-      />
+      <ul>
+        <NavPanel
+          label={RECIPE_PANEL}
+          items={recipeLinks(loggedIn)}
+          initialDisplay
+        />
+        <NavPanel
+          label={RESOURCE_PANEL}
+          items={resources(loggedIn)}
+          initialDisplay={false}
+        />
+      </ul>
       <footer>&copy; MealThyme {new Date().getFullYear()}</footer>
     </nav>
   )
