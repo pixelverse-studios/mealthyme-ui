@@ -15,6 +15,7 @@ interface AutoCompleteProps {
   onChange: (data: any, name: string) => void
   options: OptionProps[] | []
   value: OptionProps
+  required: boolean
 }
 
 const AutoComplete = ({
@@ -22,7 +23,8 @@ const AutoComplete = ({
   label,
   onChange,
   options,
-  value
+  value,
+  required
 }: AutoCompleteProps) => {
   const [text, setText] = useState('')
   const combobox = useCombobox()
@@ -87,6 +89,7 @@ const AutoComplete = ({
             onClick={() => combobox.openDropdown()}
             onFocus={() => combobox.openDropdown()}
             onBlur={() => combobox.closeDropdown()}
+            withAsterisk={required}
           />
           {StringUtils.isValid(value?.label) || StringUtils.isValid(text) ? (
             <FaBan onClick={onResetClick} className={styles.clear} />

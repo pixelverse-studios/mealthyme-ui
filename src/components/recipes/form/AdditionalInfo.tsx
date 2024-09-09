@@ -21,13 +21,13 @@ const AdditionalInfo = ({
   }
   return (
     <section className={styles.additionalInfo}>
-      <Card>
+      <Card shadow="sm" padding="lg" radius="md" withBorder>
         <Ingredients
           handleChange={handleNonFormEventChange}
           ingredients={form.ingredients.value}
         />
       </Card>
-      <Card>
+      <Card shadow="sm" padding="lg" radius="md" withBorder>
         <ListBuilder
           {...sharedProps}
           label="Instructions"
@@ -37,7 +37,7 @@ const AdditionalInfo = ({
           display="list"
         />
       </Card>
-      <Card>
+      <Card shadow="sm" padding="lg" radius="md" withBorder>
         <ListBuilder
           {...sharedProps}
           label="Notes"
@@ -47,7 +47,7 @@ const AdditionalInfo = ({
           display="list"
         />
       </Card>
-      <Card>
+      <Card shadow="sm" padding="lg" radius="md" withBorder>
         <ListBuilder
           {...sharedProps}
           label="Allergies"
@@ -57,7 +57,7 @@ const AdditionalInfo = ({
           display="chip"
         />
       </Card>
-      <Card>
+      <Card shadow="sm" padding="lg" radius="md" withBorder>
         <ListBuilder
           {...sharedProps}
           label="Tags"

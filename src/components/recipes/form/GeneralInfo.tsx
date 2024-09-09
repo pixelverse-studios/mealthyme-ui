@@ -56,21 +56,27 @@ const GeneralInfo = ({
 
   return (
     <div className={styles.generalInfo}>
-      <Card className={styles.genInfoKeyFields}>
+      <Card
+        className={styles.genInfoKeyFields}
+        shadow="sm"
+        padding="lg"
+        radius="md"
+        withBorder>
         <Upload callback={onImageUpload} />
         <div className={styles.formFields}>
           <FormRow>
             <TextInput
-              error={!form.category.valid}
               id="title"
               label="Title"
               onBlur={handleValidation}
               onChange={handleChange}
               value={form.title.value}
+              withAsterisk
             />
           </FormRow>
           <FormRow>
             <AutoComplete
+              required
               id="category"
               label="Category"
               options={categories}
@@ -86,12 +92,14 @@ const GeneralInfo = ({
           </FormRow>
           <FormRow>
             <NumberInput
+              withAsterisk
               value={form.prepTime.value}
               id="prepTime"
               onChange={e => handleNumberChange(e, 'prepTime')}
               label="Prep Time"
             />
             <NumberInput
+              withAsterisk
               value={form.cookTime.value}
               id="cookTime"
               onChange={e => handleNumberChange(e, 'cookTime')}
@@ -100,7 +108,7 @@ const GeneralInfo = ({
           </FormRow>
         </div>
       </Card>
-      <Card>
+      <Card shadow="sm" padding="lg" radius="md" withBorder>
         <label>Difficulty Level</label>
         <Rating
           value={form.difficulty.value}

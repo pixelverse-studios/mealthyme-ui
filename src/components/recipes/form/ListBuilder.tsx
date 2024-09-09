@@ -1,5 +1,5 @@
 import { useState, ChangeEvent, KeyboardEvent } from 'react'
-import { TextInput } from '@mantine/core'
+import { TextInput, Button } from '@mantine/core'
 import { FaXmark, FaCheck } from 'react-icons/fa6'
 import { FaTrash, FaPen } from 'react-icons/fa6'
 
@@ -114,8 +114,15 @@ const ListBuilder = ({
           id={id}
           onChange={onFieldUpdate}
           onKeyDown={onKeyDown}
-          rightSection={<FaCheck className={styles.submit} />}
         />
+        <Button
+          variant="outline"
+          color="green"
+          leftSection={<FaCheck />}
+          disabled={!value}
+          onClick={onSubmit}>
+          Add
+        </Button>
       </div>
       {display === 'chip' ? (
         <ChipDisplay onDelete={onDelete} onEdit={onEdit} items={field.value} />

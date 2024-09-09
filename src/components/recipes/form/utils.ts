@@ -34,7 +34,7 @@ export const recipeFormValidations = {
     test: (ingredients: any) => ingredients.every((ingr: any) => ingr.name)
   },
   instructions: {
-    required: true,
+    required: false,
     message: 'At least one instruction is required',
     test: (instructions: string[]) =>
       instructions.every((instr: any) => StringUtils.isValid(instr))
@@ -45,17 +45,17 @@ export const recipeFormValidations = {
     test: (category: { label: string }) => StringUtils.isValid(category.label)
   },
   difficulty: {
-    required: true,
+    required: false,
     method: 'A difficulty rating of 0 to 5 is required',
     test: (difficulty: number) => difficulty >= 0
   },
   prepTime: {
-    required: true,
+    required: false,
     method: 'A prep time of at least 0 minutes is required',
     test: (prepTime: number) => prepTime >= 0
   },
   cookTime: {
-    required: true,
+    required: false,
     method: 'A cook time of at least 0 minutes is required',
     test: (cookTime: number) => cookTime >= 0
   }
