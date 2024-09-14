@@ -10,6 +10,7 @@ import { useNavStore } from '../../lib/store'
 import AuthButton from '../auth/AuthButton'
 import { userLinks, NavItemProps } from '../../utils/navigation'
 import { useScreenSize } from '../../hooks'
+import StringUtils from '../../utils/validations/strings'
 import Logo from '../nav/Logo'
 import styles from './Header.module.css'
 
@@ -29,8 +30,7 @@ const HeaderMenu = ({
     if (!loggedIn) return <LoginButton />
 
     const { avatar, firstName, lastName } = profile
-
-    if (avatar === '')
+    if (StringUtils.isEmpty(avatar))
       return (
         <Avatar className={styles.avatar}>
           {firstName.charAt(0)}
@@ -39,13 +39,13 @@ const HeaderMenu = ({
       )
 
     return (
-      <Avatar
-        className={styles.avatar}
-        variant="filled"
-        radius="xl"
-        alt={`${firstName}_profileAvatar`}
-        src={avatar}
-      />
+      <Avatar className={styles.avatar} variant="filled" radius="xl">
+        <img
+          alt={`${firstName}_profileAvatar`}
+          src={avatar}
+          referrerPolicy={'no-referrer'}
+        />
+      </Avatar>
     )
   }
 

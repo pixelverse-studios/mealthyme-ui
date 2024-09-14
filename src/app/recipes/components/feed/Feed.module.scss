@@ -149,7 +149,7 @@
       svg {
         cursor: pointer;
         transition: var(--hover-transition);
-        
+
         &:hover {
           color: teal;
         }
@@ -171,17 +171,17 @@
 }
 
 .FilterBar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 1rem;
   position: sticky;
   width: 100%;
-  top: 58px;
+  top: 4rem;
   z-index: 10;
   background-color: white;
   border-bottom: 1px solid lightgray;
   padding: 0.5rem 1rem;
+  display: grid;
+  grid-template-columns: 4rem 1fr 7rem;
+  grid-gap: 2rem;
+  align-items: center;
 
   .buttonBlock {
     display: flex;

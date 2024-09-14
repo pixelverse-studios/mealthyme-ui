@@ -9,7 +9,8 @@ import { useRecipes, useAuth } from '../../hooks'
 
 const AuthWrapper = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter()
-  const { loading, loggedIn, setProfileLoading, setProfile } = useUserStore()
+  const userStore = useUserStore()
+  const { loading, loggedIn, setProfileLoading, setProfile } = userStore
   const { loading: recipeLoading, all } = useRecipeStore()
   const {
     fetchAllFilters,
@@ -17,6 +18,7 @@ const AuthWrapper = ({ children }: { children: React.ReactNode }) => {
     fetchUserFilters,
     fetchUserRecipes
   } = useRecipes()
+
   const { handleGoogleLogOut } = useAuth(router)
 
   const { profile: validated, expired } = getValidatedUser()

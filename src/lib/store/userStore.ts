@@ -45,11 +45,12 @@ const useUserStore = create<State & Actions>(set => ({
   setProfile: profile =>
     set(() => ({
       loading: false,
-      profile: profile,
+      profile,
       loggedIn: true
     })),
   setProfileLoading: loading => set(state => ({ ...state, loading })),
-  removeProfile: () => set(state => ({ ...state, profile: initialState }))
+  removeProfile: () =>
+    set(state => ({ ...state, profile: initialState, loggedIn: false }))
 }))
 
 export default useUserStore

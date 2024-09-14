@@ -5,7 +5,7 @@ import { Button } from '@mantine/core'
 
 import { useAuth } from '../../hooks'
 
-const LoginButton = () => {
+const LoginButton = ({ text = 'LOGIN' }: { text?: string }) => {
   const router = useRouter()
   const { handleGoogleSignIn } = useAuth(router as any)
   const { loading } = useUserStore()
@@ -18,7 +18,7 @@ const LoginButton = () => {
       variant="contained"
       color="success"
       onClick={onLogin}>
-      LOGIN
+      {text}
     </Button>
   )
 }

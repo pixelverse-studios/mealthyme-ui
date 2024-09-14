@@ -37,8 +37,10 @@ const useRecipeStore = create<State & Actions>(set => ({
   loading: false,
   recap: {},
   setLoadingRecipes: loading => set(state => ({ ...state, loading })),
-  setAllRecipes: recipes => set(state => ({ ...state, all: recipes })),
-  setUserRecipes: recipes => set(state => ({ ...state, user: recipes })),
+  setAllRecipes: recipes =>
+    set(state => ({ ...state, all: recipes, loading: false })),
+  setUserRecipes: recipes =>
+    set(state => ({ ...state, user: recipes, loading: false })),
   addNewRecipe: newRecipe =>
     set(state => ({
       ...state,
