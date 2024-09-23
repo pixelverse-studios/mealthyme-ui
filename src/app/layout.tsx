@@ -1,9 +1,10 @@
 import type { Metadata } from 'next'
-import { ColorSchemeScript, MantineProvider, createTheme } from '@mantine/core'
+import { ColorSchemeScript, MantineProvider } from '@mantine/core'
 import ApolloWrapper from '../lib/gql/ApolloWrapper'
 import AuthWrapper from '../components/auth'
 import Header from '../components/header'
 import Navigation from '../components/nav/Navigation'
+import { themeOverride } from '../utils/theme'
 
 import '@mantine/core/styles.css'
 import '../styles/app.css'
@@ -12,10 +13,6 @@ export const metadata: Metadata = {
   title: 'Meal Thyme',
   description: "It's Meal Thyme!"
 }
-
-const theme = createTheme({
-  primaryColor: 'blue'
-})
 
 export default function RootLayout({
   children
@@ -29,7 +26,7 @@ export default function RootLayout({
       </head>
       <body>
         <ApolloWrapper>
-          <MantineProvider theme={theme}>
+          <MantineProvider theme={themeOverride}>
             <AuthWrapper>
               <Header />
               <div className="AppWrapper">

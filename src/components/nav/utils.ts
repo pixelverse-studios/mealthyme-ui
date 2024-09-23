@@ -23,10 +23,10 @@ const additionalRecipeLinks = [{ label: 'Mine', route: RECIPE_ROUTES.mine }]
 export const recipeLinks = (loggedIn: boolean): NavItemType[] =>
   loggedIn ? [...baseRecipeLinks, ...additionalRecipeLinks] : baseRecipeLinks
 
-const baseResources = [
-  { label: 'About', route: '/about' },
-  { label: 'Feedback', route: '/feedback' }
+const baseResources = [{ label: 'About', route: '/about' }]
+const additionalResources = [
+  { label: 'Feedback', route: '/feedback' },
+  { label: 'Settings', route: '/settings' }
 ]
-const additionalResources = [{ label: 'Settings', route: '/settings' }]
 export const resources = (loggedIn: boolean): NavItemType[] =>
   loggedIn ? [...additionalResources, ...baseResources] : baseResources

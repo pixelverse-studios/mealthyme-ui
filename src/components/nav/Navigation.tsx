@@ -56,7 +56,7 @@ function Navigation() {
         <NavPanel
           label={RESOURCE_PANEL}
           items={resources(loggedIn)}
-          initialDisplay={false}
+          initialDisplay
         />
       </ul>
       <footer>&copy; MealThyme {new Date().getFullYear()}</footer>

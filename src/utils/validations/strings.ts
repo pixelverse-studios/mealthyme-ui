@@ -8,8 +8,9 @@ const capitalizeFirstLetters = (value: string) =>
     .map((word: string) => word.charAt(0).toUpperCase() + word.substring(1))
     .join(' ')
 
-const isValid = (val: string | undefined) =>
+const isValid = (val: string | undefined | null) =>
   isString(val ?? '') && !isEmpty(val ?? '')
+
 const StringUtils = {
   capitalizeFirstLetters,
   isEmpty,

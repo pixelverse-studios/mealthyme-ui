@@ -1,0 +1,27 @@
+.FeedbackPage {
+  padding: 1rem;
+
+  .form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    .fieldSet {
+      padding: 0;
+      border: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0 1rem;
+
+      &.doubleCol {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-gap: 1rem;
+      }
+
+      .textContent {
+        min-height: 6rem;
+      }
+    }
+  }
+}

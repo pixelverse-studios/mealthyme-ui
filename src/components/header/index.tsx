@@ -8,7 +8,7 @@ import { useUserStore } from '../../lib/store'
 import { ProfileProps } from '../../utils/types/user'
 import { useNavStore } from '../../lib/store'
 import AuthButton from '../auth/AuthButton'
-import { userLinks, NavItemProps } from '../../utils/navigation'
+import { userLinks, NavItemType } from '../nav/utils'
 import { useScreenSize } from '../../hooks'
 import StringUtils from '../../utils/validations/strings'
 import Logo from '../nav/Logo'
@@ -65,7 +65,7 @@ const HeaderMenu = ({
           <Menu.Item>
             <AuthButton loggedIn={loggedIn} />
           </Menu.Item>
-          {userLinks(false).map(({ route, label }: NavItemProps) => (
+          {userLinks(false).map(({ route, label }: NavItemType) => (
             <Menu.Item key={label} onClick={() => onMenuItemClick(route)}>
               {label}
             </Menu.Item>
