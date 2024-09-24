@@ -22,7 +22,6 @@ const RecipeForm = () => {
     handleChange,
     handleNumberChange,
     handleNonFormEventChange,
-    isFormValid,
     handleValidation
   } = useForm(initialRecipeForm, recipeFormValidations)
   const { profile } = useUserStore()
@@ -57,6 +56,12 @@ const RecipeForm = () => {
     }
   }
 
+  const canSubmit =
+    form?.category?.value?.label !== '' &&
+    form?.ingredients?.value?.length > 0 &&
+    form?.servings?.value > 0 &&
+    form?.title?.value !== ''
+
   return (
     <div className={styles.recipeForm}>
       <div className={styles.formBlock}>
@@ -79,7 +84,7 @@ const RecipeForm = () => {
         {/* TODO: ADD LOADER */}
         <button
           onClick={onSubmit}
-          disabled={!isFormValid}
+          disabled={!canSubmit}
           className={styles.submitButton}>
           Create Recipe
         </button>

@@ -28,7 +28,7 @@ const IngredientSearch = ({
   handleIngredientUpdate
 }: IngredientSearchProps) => {
   const [text, setText] = useState<string>('')
-  const [units, setUnits] = useState<string>('')
+  const [units, setUnits] = useState<string | null>('')
   const [amount, setAmount] = useState<number | string>('')
 
   const [selected, setSelected] = useState<SearchResultType | null>(null)
@@ -87,7 +87,7 @@ const IngredientSearch = ({
     setText('')
     setSelected(null)
     setAmount('')
-    setUnits('')
+    setUnits(null)
   }
 
   const [getFood] = useLazyQuery(GET_FOOD, {
@@ -179,9 +179,9 @@ const IngredientSearch = ({
           label="Units"
           id="unit"
           placeholder="Select one"
-          data={selected?.units}
-          value={units}
-          onChange={e => setUnits(e ?? '')}
+          data={selected?.units ?? []}
+          value={units ?? null}
+          onChange={e => setUnits(e ?? null)}
           disabled={selected === null}
         />
       </div>
