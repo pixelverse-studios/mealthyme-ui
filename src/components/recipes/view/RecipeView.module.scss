@@ -65,9 +65,10 @@ $details-fontsize: 0.9rem;
       }
 
       img {
-        height: 15rem;
         width: 100%;
         object-fit: contain;
+        border: 1px solid var(--primary);
+        border-radius: var(--border-radius);
       }
 
       .nonImg {
