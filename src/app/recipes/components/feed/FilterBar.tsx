@@ -47,7 +47,7 @@ const FilterBar = () => {
       /> */}
       <div className={styles.buttonBlock}>
         <Button
-          variant="light"
+          variant="subtle"
           leftSection={<FaCirclePlus />}
           onClick={onCreateClick}>
           Create

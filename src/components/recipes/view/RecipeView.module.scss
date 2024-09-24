@@ -1,8 +1,11 @@
+$details-fontsize: 0.9rem;
+
 .RecipeView {
   display: flex;
   flex-direction: column;
   gap: 1rem;
   padding: 1rem;
+  height: 100%;
 
   header {
     display: flex;
@@ -10,7 +13,8 @@
     align-items: flex-start;
     gap: 1rem;
 
-    .title {
+    h2 {
+      font-size: 1.1rem;
     }
 
     .actions {
@@ -41,8 +45,9 @@
   }
 
   .recipeInfo {
-    display: flex;
-    gap: 1rem;
+    display: grid;
+    grid-template-columns: 20rem 1fr;
+    grid-gap: 2rem;
 
     .details {
       display: flex;
@@ -52,6 +57,12 @@
 
     .infoBlock {
       padding-bottom: 1rem;
+
+      &.doubleRow {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
 
       img {
         height: 15rem;
@@ -66,49 +77,119 @@
         }
       }
 
-      .macros {
+      .flatRow {
         display: flex;
         gap: 1rem;
-        justify-content: space-between;
-        align-items: center;
-        flex-wrap: wrap;
+      }
 
-        div {
-          display: flex;
-          flex-direction: column;
-          border-radius: var(--border-radius);
-          border: 1px solid darkgray;
-          justify-content: center;
-          align-items: center;
-          padding: 0.5rem;
-          height: 5rem;
-          width: 5rem;
-
-          span {
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            overflow: hidden;
-
-            &:nth-of-type(1) {
-              font-size: 1.1rem;
-              font-weight: 600;
-            }
-            &:nth-of-type(2) {
-              font-size: 0.7rem;
-              color: darkgray;
-            }
-          }
+      .servings {
+        font-size: $details-fontsize;
+        span {
+          font-weight: 600;
         }
       }
 
       .timings {
         display: flex;
         gap: 1rem;
+        justify-content: space-between;
+        font-size: $details-fontsize;
+
+        span {
+          font-weight: 600;
+        }
+      }
+
+      h3 {
+        font-size: 1rem;
+      }
+
+      .macros {
+        display: flex;
+        gap: 0.5rem;
+      }
+
+      .ingredients {
+        list-style: none;
+        margin: 0;
+        padding: 1rem;
+        font-size: $details-fontsize;
+
+        li {
+          display: flex;
+          justify-content: flex-start;
+          align-items: center;
+          gap: 1rem;
+
+          .amounts {
+            flex: 1;
+            font-weight: 600;
+            color: var(--primary);
+          }
+
+          .ingredient {
+            flex: 4;
+          }
+        }
+      }
+
+      .instructions {
+        list-style: none;
+        margin: 0;
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+
+        $step-size: 1.5rem;
+
+        li {
+          display: grid;
+          grid-template-columns: $step-size 1fr;
+          grid-gap: 1rem;
+          align-items: flex-start;
+
+          .step {
+            border: 1px solid transparent;
+            width: $step-size;
+            height: $step-size;
+            padding: 0.5rem;
+            margin-top: 0.2rem;
+            border-radius: 50%;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--primary);
+            color: white;
+          }
+
+          .instruction {
+          }
+        }
       }
     }
 
-    @media screen and (max-width: 750px) {
-      flex-direction: column;
+    @media screen and (max-width: 700px) {
+      grid-template-columns: 1fr;
     }
+  }
+}
+
+.macroDisplay {
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  label {
+    color: var(--primary);
+    font-weight: 600;
+    border-bottom: 2px solid var(--primary-light);
+  }
+
+  span {
+    font-weight: 700;
   }
 }

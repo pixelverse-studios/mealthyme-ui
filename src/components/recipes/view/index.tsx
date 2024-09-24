@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react'
 import { useRouter } from 'next/navigation'
-import { FaUpload, FaPeopleGroup, FaClock } from 'react-icons/fa6'
+import { FaUpload, FaPeopleGroup, FaClock, FaArrowRight } from 'react-icons/fa6'
 
 import { FaTrashCan } from 'react-icons/fa6'
 import { ActionIcon } from '@mantine/core'
@@ -13,6 +13,7 @@ import Banner from '../../banner'
 import NumberUtils from '../../../utils/numbers'
 import Rating from '../rating'
 import { RECIPE_ROUTES } from '../../nav/utils'
+import MacroDisplay from './MacroDisplay'
 import styles from './RecipeView.module.scss'
 
 const RecipeView = ({ recipe }: { recipe: RecipeType }) => {
@@ -64,7 +65,6 @@ const RecipeView = ({ recipe }: { recipe: RecipeType }) => {
     return true
   }, [loggedIn, profile._id, user._id])
 
-  console.log({ canDelete, loggedIn, user, profile })
   return (
     <section className={styles.RecipeView}>
       <header>
@@ -97,66 +97,49 @@ const RecipeView = ({ recipe }: { recipe: RecipeType }) => {
               </div>
             )}
           </div>
-          <div className={styles.infoBlock}>
-            <h3>Ingredients</h3>
-            <ul>
-              {ingredients.map(ingredient => (
-                <li key={ingredient.name}>
-                  {ingredient.amount} {ingredient.units.short}
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div className={styles.infoBlock}>
-            <h3>Instructions</h3>
-            <ol>
-              {instructions.map(instruction => (
-                <li key={instruction}>{instruction}</li>
-              ))}
-            </ol>
-          </div>
-        </div>
-        <div className={styles.details}>
-          <div className={styles.infoBlock}>
-            <div className={styles.macros}>
-              <div>
-                <span>{NumberUtils.handleRoundNumber(macros.calories)}g</span>
-                <span>Calories</span>
-              </div>
-              <div>
-                <span>{NumberUtils.handleRoundNumber(macros.carbs)}g</span>
-                <span>Carbs</span>
-              </div>
-              <div>
-                <span>{NumberUtils.handleRoundNumber(macros.protein)}g</span>
-                <span>Protein</span>
-              </div>
-              <div>
-                <span>{NumberUtils.handleRoundNumber(macros.fat)}g</span>
-                <span>Fat</span>
-              </div>
-            </div>
-          </div>
-          <div className={styles.infoBlock}>
-            <h3>Times</h3>
-            <div className={styles.timings}>
-              <FaClock />
-              <p>
-                Total <span>{totalTime}</span>
+          <div className={`${styles.infoBlock} ${styles.doubleRow}`}>
+            <div className={styles.flatRow}>
+              <p className={styles.servings}>
+                Serves: <span>{servings}</span>
               </p>
+              <Rating value={difficulty} />
+            </div>
+            <div className={styles.timings}>
               <p>
                 Prep <span>{prepTime}</span>
               </p>
               <p>
                 Cook <span>{cookTime}</span>
               </p>
+              <p>
+                Total <span>{totalTime}</span>
+              </p>
             </div>
           </div>
           <div className={styles.infoBlock}>
-            <p>
-              <FaPeopleGroup /> {servings}
-            </p>
-            <Rating value={difficulty} />
+            <h3>Nutrition facts (per serving)</h3>
+            <div className={styles.macros}>
+              <MacroDisplay
+                label="Calories"
+                value={macros.calories}
+                servings={servings}
+              />
+              <MacroDisplay
+                label="Protein"
+                value={macros.protein}
+                servings={servings}
+              />
+              <MacroDisplay
+                label="Carbs"
+                value={macros.carbs}
+                servings={servings}
+              />
+              <MacroDisplay
+                label="Fat"
+                value={macros.fat}
+                servings={servings}
+              />
+            </div>
           </div>
           <div className={styles.infoBlock}>
             {allergies.length > 0 ? (
@@ -181,6 +164,32 @@ const RecipeView = ({ recipe }: { recipe: RecipeType }) => {
             ) : (
               <p>No tags</p>
             )}
+          </div>
+        </div>
+        <div className={styles.details}>
+          <div className={styles.infoBlock}>
+            <h3>Ingredients</h3>
+            <ul className={styles.ingredients}>
+              {ingredients.map(ingredient => (
+                <li key={ingredient.name}>
+                  <span className={styles.amounts}>
+                    {ingredient.amount} {ingredient.units.short}
+                  </span>
+                  <span className={styles.ingredient}>{ingredient.name}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className={styles.infoBlock}>
+            <h3>Directions</h3>
+            <ul className={styles.instructions}>
+              {instructions.map((instruction, index) => (
+                <li key={instruction}>
+                  <div className={styles.step}>{index + 1}</div>
+                  <span className={styles.instruction}>{instruction}</span>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       </div>

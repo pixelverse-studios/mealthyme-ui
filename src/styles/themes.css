@@ -14,6 +14,8 @@
 
   --background: #fbfbfe;
   --primary: #86a286;
+  --primary-dark: #6a826a;
+  --primary-light: #abb8ab;
   --secondary: #76788f;
   --accent: #e08d6c;
 }
@@ -22,6 +24,8 @@
 
   --background: #010104;
   --primary: #5d795d;
+  --primary-dark: #6a826a;
+  --primary-light: #abb8ab;
   --secondary: #707389;
   --accent: #93401f;
 }

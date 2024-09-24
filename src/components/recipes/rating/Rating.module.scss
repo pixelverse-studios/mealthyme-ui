@@ -1,13 +1,7 @@
 .ratingDisplay {
-  font-size: 0.8rem;
-  font-weight: 500;
-  display: flex;
-  align-items: center;
-  gap: 5px;
+  font-size: 0.9rem;
 
-  em {
-    font-style: normal;
-    font-size: 1.25rem;
-    font-weight: 700;
+  span {
+    font-weight: 600;
   }
 }
