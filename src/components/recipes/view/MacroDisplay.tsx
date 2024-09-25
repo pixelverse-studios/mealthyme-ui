@@ -11,6 +11,7 @@ const MacroDisplay = ({ label, value, servings }: MacroDisplayProps) => {
   return (
     <div className={styles.macroDisplay}>
       <label>{label}</label>
+      <hr />
       <span>{NumberUtils.handleRoundNumber(value / servings)}</span>
     </div>
   )

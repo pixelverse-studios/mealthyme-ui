@@ -1,35 +1,3 @@
-.mobileNav {
-  gap: 1rem;
-
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.Nav {
-  box-shadow: none;
-  height: 64px;
-}
-
-.navBody {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 5px;
-  min-height: var(--nav-offset) !important;
-  max-width: var(--max-width);
-  margin: auto;
-}
-
-.userMenu {
-  gap: 1rem;
-  justify-content: space-between;
-
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
 .logoBlock {
   padding: 5px 0;
 

@@ -1,6 +1,16 @@
 import { FaClock, FaEye, FaPeopleGroup, FaTrash } from 'react-icons/fa6'
 import { useRouter } from 'next/navigation'
 import { useMutation } from '@apollo/client'
+import {
+  Card,
+  Image,
+  Text,
+  Badge,
+  Button,
+  Group,
+  ActionIcon,
+  Avatar
+} from '@mantine/core'
 
 import Banner from '../../../../components/banner'
 import { useRecipeStore } from '../../../../lib/store'
@@ -13,7 +23,7 @@ const recipeFallbackImg =
   'https://res.cloudinary.com/mealthyme/image/upload/mealthyme/placeholders/recipe_placeholder_yszhtf.jpg'
 
 const FeedItem = ({
-  recipe: { title, category, image, tags, totalTime, servings, _id },
+  recipe: { title, image, totalTime, servings, _id, user },
   canDelete
 }: {
   recipe: RecipeType
@@ -39,43 +49,55 @@ const FeedItem = ({
   }
 
   return (
-    <div className={styles.FeedItem}>
-      <div className={styles.topPanel}>
-        <div className={styles.title}>
-          <h2>{title}</h2>
-          <h3>{category.label}</h3>
-        </div>
-        <img
+    <Card shadow="sm" padding="sm" radius="md" withBorder>
+      <Card.Section>
+        <Image
           src={
             image.src === null || image.src === ''
               ? recipeFallbackImg
               : image.src ?? ''
           }
+          height={150}
           alt={`${title} image`}
         />
-      </div>
-      <div className={styles.infoPanel}>
-        <div className={styles.singleRow}>
-          <p>
-            <FaClock /> {totalTime}
-          </p>
-          <p>
-            <FaPeopleGroup /> {servings ?? 0}
-          </p>
+      </Card.Section>
+      <Card.Section className={styles.cardContent}>
+        <div>
+          <p className={styles.title}>{title}</p>
+          <p className={styles.author}>{user?.firstName}</p>
         </div>
-        {tags?.length > 0 ? (
-          <div className={styles.tags}>
-            {tags.map(tag => (
-              <div key={tag}>{tag}</div>
-            ))}
+        <div className={styles.details}>
+          <div className={styles.subDetails}>
+            <p>
+              <FaClock /> {totalTime}
+            </p>
+            <p>
+              <FaPeopleGroup /> {servings}
+            </p>
           </div>
-        ) : null}
-        <div className={styles.actions}>
-          <FaEye onClick={onViewClick} />
-          {canDelete ? <FaTrash onClick={onDeleteClick} /> : null}
+          <div className={styles.subDetails}>
+            <ActionIcon
+              variant="subtle"
+              size="lg"
+              radius="md"
+              color="accent"
+              onClick={() => onViewClick()}>
+              <FaEye />
+            </ActionIcon>
+            {canDelete ? (
+              <ActionIcon
+                variant="subtle"
+                size="lg"
+                radius="md"
+                color="accent"
+                onClick={() => onDeleteClick()}>
+                <FaTrash />
+              </ActionIcon>
+            ) : null}
+          </div>
         </div>
-      </div>
-    </div>
+      </Card.Section>
+    </Card>
   )
 }
 
